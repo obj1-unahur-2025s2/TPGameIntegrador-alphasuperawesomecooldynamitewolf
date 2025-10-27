@@ -7,6 +7,11 @@ Proteger el castillo de las oleadas de enemigos que avanzan desde un extremo del
 Si los enemigos llegan al castillo y lo destruyen → Game Over.
 Si eliminás todos los enemigos de una oleada → ganás monedas y pasás al siguiente nivel.
 
+## Menú principal: Inicio, Controles, Y hasta se puede sumar una guía de c/ torre y enemigo para entender el juego y sus elementos.
+## Dentro del juego: Controles con acciones rápidas a la vista, como pausa, reiniciar nivel, volver a menu principal.
+## Al finalizar el juego Pantalla de "Fin de Juego" con opciones para reiniciar nivel o volver a menu principal
+
+
 Mapa:
 ## Mapa con recorrido para los enemigos, no con movimiento libre por el tablero. Puede haber mas de un tipo de recorrido y enemigos generados que prefieran un camino u otro para dar aleatoriedad.
 ## Objetos invisibles como recurso para determinar limites, mecanicas necesarias, o incluso para enemigos de mayor tamaño (boss)
