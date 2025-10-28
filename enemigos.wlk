@@ -11,12 +11,12 @@ class Enemigo{
         }
      ///self.morir()
     }
+    
     /*method morir(){
         if(!self.estaVivo()){
 
         }
     }*/
-
 
     method estaVivo() = vida > 0
     
@@ -24,7 +24,10 @@ class Enemigo{
         unObjeto.recibirDaño(daño)
     }
     method valor() = 50 
-
+    
+    /*method morir(){
+        ///Generar una moneda aletoria 
+    }*/
 }
 
 ///Opcion un jefe final poderoso, lo hago objeto por que es uno solo por el momento 

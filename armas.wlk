@@ -6,6 +6,7 @@ class Torre{
     var rango
     var costo
     var daño
+    var position 
     
     method estaVivo() = vida > 0
     
@@ -20,6 +21,8 @@ class Torre{
 
         }
     }*/
+
+    method position() = position
 
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
