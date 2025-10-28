@@ -9,12 +9,19 @@ class Enemigo{
         if(self.estaVivo()){
             vida -= cantidadDaño
         }
+     ///self.morir()
     }
+    /*method morir(){
+        if(!self.estaVivo()){
+
+        }
+    }*/
+
 
     method estaVivo() = vida > 0
     
-    method atacar(unObjeto, cantidadDaño){
-        unObjeto.recibirDaño(cantidadDaño)
+    method atacar(unObjeto){
+        unObjeto.recibirDaño(daño)
     }
     method valor() = 50 
 
@@ -32,8 +39,8 @@ object jefeFinal{
         }
     }
 
-    method atacar(unObjeto, cantidadDaño){
-        unObjeto.recibirDaño(cantidadDaño)
+    method atacar(unObjeto){
+        unObjeto.recibirDaño(daño)
     }
 
     method estaVivo() = vida > 0

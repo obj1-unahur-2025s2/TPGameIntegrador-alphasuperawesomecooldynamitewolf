@@ -5,7 +5,14 @@ object castillo {
     method recibirDaño(cantidadDaño){
         if(self.estaVivo())
         vida -= cantidadDaño
+     ///self.morir()
     }
+    /*method morir(){
+        if(!self.estaVivo()){
+
+        }
+    }*/
+
     
     method estaVivo() = vida > 0
     
@@ -19,7 +26,7 @@ object personajePrincipal{
 
     method agregarTorre(torre){
         if(self.puedePagar(torre.costo())){ ///Faltaria agregar que no haya una torre en la ubicacion actual y un par de cosas mas 
-            const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50) /// Lo puse como para tener una idea de como seria
+            const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10) /// Lo puse como para tener una idea de como seria
             torres.add(torre)
             monedas -= torre.costo()
         }

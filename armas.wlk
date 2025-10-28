@@ -5,6 +5,7 @@ class Torre{
     var velocidadAtaque
     var rango
     var costo
+    var daño
     
     method estaVivo() = vida > 0
     
@@ -12,10 +13,16 @@ class Torre{
         if(self.estaVivo()){
             vida -= cantidadDaño
         }
+        ///self.morir()
     }
-    
-    method atacar(unObjeto, cantidadDaño){
-        unObjeto.recibirDaño(cantidadDaño)
+    /*method morir(){
+        if(!self.estaVivo()){
+
+        }
+    }*/
+
+    method atacar(unObjeto){
+        unObjeto.recibirDaño(daño)
     }
     
     method nivelMaximo() = nivel == 3
