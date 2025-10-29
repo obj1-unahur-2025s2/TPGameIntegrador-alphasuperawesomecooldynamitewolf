@@ -30,7 +30,7 @@ object personajePrincipal{
     const torres = []
     var imagen="cursor.png"
     method image() =imagen
-    var property position =game.origin() 
+    var property position = game.origin() 
     //secuencia del cursor
     method sensar() {
       	game.onCollideDo(
@@ -93,8 +93,9 @@ object personajePrincipal{
     method eliminarTorre(unaTorre){
     if (torres.contains(unaTorre)){
         torres.remove(unaTorre)
+        game.removeVisual(unaTorre)
         }
     }
-    
-    method recogerMonedas(enemigo){monedas += enemigo.valor()}
+
+    method recogerMonedas(enemigo){monedas += enemigo.valor()} ///Actualizar
 }
