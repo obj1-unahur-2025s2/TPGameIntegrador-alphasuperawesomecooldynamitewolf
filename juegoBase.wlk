@@ -1,3 +1,4 @@
+import castillo.*
 
 import niveles.*
 import wollok.game.*
@@ -5,8 +6,9 @@ object juegoDelCastillo {//para mantener la estructura del juego.
   var  property nivel = nivelPrueba
   method iniciar() {
     game.title("juego Del Castillo")
-    game.height(9)
+    game.height(10)
 	  game.width(20)
+    game.addVisual(cursorMenu)
     game.boardGround("fondo.png")
     nivel.iniciar()
   }

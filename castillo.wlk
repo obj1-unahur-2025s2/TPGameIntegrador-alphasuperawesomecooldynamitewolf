@@ -4,7 +4,7 @@ import wollok.game.*
 import niveles.*
 object castillo {
     var vida = 100
-    var property position =game.origin() 
+    var property position =game.at(6, 0) 
     method image() ="castillo.png" 
     method recibirDaño(cantidadDaño){
         if(self.estaVivo())
@@ -24,13 +24,36 @@ object castillo {
     method estaDestruido() = !self.estaVivo()
 }
 
+object cursorMenu {
+  method image() ="cursor.png"
+  var property position = game.at(1, 3) 
+    method sensar() {
+        game.onCollideDo(
+		self,
+		{ algo =>
+            
+		}   //adaptarlo despues.
+	    )
+    }
+    //movimientos
+    method moverseHaciaArriba() {
+        if(self.position().y() <6 )
+		self.position(self.position().up(1))
+        self.sensar()
+	}
+    method moverseHaciaAbajo()  {
+        if(self.position().y() >3)
+		self.position(self.position().down(1))
+        self.sensar()
+	}
 
+}
 object personajePrincipal{
     var monedas = 10
     const torres = []
-    var imagen="cursor.png"
+    var imagen="cursor12.png"
     method image() =imagen
-    var property position = game.origin() 
+    var property position = game.at(6, 0) 
     //secuencia del cursor
     method sensar() {
       	game.onCollideDo(
@@ -46,19 +69,19 @@ object personajePrincipal{
 
     //movimientos
     method moverseHaciaArriba() {
-		self.position(self.position().up(4))
+		self.position(self.position().up(1))
         self.sensar()
 	}
 	method moverseHaciaAbajo() {
-		self.position(self.position().down(4))
+		self.position(self.position().down(1))
         self.sensar()
 	}
 	method moverseHaciaDerecha() {
-		self.position(self.position().right(4))
+		self.position(self.position().right(1))
         self.sensar()
 	}
 	method moverseHaciaIzquierda() {
-		self.position(self.position().left(4))
+		self.position(self.position().left(1))
         self.sensar()
 	}
 

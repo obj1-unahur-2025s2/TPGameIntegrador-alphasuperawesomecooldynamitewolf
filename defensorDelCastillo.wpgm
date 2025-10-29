@@ -4,17 +4,20 @@ import juegoBase.*
 import niveles.*
 
 program DefensorDelCastillo {
-	//movimientos Cursor //meter limitaciones y q no salga del mapa
-	keyboard.a().onPressDo({personajePrincipal.moverseHaciaIzquierda()})
-	keyboard.d().onPressDo({personajePrincipal.moverseHaciaDerecha()})
-	keyboard.w().onPressDo({personajePrincipal.moverseHaciaArriba()})
-	keyboard.s().onPressDo({personajePrincipal.moverseHaciaAbajo()})
+	//movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
+	keyboard.left().onPressDo({personajePrincipal.moverseHaciaIzquierda()})
+	keyboard.right().onPressDo({personajePrincipal.moverseHaciaDerecha()})
+	keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
+	keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
 
 	juegoDelCastillo.iniciar()
 	torresOpciones.iniciar()
-	//teclas de opciones 
+	//teclas de opciones torres 
 	keyboard.z().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreNormal())}) //Z para poner la torre normal 
 	keyboard.x().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreCañon())}) //X para la torre de cañon
-	game.start()
+	//teclas opciones
 
+	keyboard.w().onPressDo({cursorMenu.moverseHaciaArriba()})
+	keyboard.s().onPressDo({cursorMenu.moverseHaciaAbajo()})
+	game.start()
 }
