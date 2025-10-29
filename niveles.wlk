@@ -50,10 +50,10 @@ object torresOpciones {
     const torres=[]
     method iniciar() {
 
-        const torreNormal=new Torre(nivelTorre=1,costo=10,daño=10,position=game.at(0,0)) //al iniciar las opciones se guardan en la lista las torres 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(0,0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=10,daño=10,position=game.at(0,0))
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=10,position=game.at(0,0))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
     }    

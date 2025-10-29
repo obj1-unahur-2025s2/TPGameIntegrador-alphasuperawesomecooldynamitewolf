@@ -65,12 +65,11 @@ object personajePrincipal{
     method puedePagar(costo) = monedas >= costo
     
     method agregarTorre(torre){
-        ///Faltaria agregar que no haya una torre en la ubicacion actual y un par de cosas mas 
-        //const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10, position = 8) /// Lo puse como para tener una idea de como seria
         const costo = torre.costo()
-        if (not self.hayTorreEn(self.position()) && self.puedePagar(costo)){
+        const posicion = self.position()
+        if (not self.hayTorreEn(posicion) && self.puedePagar(costo)){
             torres.add(torre)
-            torre.asignarUbicacion(self.position())
+            torre.asignarUbicacion(posicion)
             game.addVisual(torre)
             self.gastarMonedas(costo)
         }
@@ -84,9 +83,10 @@ object personajePrincipal{
     method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual })
 
     method mejorarTorre(unaTorre){
-        if (torres.contains(unaTorre) && self.puedePagar(unaTorre.costoMejora())) {
+        const costo = unaTorre.costoMejora()
+        if (torres.contains(unaTorre) && self.puedePagar(costo)) {
             unaTorre.subirNivel()
-            monedas -= unaTorre.costoMejora()
+            self.gastarMonedas(costo)
         }
     }
 
