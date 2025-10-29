@@ -78,20 +78,13 @@ object personajePrincipal{
         imagen="cursorTorre.png"
         position= game.at(pos.get(0), pos.get(1))
 		console.println(position)
+        self.sensar()
 	}
 	method moverseHaciaAbajo() {
 		const pos =nivel.ubicacionAnterior([position.x(),position.y()])
         position=game.at(pos.get(0),pos.get(1))
-	}
-	method moverseHaciaDerecha() {
-		self.position(self.position().right(1))
         self.sensar()
-	}
-	method moverseHaciaIzquierda() {
-		self.position(self.position().left(1))
-        self.sensar()
-	}
-
+    }
     method puedePagar(costo) = monedas >= costo
     
     method agregarTorre(torre){

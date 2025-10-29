@@ -5,7 +5,8 @@ describe "prueba castillo" {
 
   test "ubicacion va a la siguiente permitida por el entorno del nivel" {
     personajePrincipal.moverseHaciaArriba()
-    assert.equals(personajePrincipal.position(), game.at(6,0))
+    personajePrincipal.moverseHaciaArriba()
+    assert.equals(personajePrincipal.position(), game.at(8,3))
   }
 
 }
