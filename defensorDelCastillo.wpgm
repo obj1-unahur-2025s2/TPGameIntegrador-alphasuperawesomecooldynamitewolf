@@ -1,17 +1,20 @@
+import castillo.*
 import wollok.game.*
 import juegoBase.*
+import niveles.*
+program DefensorDelCastillo {
+	//movimientos Cursor //meter limitaciones y q no salga del mapa
+	keyboard.a().onPressDo({personajePrincipal.moverseHaciaIzquierda()})
+	keyboard.d().onPressDo({personajePrincipal.moverseHaciaDerecha()})
+	keyboard.w().onPressDo({personajePrincipal.moverseHaciaArriba()})
+	keyboard.s().onPressDo({personajePrincipal.moverseHaciaAbajo()})
 
-program PepitaGame {
-	game.title("Pepita")
-	game.height(10)
-	game.width(10)
 
-	// add assets in asset folder, for example, for the background
-  // game.boardGround("fondo2.jpg")
-
-	//
-
-	game.showAttributes(pepita) //Debug
-
+	juegoDelCastillo.iniciar()
+	torresOpciones.iniciar()
+	//teclas de opciones 
+	keyboard.z().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreNormal())}) //Z para poner la torre normal 
+	keyboard.x().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreCañon())}) //X para la torre de cañon
 	game.start()
+
 }
