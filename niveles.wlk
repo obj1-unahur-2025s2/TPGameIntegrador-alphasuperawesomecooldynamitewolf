@@ -6,17 +6,35 @@ class Nivel{
     var nivel
     var enemigosPorOleada 
     var enemigosGenerados
-    var enemigosVivos
-    
+    var enemigosVivos                 //x,y
+    const ubicacionesPosiblesDeTorre=[[5,4],[8, 3],[11, 0],[14, 2],[16,1],[18,6]] //debe estar ordenada 
+    const ubicaionActualJugador =[] 
     // Inicializa el nivel
     method iniciar(){
+        
         game.addVisual(personajePrincipal)
         game.addVisual(castillo)
         enemigosGenerados = 0
         enemigosVivos = 0
         self.generarOleada()
+        
     }
-
+    method ubicaionActualJugador() =ubicaionActualJugador 
+    method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
+    method ubicacionSiguienteA(pos) {
+        ubicaionActualJugador.add(pos)
+        console.println(ubicacionesPosiblesDeTorre)
+        console.println(ubicaionActualJugador)
+        console.println(self.restaDeUbicaciones())
+        return self.restaDeUbicaciones().get(0)
+    }
+    method obtenerUltimo() =ubicaionActualJugador.last()
+    method ubicacionAnterior(pos) {
+        const moverse=self.obtenerUltimo()
+        ubicaionActualJugador.remove(self.obtenerUltimo())
+        return  moverse
+    }
+    method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicaionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
     method generarOleada(){
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1

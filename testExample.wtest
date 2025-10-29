@@ -1,9 +1,11 @@
-import example.pepita
+import castillo.*
+import niveles.*
+import wollok.game.*
+describe "prueba castillo" {
 
-describe "group of tests for pepita" {
-
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  test "ubicacion va a la siguiente permitida por el entorno del nivel" {
+    personajePrincipal.moverseHaciaArriba()
+    assert.equals(personajePrincipal.position(), game.at(6,0))
   }
 
 }

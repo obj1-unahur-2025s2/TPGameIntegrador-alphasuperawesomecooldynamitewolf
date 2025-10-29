@@ -5,8 +5,6 @@ import niveles.*
 
 program DefensorDelCastillo {
 	//movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
-	keyboard.left().onPressDo({personajePrincipal.moverseHaciaIzquierda()})
-	keyboard.right().onPressDo({personajePrincipal.moverseHaciaDerecha()})
 	keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
 	keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
 

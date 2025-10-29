@@ -20,7 +20,7 @@ object castillo {
 
     
     method estaVivo() = vida > 0
-    method cursor()="cursor.png" //polimorfismo en las estructura asi el cursor sabe como adaptarse 
+    method cursor()="cursorCastillo.png" //polimorfismo en las estructura asi el cursor sabe como adaptarse 
     method estaDestruido() = !self.estaVivo()
 }
 
@@ -50,11 +50,12 @@ object cursorMenu {
 }
 object personajePrincipal{
     var monedas = 10
+    var nivel= nivelPrueba
     const torres = []
-    var imagen="cursor12.png"
+    var imagen="cursorCastillo.png"
     method image() =imagen
     var property position = game.at(6, 0) 
-    //secuencia del cursor
+    //secuencia del cursor y estrucutura de nivel
     method sensar() {
       	game.onCollideDo(
 		self,
@@ -66,15 +67,21 @@ object personajePrincipal{
     method adaptar(algo) {
         imagen=algo.cursor()
     }
+    method siguienteNivel(unNivel) {
+      nivel=unNivel
+    }
 
     //movimientos
     method moverseHaciaArriba() {
-		self.position(self.position().up(1))
-        self.sensar()
+        const pos=nivel.ubicacionSiguienteA([position.x(),position.y()])
+        console.println(pos)
+        imagen="cursorTorre.png"
+        position= game.at(pos.get(0), pos.get(1))
+		console.println(position)
 	}
 	method moverseHaciaAbajo() {
-		self.position(self.position().down(1))
-        self.sensar()
+		const pos =nivel.ubicacionAnterior([position.x(),position.y()])
+        position=game.at(pos.get(0),pos.get(1))
 	}
 	method moverseHaciaDerecha() {
 		self.position(self.position().right(1))
