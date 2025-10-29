@@ -45,7 +45,7 @@ object personajePrincipal{
     }
 
     //movimientos
-    	method moverseHaciaArriba() {
+    method moverseHaciaArriba() {
 		self.position(self.position().up(4))
         self.sensar()
 	}
@@ -53,33 +53,38 @@ object personajePrincipal{
 		self.position(self.position().down(4))
         self.sensar()
 	}
-		method moverseHaciaDerecha() {
+	method moverseHaciaDerecha() {
 		self.position(self.position().right(4))
         self.sensar()
 	}
-		method moverseHaciaIzquierda() {
+	method moverseHaciaIzquierda() {
 		self.position(self.position().left(4))
         self.sensar()
 	}
+
     method puedePagar(costo) = monedas >= costo
     
     method agregarTorre(torre){
         ///Faltaria agregar que no haya una torre en la ubicacion actual y un par de cosas mas 
-            //const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10, position = 8) /// Lo puse como para tener una idea de como seria
-        torres.add(torre)
-        monedas -= torre.costo()
-        torre.asignarUbicacion(self.position())
-        console.println(self.position())
-        console.println(torre)
-        game.addVisual(torre)
+        //const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10, position = 8) /// Lo puse como para tener una idea de como seria
+        const costo = torre.costo()
+        if (not self.hayTorreEn(self.position()) && self.puedePagar(costo)){
+            torres.add(torre)
+            torre.asignarUbicacion(self.position())
+            game.addVisual(torre)
+            self.gastarMonedas(costo)
+        }
         
+    }
+
+    method gastarMonedas(unCosto){
+        monedas = monedas - unCosto
     }
 
     method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual })
 
     method mejorarTorre(unaTorre){
         if (torres.contains(unaTorre) && self.puedePagar(unaTorre.costoMejora())) {
-            
             unaTorre.subirNivel()
             monedas -= unaTorre.costoMejora()
         }
@@ -90,5 +95,6 @@ object personajePrincipal{
         torres.remove(unaTorre)
         }
     }
+    
     method recogerMonedas(enemigo){monedas += enemigo.valor()}
 }
