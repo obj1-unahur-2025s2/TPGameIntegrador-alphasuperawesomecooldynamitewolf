@@ -44,13 +44,14 @@ class Nivel{
     }*/
 }
 
+
 ///usos, se podria utilizar para saber cuantas torres hay para ubicar,  si es que en algun nivel especifico ya no se permite dicha torre etc.
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
     const torres=[]
     method iniciar() {
 
-        const torreNormal=new Torre(nivelTorre=1,costo=10,daño=10,position=game.at(0,0)) //al iniciar las opciones se guardan en la lista las torres 
+        const torreNormal = new Torre(nivelTorre=1,costo=10,daño=10,position=game.at(0,0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
         const torreCañon=new Torre(nivelTorre=2,costo=10,daño=10,position=game.at(0,0))
@@ -59,6 +60,7 @@ object torresOpciones {
     }    
     method obtenerTorreNormal() = torres.get(0)
     method obtenerTorreCañon() = torres.get(1)
+
 }
 //---------(Entorno)--------
-const nivelPrueba= new Nivel(nivel=0,enemigosPorOleada=0,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=0,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante

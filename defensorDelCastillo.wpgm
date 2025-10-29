@@ -2,13 +2,13 @@ import castillo.*
 import wollok.game.*
 import juegoBase.*
 import niveles.*
+
 program DefensorDelCastillo {
 	//movimientos Cursor //meter limitaciones y q no salga del mapa
 	keyboard.a().onPressDo({personajePrincipal.moverseHaciaIzquierda()})
 	keyboard.d().onPressDo({personajePrincipal.moverseHaciaDerecha()})
 	keyboard.w().onPressDo({personajePrincipal.moverseHaciaArriba()})
 	keyboard.s().onPressDo({personajePrincipal.moverseHaciaAbajo()})
-
 
 	juegoDelCastillo.iniciar()
 	torresOpciones.iniciar()

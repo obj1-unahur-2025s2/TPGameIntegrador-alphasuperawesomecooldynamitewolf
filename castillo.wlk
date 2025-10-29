@@ -30,7 +30,7 @@ object personajePrincipal{
     const torres = []
     var imagen="cursor.png"
     method image() =imagen
-    var property position =game.origin() 
+    var property position = game.origin() 
     //secuencia del cursor
     method sensar() {
       	game.onCollideDo(
@@ -45,7 +45,7 @@ object personajePrincipal{
     }
 
     //movimientos
-    	method moverseHaciaArriba() {
+    method moverseHaciaArriba() {
 		self.position(self.position().up(4))
         self.sensar()
 	}
@@ -64,14 +64,16 @@ object personajePrincipal{
     method puedePagar(costo) = monedas >= costo
     
     method agregarTorre(torre){
+        if(!self.hayTorreEn(position) && self.puedePagar(torre.costo())){
         ///Faltaria agregar que no haya una torre en la ubicacion actual y un par de cosas mas 
-            //const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10, position = 8) /// Lo puse como para tener una idea de como seria
+        //const nuevaTorre = new Torre(nivel = 1, vida = 50 ,velocidadAtaque = 10, rango = 2 ,costo = 50, daño = 10, position = 8) 
+        /// Lo puse como para tener una idea de como seria
         torres.add(torre)
         monedas -= torre.costo()
         torre.asignarUbicacion(self.position())
         console.println(self.position())
         console.println(torre)
-        game.addVisual(torre)
+        game.addVisual(torre)}
         
     }
 
@@ -88,7 +90,9 @@ object personajePrincipal{
     method eliminarTorre(unaTorre){
     if (torres.contains(unaTorre)){
         torres.remove(unaTorre)
+        game.removeVisual(unaTorre)
         }
     }
-    method recogerMonedas(enemigo){monedas += enemigo.valor()}
+
+    method recogerMonedas(enemigo){monedas += enemigo.valor()} ///Actualizar
 }
