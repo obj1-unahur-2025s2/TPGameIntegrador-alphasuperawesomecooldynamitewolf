@@ -7,7 +7,7 @@ class Torre{
     var costo
     var daño
     var position 
-    
+
     method estaVivo() = vida > 0
     
     method recibirAtaque(cantidadDaño){

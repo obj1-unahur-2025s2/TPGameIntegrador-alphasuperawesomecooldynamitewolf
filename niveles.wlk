@@ -8,7 +8,7 @@ class Nivel{
     var enemigosGenerados
     var enemigosVivos                 //x,y
     const ubicacionesPosiblesDeTorre=[[5,4],[8, 3],[11, 0],[14, 3],[16,1],[15,6]] //debe estar ordenada 
-    const ubicaionActualJugador =[] 
+    const ubicacionActualJugador =[] 
     // Inicializa el nivel
     method iniciar(){
         
@@ -19,22 +19,22 @@ class Nivel{
         self.generarOleada()
         
     }
-    method ubicaionActualJugador() =ubicaionActualJugador 
+    method ubicacionActualJugador() =ubicacionActualJugador 
     method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
     method ubicacionSiguienteA(pos) {
-        ubicaionActualJugador.add(pos)
+        ubicacionActualJugador.add(pos)
         console.println(ubicacionesPosiblesDeTorre)
-        console.println(ubicaionActualJugador)
+        console.println(ubicacionActualJugador)
         console.println(self.restaDeUbicaciones())
         return self.restaDeUbicaciones().get(0)
     }
-    method obtenerUltimo() =ubicaionActualJugador.last()
+    method obtenerUltimo() =ubicacionActualJugador.last()
     method ubicacionAnterior(pos) {
         const moverse=self.obtenerUltimo()
-        ubicaionActualJugador.remove(self.obtenerUltimo())
+        ubicacionActualJugador.remove(self.obtenerUltimo())
         return  moverse
     }
-    method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicaionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
+    method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
     method generarOleada(){
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1
