@@ -8,7 +8,7 @@ class Nivel{
     var enemigosPorOleada 
     var enemigosGenerados
     var enemigosVivos                 //x,y
-    const ubicacionesPosiblesDeTorre=[[5,4],[8, 3],[11, 0],[14, 3],[16,1],[15,6]] //debe estar ordenada 
+    const ubicacionesPosiblesDeTorre=[[8, 3],[11,0],[11, 3],[16,0],[14, 4],[15,6]] //debe estar ordenada 
     const ubicacionActualJugador =[]    
     // Inicializa el nivel                  
     method iniciar(){

@@ -9,7 +9,7 @@ class Enemigo{
     var rango
     var imagen
     var property position =game.at(0, 0)
-    const posiciones=[[19,5],[18,5],[17,5],[17,4],[17,3],[17,2],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[9,1]] //mapeo //14,5
+    const posiciones=[[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]] //mapeo //14,5
     const posicioActual=[]
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
     method recibirDaño(cantidadDaño){

@@ -19,7 +19,7 @@ program DefensorDelCastillo {
 	keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
 	keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
 
-	game.addVisualCharacter(map)
+	//game.addVisualCharacter(map)
 
 	game.start()
 
