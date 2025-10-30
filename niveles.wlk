@@ -1,3 +1,4 @@
+import enemigos.*
 import juegoBase.*
 import castillo.*
 import wollok.game.*
@@ -9,7 +10,7 @@ class Nivel{
     var enemigosVivos                 //x,y
     const ubicacionesPosiblesDeTorre=[[5,4],[8, 3],[11, 0],[14, 3],[16,1],[15,6]] //debe estar ordenada 
     const ubicacionActualJugador =[] 
-    // Inicializa el nivel
+    // Inicializa el nivel                  
     method iniciar(){
         
         game.addVisual(personajePrincipal)
@@ -39,6 +40,9 @@ class Nivel{
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1
             enemigosVivos += 1
+            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png")
+            game.addVisual(troll)
+            troll.iniciar()
         }
     }
 
@@ -105,7 +109,7 @@ object torresOpciones {
 	}
 }
 //---------(Entorno)--------
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=0,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 object cursorMenu {
   
   
