@@ -9,7 +9,7 @@ class Nivel{
     var enemigosGenerados
     var enemigosVivos                 //x,y
     const ubicacionesPosiblesDeTorre=[[5,4],[8, 3],[11, 0],[14, 3],[16,1],[15,6]] //debe estar ordenada 
-    const ubicacionActualJugador =[] 
+    const ubicacionActualJugador =[]    
     // Inicializa el nivel                  
     method iniciar(){
         
@@ -75,10 +75,10 @@ object torresOpciones {
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
     method iniciar() {
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(0,0),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(0,0),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=10,position=game.at(0,0),positionOpcion=opciones.get(1))
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(0,0),positionOpcion=opciones.get(1))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
 

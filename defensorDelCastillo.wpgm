@@ -4,6 +4,7 @@ import juegoBase.*
 import niveles.*
 import enemigos.map
 
+
 program DefensorDelCastillo {
 	//movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
 	keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
@@ -14,8 +15,12 @@ program DefensorDelCastillo {
 	//teclas de opciones torres 
 	keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
 		//teclas opciones
-	
+
 	keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
 	keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
+
+	game.addVisualCharacter(map)
+
 	game.start()
+
 }

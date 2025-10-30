@@ -1,5 +1,5 @@
 import castillo.*
-
+import enemigos.*
 import niveles.*
 import wollok.game.*
 object juegoDelCastillo {//para mantener la estructura del juego.
@@ -32,6 +32,7 @@ class Torre{
   var nivelTorre
   const costo
   const daño
+  const rango
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const diseñoTorre=["torre1.png","torre2.png"] //falta agregar mas imagenes ... 
   var imagen="torre.png"
@@ -52,12 +53,76 @@ class Torre{
   }
   method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
+  method rangoEfectivo() {
+    return [
+      position.up(rango),position.down(rango),position.left(rango),position.right(rango), arriba.siguientePosicion(position.up(rango)),
+      abajo.siguientePosicion(position.down(rango)),
+      izquierda.siguientePosicion(position.left(rango)),
+      derecha.siguientePosicion(position.right(rango))
+    ]
+  }
+
+  //No estoy seguro si funcionara, pero me parece una forma rapida de saber si un enemigo esta en el rango de la torre
+  method estaEnRango(unEnemigo) {
+    game.schedule(1700, {self.rangoEfectivo().contains(unEnemigo.posicionActual()) })
+    console.println(self.rangoEfectivo().contains(unEnemigo.posicionActual()))
+    console.println(self.rangoEfectivo())
+  }
+
+
 }
 
+object arriba {
+  method siguientePosicion(pos) = pos.up(1)
+}
+object abajo {
+  method siguientePosicion(pos) = pos.down(1)
+}
+object izquierda {
+  method siguientePosicion(pos) = pos.left(1)
+}
+object derecha {
+  method siguientePosicion(pos) = pos.right(1)
+}
+
+class Proyectil{
+  //
+  const daño
+  var imagen
+  var property position 
+  const diseñoProyectil = []
+
+
+  method obtenerDiseñoDeLista(num)=diseñoProyectil.get(num) 
+  method elegirDiseño(num) {
+    imagen=self.obtenerDiseñoDeLista(num) //Me lo robe por que puede servir muejejeje
+  }
+
+  method infligirDañoA(unEnemigo){
+    unEnemigo.recibirDaño(daño)
+  }
+
+  method mover(direccion) {
+    position = direccion.siguientePosicion(position)
+  }
+
+  method hayEnemigo(unEnemigo){
+    return unEnemigo.position() == position
+  }
+
+  method viajarProyectilHacia(direccion, unEnemigo){
+    if(self.hayEnemigo(unEnemigo)){
+      self.infligirDañoA(unEnemigo)
+    }
+    else{
+      self.mover(direccion)
+    }
+  }
+}
 //Los Stats de los enemigos luego resolvemos como automatizar la creación y parametrización para polimorfizarlo de nivel a nivel
 class EnemigoBase{
   //El nivel de juego luego resolvemos como pasárlo para parametrizar y automatizarlo al pasar de nivel
-  const nivelEnemigo = juego.nivelJuego() * 2
+  const nivelEnemigo = juegoDelCastillo.nivel().nivel() * 2
   const daño
   var vida
 
@@ -68,15 +133,15 @@ class EnemigoBase{
   method atacar() = daño + nivelEnemigo
 }
 
-class EnemigoJefe{
-  const nivelEnemigo = juego.nivelJuego() * 2
-  const daño //Algún multiplicador respecto a los EnemigosBase
-  var vida //Algún multiplicador respecto a los EnemigosBase
+class EnemigoJefe inherits EnemigoBase{
+  // const nivelEnemigo = juego.nivelJuego() * 2
+  // const daño //Algún multiplicador respecto a los EnemigosBase
+  // var vida //Algún multiplicador respecto a los EnemigosBase
 
-  method recibirDaño(nivelDeDaño){
-    vida = vida - nivelDeDaño
+  override method recibirDaño(nivelDeDaño){
+    vida = vida - (nivelDeDaño*0.80)
   }
 
-  method atacar() = daño * nivelEnemigo
+  override method atacar() = (daño+1) * nivelEnemigo
 }
 

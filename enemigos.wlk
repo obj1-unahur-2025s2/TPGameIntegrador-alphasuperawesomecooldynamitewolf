@@ -1,6 +1,8 @@
 import armas.*
 import castillo.*
 import wollok.game.*
+import niveles.torresOpciones
+
 class Enemigo{
     var vida
     var daño
@@ -9,7 +11,7 @@ class Enemigo{
     var property position =game.at(0, 0)
     const posiciones=[[19,5],[18,5],[17,5],[17,4],[17,3],[17,2],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[9,1]] //mapeo //14,5
     const posicioActual=[]
-
+    method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
@@ -29,7 +31,7 @@ class Enemigo{
             position=game.at(posiciones.first().get(0),posiciones.first().get(1)) // obtiene la primera posicion a la cual debe ir
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su priemra posicion
-            game.schedule(1700, { self.avanzar() }) // activa recursion
+            game.schedule(1700, { self.avanzar(); console.println(posicioActual.last())}) // activa recursion
         }
     }
     method morir(){
