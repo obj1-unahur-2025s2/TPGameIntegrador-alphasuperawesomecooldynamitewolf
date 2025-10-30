@@ -8,9 +8,12 @@ class Enemigo{
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
+            ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
         }
         self.morir()
     }
+
+    method vida() = vida
     
     method morir(){
         if(!self.estaVivo()){
@@ -32,16 +35,11 @@ class Enemigo{
     
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
+        game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
     }
     
     method valor() = 50 
     
-}
-
-class Moneda {
-  var property valor
-  var property position
-  method image(){} 
 }
 
 ///Opcion un jefe final poderoso, lo hago objeto por que es uno solo por el momento 

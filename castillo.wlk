@@ -2,6 +2,7 @@ import armas.*
 import enemigos.*
 import wollok.game.*
 import niveles.*
+
 object castillo {
     var vida = 100
     var property position =game.at(6, 0) 
@@ -64,6 +65,10 @@ object personajePrincipal{
 		}
 	)
     }
+    ///Estos dos metodos agregue
+    method monedas() = monedas
+    method botin(valor){monedas += valor}
+
     method adaptar(algo) {
         imagen=algo.cursor()
     }
@@ -121,4 +126,14 @@ object personajePrincipal{
     }
 
     method recogerMonedas(enemigo){monedas += enemigo.valor()} ///Actualizar
+}
+
+class Moneda {
+  var property valor
+  var property position
+  method image(){} 
+  method moneda(){
+    personajePrincipal.botin(valor)
+    game.say(personajePrincipal,"Tengo" + personajePrincipal.monedas() + "Monedas")
+  }
 }

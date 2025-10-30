@@ -13,6 +13,7 @@ class Torre{
     method recibirAtaque(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
+            ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
         }
         ///self.morir()
     }
@@ -26,6 +27,8 @@ class Torre{
 
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
+        game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
+
     }
     
     method nivelMaximo() = nivel == 3
