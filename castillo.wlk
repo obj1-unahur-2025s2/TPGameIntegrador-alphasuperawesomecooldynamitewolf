@@ -25,30 +25,7 @@ object castillo {
     method estaDestruido() = !self.estaVivo()
 }
 
-object cursorMenu {
-  method image() ="cursor.png"
-  var property position = game.at(1, 3) 
-    method sensar() {
-        game.onCollideDo(
-		self,
-		{ algo =>
-            
-		}   //adaptarlo despues.
-	    )
-    }
-    //movimientos
-    method moverseHaciaArriba() {
-        if(self.position().y() <6 )
-		self.position(self.position().up(1))
-        self.sensar()
-	}
-    method moverseHaciaAbajo()  {
-        if(self.position().y() >3)
-		self.position(self.position().down(1))
-        self.sensar()
-	}
 
-}
 object personajePrincipal{
     var monedas = 10
     var nivel= nivelPrueba
@@ -92,7 +69,8 @@ object personajePrincipal{
     }
     method puedePagar(costo) = monedas >= costo
     
-    method agregarTorre(torre){
+    method agregarTorre(){
+        const torre=torresOpciones.seleccionar()
         const costo = torre.costo()
         const posicion = self.position()
         if (not self.hayTorreEn(posicion) && self.puedePagar(costo)){

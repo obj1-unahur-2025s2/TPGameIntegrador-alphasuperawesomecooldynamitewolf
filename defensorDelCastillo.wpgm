@@ -11,11 +11,10 @@ program DefensorDelCastillo {
 	juegoDelCastillo.iniciar()
 	torresOpciones.iniciar()
 	//teclas de opciones torres 
-	keyboard.z().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreNormal())}) //Z para poner la torre normal 
-	keyboard.x().onPressDo({personajePrincipal.agregarTorre(torresOpciones.obtenerTorreCañon())}) //X para la torre de cañon
-	//teclas opciones
+	keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
+		//teclas opciones
 
-	keyboard.w().onPressDo({cursorMenu.moverseHaciaArriba()})
-	keyboard.s().onPressDo({cursorMenu.moverseHaciaAbajo()})
+	keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
+	keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
 	game.start()
 }

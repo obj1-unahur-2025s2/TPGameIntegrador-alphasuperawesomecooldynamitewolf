@@ -66,19 +66,50 @@ class Nivel{
 ///usos, se podria utilizar para saber cuantas torres hay para ubicar,  si es que en algun nivel especifico ya no se permite dicha torre etc.
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
+    const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
     const torres=[]
+    method image() ="cursor.png"
+    var property position = game.at(1, 3) 
     method iniciar() {
-
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(0,0)) //al iniciar las opciones se guardan en la lista las torres 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(0,0),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=10,position=game.at(0,0))
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=10,position=game.at(0,0),positionOpcion=opciones.get(1))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
+
     }    
+    method posicionActualComoColeccion() =[position.x(),position.y()]
+    method torreSeleccionada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+    method seleccionar()=self.torreSeleccionada()
+    method sensar() {
+        game.onCollideDo(
+		self,
+		{ algo =>
+            
+		}   //adaptarlo despues.
+	    )
+    }
     method obtenerTorreNormal() = torres.get(0)
     method obtenerTorreCañon() = torres.get(1)
-
+    //movimientos
+    method moverseHaciaArriba() {
+        if(self.position().y() <6 )
+		self.position(self.position().up(1))
+        self.sensar()
+	}
+    method moverseHaciaAbajo()  {
+        if(self.position().y() >3)
+		self.position(self.position().down(1))
+        self.sensar()
+	}
 }
 //---------(Entorno)--------
 const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=0,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+object cursorMenu {
+  
+  
+
+
+
+}

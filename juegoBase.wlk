@@ -8,7 +8,7 @@ object juegoDelCastillo {//para mantener la estructura del juego.
     game.title("juego Del Castillo")
     game.height(10)
 	  game.width(20)
-    game.addVisual(cursorMenu)
+    game.addVisual(torresOpciones)
     game.boardGround("fondo.png")
     nivel.iniciar()
   }
@@ -32,7 +32,7 @@ class Torre{
   var nivelTorre
   const costo
   const daño
-
+  const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const diseñoTorre=["torre1.png","torre2.png"] //falta agregar mas imagenes ... 
   var imagen="torre.png"
   var property  position 
@@ -50,6 +50,7 @@ class Torre{
     position=unaPosicion
     
   }
+  method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
 }
 
