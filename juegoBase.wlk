@@ -9,7 +9,7 @@ object juegoDelCastillo {//para mantener la estructura del juego.
     game.height(10)
 	  game.width(20)
     game.addVisual(torresOpciones)
-    game.boardGround("fondo.png")
+    game.boardGround("fondo.png") //clase fondo para cambiar de niveles
     nivel.iniciar()
   }
 }
@@ -119,29 +119,3 @@ class Proyectil{
     }
   }
 }
-//Los Stats de los enemigos luego resolvemos como automatizar la creación y parametrización para polimorfizarlo de nivel a nivel
-class EnemigoBase{
-  //El nivel de juego luego resolvemos como pasárlo para parametrizar y automatizarlo al pasar de nivel
-  const nivelEnemigo = juegoDelCastillo.nivel().nivel() * 2
-  const daño
-  var vida
-
-  method recibirDaño(nivelDeDaño){
-    vida = vida - nivelDeDaño
-  }
-
-  method atacar() = daño + nivelEnemigo
-}
-
-class EnemigoJefe inherits EnemigoBase{
-  // const nivelEnemigo = juego.nivelJuego() * 2
-  // const daño //Algún multiplicador respecto a los EnemigosBase
-  // var vida //Algún multiplicador respecto a los EnemigosBase
-
-  override method recibirDaño(nivelDeDaño){
-    vida = vida - (nivelDeDaño*0.80)
-  }
-
-  override method atacar() = (daño+1) * nivelEnemigo
-}
-

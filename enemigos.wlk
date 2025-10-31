@@ -3,13 +3,15 @@ import castillo.*
 import wollok.game.*
 import niveles.torresOpciones
 
+//const enemigo1 = new Enemigo(posiciones = nivelPrueba.ubicacionesCamino()) Ejemplo de como tendría que ser la instanciación de los enemigos con los demas atributos
+
 class Enemigo{
-    var vida
+    var vida //diferencias de vidas y hits
     var daño
     var rango
     var imagen
     var property position =game.at(0, 0)
-    const posiciones=[[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]] //mapeo //14,5
+    const posiciones //esto en nivel
     const posicioActual=[]
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
     method recibirDaño(cantidadDaño){
@@ -63,21 +65,8 @@ class Enemigo{
 
 ///Opcion un jefe final poderoso, lo hago objeto por que es uno solo por el momento 
 
-object jefeFinal{
-    var vida = 1000 
-    const daño = 50
-
-    method recibirDaño(cantidadDaño){
-        if(self.estaVivo()){
-            vida -= cantidadDaño
-        }
-    }
-
-    method atacar(unObjeto){
-        unObjeto.recibirDaño(daño)
-    }
-
-    method estaVivo() = vida > 0
+class JefeFinal inherits Enemigo{
+    
 }
 //para ver posiciones, borrar si hace falta:
 object map {

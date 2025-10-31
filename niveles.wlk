@@ -8,7 +8,8 @@ class Nivel{
     var enemigosPorOleada 
     var enemigosGenerados
     var enemigosVivos                 //x,y
-    const ubicacionesPosiblesDeTorre=[[8, 3],[11,0],[11, 3],[16,0],[14, 4],[15,6]] //debe estar ordenada 
+    const ubicacionesPosiblesDeTorre=[[8, 3],[11,0],[11, 3],[16,0],[14, 4],[15,6]] //debe estar ordenada
+    const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador =[]    
     // Inicializa el nivel                  
     method iniciar(){
@@ -70,7 +71,7 @@ class Nivel{
 ///usos, se podria utilizar para saber cuantas torres hay para ubicar,  si es que en algun nivel especifico ya no se permite dicha torre etc.
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
-    const opciones=[[1,0],[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
+    const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
     const torres=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
@@ -115,4 +116,4 @@ object torresOpciones {
 	}
 }
 //---------(Entorno)--------
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0 , ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]]) //un nivel para probar diseños. --cambiar a tutorial mas adelante
