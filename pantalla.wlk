@@ -1,0 +1,10 @@
+class Pantalla{
+    const imagen 
+    var property position =game.at(0,0)
+    method image() =imagen
+
+    method iniciar() {
+        if(! game.hasVisual(self)){
+            game.addVisual(self)}
+        }
+}

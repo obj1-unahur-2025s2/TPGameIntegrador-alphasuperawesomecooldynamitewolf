@@ -10,8 +10,9 @@ class Enemigo{
     var daño
     var rango
     var imagen
+    const nivelAct
     var property position =game.at(0, 0)
-    const posiciones //esto en nivel
+    method posiciones() = nivelAct.mapeoEnemigo()
     const posicioActual=[]
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
     method recibirDaño(cantidadDaño){
@@ -29,10 +30,10 @@ class Enemigo{
        
     } 
     method avanzar() {
-        if(posiciones.size() !=0){//caso base, ya no hay posiciones.
-            position=game.at(posiciones.first().get(0),posiciones.first().get(1)) // obtiene la primera posicion a la cual debe ir
+        if(self.posiciones().size() !=0){//caso base, ya no hay posiciones.
+            position=game.at(self.posiciones().first().get(0),self.posiciones().first().get(1)) // obtiene la primera posicion a la cual debe ir
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
-            posiciones.remove(posiciones.first()) // remueve su priemra posicion
+            self.posiciones().remove(self.posiciones().first()) // remueve su priemra posicion
             game.schedule(1700, { self.avanzar(); console.println(posicioActual.last())}) // activa recursion
         }
     }

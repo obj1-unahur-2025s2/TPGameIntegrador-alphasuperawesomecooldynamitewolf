@@ -4,14 +4,38 @@ import niveles.*
 import wollok.game.*
 object juegoDelCastillo {//para mantener la estructura del juego.
   var  property nivel = nivelPrueba
+  const niveles=[]
+  const nivelesCompeltos=[]
+  var nivelActl = nivelPrueba
   method iniciar() {
-    game.title("juego Del Castillo")
-    game.height(10)
-	  game.width(20)
-    game.addVisual(torresOpciones)
-    game.boardGround("fondo.png") //clase fondo para cambiar de niveles
-    nivel.iniciar()
+      game.title("juego Del Castillo")
+      game.height(10)
+      game.width(20)
+      game.addVisual(torresOpciones)
+      //torresOpciones.iniciar()
+      self.configurarTeclas()
+      //nivelActl.pantalla() //pantalla del nivel propio
+      nivel.iniciar()
+      game.start()
   }
+  method configurarTeclas() {
+    //movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
+	  keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
+	  keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
+    	//teclas de opciones torres 
+    keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
+      //teclas opciones
+
+    keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
+    keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
+
+  }
+  method obtenerNivel() = nivelPrueba
+  method pasarDeNivel() {
+    nivelesCompeltos.add(nivelActl)
+    nivelActl=self.nivelQueSigue()
+  }
+  method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
 }
 class Castillo{
   //Las defensas y ataques mejor numeros altos (100 o 500) para facilitar las escalas y usar así siempre números enteros

@@ -30,9 +30,9 @@ object personajePrincipal{
     var monedas = 10
     var nivel= nivelPrueba
     const torres = []
-    var imagen="cursorCastillo.png"
+    var imagen="cursorTorre.png"
     method image() =imagen
-    var property position = game.at(6, 0) 
+    var property position =game.at(8,3) 
     //secuencia del cursor y estrucutura de nivel
     method sensar() {
       	game.onCollideDo(
@@ -56,10 +56,7 @@ object personajePrincipal{
     //movimientos
     method moverseHaciaArriba() {
         const pos=nivel.ubicacionSiguienteA([position.x(),position.y()])
-        console.println(pos)
-        imagen="cursorTorre.png"
         position= game.at(pos.get(0), pos.get(1))
-		console.println(position)
         self.sensar()
 	}
 	method moverseHaciaAbajo() {
@@ -67,17 +64,23 @@ object personajePrincipal{
         position=game.at(pos.get(0),pos.get(1))
         self.sensar()
     }
+    //opciones torres -> es agarrado del menu de opciones //ver si es correcto hacerlo asi.
     method puedePagar(costo) = monedas >= costo
+    method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
+    method torreCosto() =self.torreSeleccionada().costo()  
+    method posicionActual() =position 
+    method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())
     
-    method agregarTorre(){
-        const torre=torresOpciones.seleccionar()
-        const costo = torre.costo()
-        const posicion = self.position()
-        if (not self.hayTorreEn(posicion) && self.puedePagar(costo)){
-            torres.add(torre)
-            torre.asignarUbicacion(posicion)
-            game.addVisual(torre)
-            self.gastarMonedas(costo)
+    
+    method agregarTorre(){    
+        if (self.sePuedeAgregarTorre()){
+            torres.add(self.torreSeleccionada())
+            game.addVisual(self.torreSeleccionada())
+            console.println(self.torreSeleccionada().position())
+            console.println(self.torreSeleccionada())
+            console.println(self.torreSeleccionada().position())
+            self.gastarMonedas(self.torreCosto())
+            console.println(self.monedas())
         }
         
     }

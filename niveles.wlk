@@ -2,46 +2,64 @@ import enemigos.*
 import juegoBase.*
 import castillo.*
 import wollok.game.*
-
+import pantalla.* 
 class Nivel{
     var nivel
     var enemigosPorOleada 
     var enemigosGenerados
     var enemigosVivos                 //x,y
-    const ubicacionesPosiblesDeTorre=[[8, 3],[11,0],[11, 3],[16,0],[14, 4],[15,6]] //debe estar ordenada
+    const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[15,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
-    const ubicacionActualJugador =[]    
+    const ubicacionActualJugador =[]
+    const pantalla   //pasar la imagen de clase Pantalla al crear el nivel.
     // Inicializa el nivel                  
     method iniciar(){
-        
-        game.addVisual(personajePrincipal)
-        game.addVisual(castillo)
         enemigosGenerados = 0
         enemigosVivos = 0
+        self.pantalla()
+        game.addVisual(personajePrincipal)
+        game.addVisual(castillo)
         self.generarOleada()
-        
+        game.boardGround("fondo.png")
     }
+    method mapeoEnemigo() =ubicacionesCamino 
     method ubicacionActualJugador() =ubicacionActualJugador 
     method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
     method ubicacionSiguienteA(pos) {
-        ubicacionActualJugador.add(pos)
-        console.println(ubicacionesPosiblesDeTorre)
-        console.println(ubicacionActualJugador)
-        console.println(self.restaDeUbicaciones())
+        if(self.restaDeUbicaciones().size() !=1){
+            ubicacionActualJugador.add(pos)
+            return self.restaDeUbicaciones().get(0)
+        }
+        return self.reiniciarSiguientesUbi(pos)
+
+    } 
+    method reiniciarSiguientesUbi(unaPos) {
+        ubicacionActualJugador.clear()
+        ubicacionActualJugador.add(unaPos)
         return self.restaDeUbicaciones().get(0)
     }
+    method reiniciarAnterioresUbi(unaPos) {
+        ubicacionActualJugador.clear()
+        ubicacionActualJugador.addAll(ubicacionesPosiblesDeTorre)
+        return ubicacionActualJugador.last().get(0)
+    }
     method obtenerUltimo() =ubicacionActualJugador.last()
-    method ubicacionAnterior(pos) {
-        const moverse=self.obtenerUltimo()
-        ubicacionActualJugador.remove(self.obtenerUltimo())
-        return  moverse
+    method ubicacionAnterior(unaPos) {
+        if(ubicacionActualJugador.size() !=0){
+            const moverse=self.obtenerUltimo()
+            ubicacionActualJugador.remove(self.obtenerUltimo())
+            return  moverse
+        }
+        else{
+            return self.reiniciarAnterioresUbi(unaPos)
+        }
     }
     method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
     method generarOleada(){
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1
             enemigosVivos += 1
-            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png")
+            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self)
             game.addVisual(troll)
             troll.iniciar()
         }
@@ -59,7 +77,7 @@ class Nivel{
         nivel += 1
         enemigosPorOleada += 2  // Cada nivel más difícil
     }
-
+    method pantalla() = pantalla.iniciar()
     /*method nivelFinal(){
         if(nivel == 10){
 
@@ -75,18 +93,22 @@ object torresOpciones {
     const torres=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
-    method iniciar() {
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(0,0),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
+    
+    method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
+    
+    //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
+    method torreSeleccionada(x,y) {
+        torres.clear() //<- elimina para poder crear repeticion. 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(0,0),positionOpcion=opciones.get(1))
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
+        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+    }  
 
-    }    
-    method posicionActualComoColeccion() =[position.x(),position.y()]
-    method torreSeleccionada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
-    method seleccionar()=self.torreSeleccionada()
+    
     method sensar() {
         game.onCollideDo(
 		self,
@@ -114,6 +136,8 @@ object torresOpciones {
             position=game.at(1,0)
         }
 	}
+
 }
 //---------(Entorno)--------
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0 , ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]]) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelUnoFondo=new Pantalla(imagen="nivel2Fondo.png")
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0 , ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
