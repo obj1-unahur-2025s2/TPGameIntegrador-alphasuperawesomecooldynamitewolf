@@ -6,8 +6,8 @@ import pantalla.*
 class Nivel{
     var nivel
     var enemigosPorOleada 
-    var enemigosGenerados
-    var enemigosVivos                 //x,y
+    var enemigosGenerados =0
+    var enemigosVivos=0                 //x,y
     const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[15,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador =[]
@@ -22,7 +22,12 @@ class Nivel{
         self.generarOleada()
         game.boardGround("fondo.png")
     }
-    method mapeoEnemigo() =ubicacionesCamino 
+
+    method mapeoEnemigo() {
+        const soloEnemigo=[]
+        soloEnemigo.addAll(ubicacionesCamino) // evitar errores por paso de referencia.
+        return soloEnemigo
+    } 
     method ubicacionActualJugador() =ubicacionActualJugador 
     method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
     method ubicacionSiguienteA(pos) {
@@ -59,9 +64,11 @@ class Nivel{
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1
             enemigosVivos += 1
-            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self)
+
+            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo())
             game.addVisual(troll)
             troll.iniciar()
+            game.schedule( 5000, {self.generarOleada()})
         }
     }
 
@@ -140,4 +147,4 @@ object torresOpciones {
 }
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel2Fondo.png")
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=1,enemigosGenerados=0,enemigosVivos=0 , ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

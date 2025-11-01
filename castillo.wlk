@@ -76,11 +76,7 @@ object personajePrincipal{
         if (self.sePuedeAgregarTorre()){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
-            console.println(self.torreSeleccionada().position())
-            console.println(self.torreSeleccionada())
-            console.println(self.torreSeleccionada().position())
             self.gastarMonedas(self.torreCosto())
-            console.println(self.monedas())
         }
         
     }
@@ -105,7 +101,7 @@ object personajePrincipal{
         game.removeVisual(unaTorre)
         }
     }
-
+    
     method recogerMonedas(enemigo){monedas += enemigo.valor()} ///Actualizar
 }
 

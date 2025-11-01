@@ -1,5 +1,5 @@
 import wollok
-class Torre{
+class Torre1{
     var nivel 
     var vida
     var velocidadAtaque
