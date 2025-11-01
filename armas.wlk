@@ -1,4 +1,6 @@
-import wollok
+import wollok //No se que se estaría importando.
+
+
 class Torre1{
     var nivel 
     var vida
@@ -10,6 +12,8 @@ class Torre1{
 
     method estaVivo() = vida > 0
     
+
+    //Se puede sacar el "recibir ataque" ya que no va a estar implementado. No lo saco por si algo depende por algún motivo de esto. No quiero romper el código
     method recibirAtaque(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
