@@ -1,8 +1,10 @@
+//import TPGameIntegrador-alphasuperawesomecooldynamitewolf.menu.*
 import enemigos.*
 import juegoBase.*
 import castillo.*
 import wollok.game.*
 import pantalla.* 
+import menu.*
 class Nivel{
     var nivel
     var enemigosPorOleada 
@@ -10,17 +12,20 @@ class Nivel{
     var enemigosVivos=0                 //x,y
     const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[15,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
-    const ubicacionActualJugador =[]
+    const ubicacionActualJugador=[]
     const pantalla   //pasar la imagen de clase Pantalla al crear el nivel.
     // Inicializa el nivel                  
     method iniciar(){
+
         enemigosGenerados = 0
         enemigosVivos = 0
-        self.pantalla()
+        pantalla.iniciar()
         game.addVisual(personajePrincipal)
         game.addVisual(castillo)
         self.generarOleada()
         game.boardGround("fondo.png")
+        
+
     }
 
     method mapeoEnemigo() {
@@ -31,32 +36,35 @@ class Nivel{
     method ubicacionActualJugador() =ubicacionActualJugador 
     method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
     method ubicacionSiguienteA(pos) {
-        if(self.restaDeUbicaciones().size() !=1){
+        if(ubicacionActualJugador.size() !=ubicacionesPosiblesDeTorre.size()-1){
             ubicacionActualJugador.add(pos)
             return self.restaDeUbicaciones().get(0)
         }
-        return self.reiniciarSiguientesUbi(pos)
+        else{
+            return self.reiniciarSiguientesUbi()
+        }
+        
 
     } 
-    method reiniciarSiguientesUbi(unaPos) {
+    method reiniciarSiguientesUbi() {
         ubicacionActualJugador.clear()
-        ubicacionActualJugador.add(unaPos)
-        return self.restaDeUbicaciones().get(0)
+        return self.obtenerPrimeraDireccion() //entrega la primera direccion al jugador porque las posiciones se reiniciaron.
     }
-    method reiniciarAnterioresUbi(unaPos) {
-        ubicacionActualJugador.clear()
+    method obtenerPrimeraDireccion() =ubicacionesPosiblesDeTorre.get(0) 
+    method reiniciarAnterioresUbi() {
         ubicacionActualJugador.addAll(ubicacionesPosiblesDeTorre)
-        return ubicacionActualJugador.last().get(0)
+        return self.ubicacionAnterior()
     }
     method obtenerUltimo() =ubicacionActualJugador.last()
-    method ubicacionAnterior(unaPos) {
-        if(ubicacionActualJugador.size() !=0){
+    method ubicacionAnterior() {
+        if(ubicacionActualJugador.size() >0){
             const moverse=self.obtenerUltimo()
+            console.println(moverse)
             ubicacionActualJugador.remove(self.obtenerUltimo())
             return  moverse
         }
         else{
-            return self.reiniciarAnterioresUbi(unaPos)
+            return self.reiniciarAnterioresUbi()
         }
     }
     method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
@@ -97,6 +105,7 @@ class Nivel{
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
     const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
+   
     const torres=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
@@ -114,7 +123,7 @@ object torresOpciones {
         torres.add(torreCañon)
         return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     }  
-
+    
     
     method sensar() {
         game.onCollideDo(
@@ -140,11 +149,11 @@ object torresOpciones {
 		self.position(self.position().down(1))
         self.sensar()}
         else{
-            position=game.at(1,0)
+            position=game.at(1,0)   
         }
 	}
 
 }
 //---------(Entorno)--------
-const nivelUnoFondo=new Pantalla(imagen="nivel2Fondo.png")
+const nivelUnoFondo=new Pantalla(imagen="nivel1Fondo.png")
 const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

@@ -56,11 +56,12 @@ object personajePrincipal{
     //movimientos
     method moverseHaciaArriba() {
         const pos=nivel.ubicacionSiguienteA([position.x(),position.y()])
+        console.println(pos)
         position= game.at(pos.get(0), pos.get(1))
         self.sensar()
 	}
 	method moverseHaciaAbajo() {
-		const pos =nivel.ubicacionAnterior([position.x(),position.y()])
+		const pos =nivel.ubicacionAnterior()
         position=game.at(pos.get(0),pos.get(1))
         self.sensar()
     }

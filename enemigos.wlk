@@ -9,7 +9,7 @@ class Enemigo{
     var vida //diferencias de vidas y hits
     var daño
     var rango
-    var imagen
+    var imagen //variar al recibir un ataque
     const posiciones
     const nivelAct
     var property position =game.at(0, 0)

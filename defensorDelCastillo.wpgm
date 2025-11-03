@@ -6,8 +6,9 @@ import enemigos.map
 
 
 program DefensorDelCastillo {
-
-	juegoDelCastillo.iniciar()
+	
+	juego.iniciar()
+	
 	//game.addVisualCharacter(map)
 
 }

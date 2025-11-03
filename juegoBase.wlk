@@ -2,21 +2,38 @@ import castillo.*
 import enemigos.*
 import niveles.*
 import wollok.game.*
-object juegoDelCastillo {//para mantener la estructura del juego.
+import menu.*
+
+
+object juego {
+  method iniciar() {
+    game.title("juego Del Castillo")
+    game.height(10)
+    game.width(20)
+    game.boardGround("fondo.png")
+
+    game.addVisual(menu)
+    menu.seleccionNivel()
+    game.start()
+    
+  } 
+}
+
+object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
   var  property nivel = nivelPrueba
+  
   const niveles=[]
   const nivelesCompeltos=[]
-  var nivelActl = nivelPrueba
-  method iniciar() {
-      game.title("juego Del Castillo")
-      game.height(10)
-      game.width(20)
-      game.addVisual(torresOpciones)
-      //torresOpciones.iniciar()
-      self.configurarTeclas()
-      //nivelActl.pantalla() //pantalla del nivel propio
-      nivel.iniciar()
-      game.start()
+
+  method agregarNiveles(unosNiveles) {
+    niveles.add(unosNiveles)
+  }
+  method iniciarNivel() {
+    game.addVisual(torresOpciones)
+    self.configurarTeclas()
+    console.println(niveles)
+    niveles.first().iniciar()
+
   }
   method configurarTeclas() {
     //movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
@@ -32,8 +49,8 @@ object juegoDelCastillo {//para mantener la estructura del juego.
   }
   method obtenerNivel() = nivelPrueba
   method pasarDeNivel() {
-    nivelesCompeltos.add(nivelActl)
-    nivelActl=self.nivelQueSigue()
+    nivelesCompeltos.add(nivel)
+    nivel=self.nivelQueSigue()
   }
   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
 }
