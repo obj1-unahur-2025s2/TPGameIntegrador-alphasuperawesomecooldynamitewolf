@@ -6,7 +6,7 @@ import niveles.*
 object castillo {
     var vida = 100
     var property position =game.at(6, 0) 
-    method image() ="castillo.png" 
+    method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
     method recibirDaño(cantidadDaño){
         if(self.estaVivo())
         vida -= cantidadDaño
@@ -29,7 +29,7 @@ object castillo {
 object personajePrincipal{
     var monedas = 10
     var nivel= nivelPrueba
-    const torres = []
+    const torres = [] //Cual sería la ventaja de guardar la lista de torres en el mapa en vez de evaluar en el momento de la acción (poner, mejorar, sacar) si hay una instancia de clase torre en la posición? Y delegar que hace en casa caso a cada función.
     var imagen="cursorTorre.png"
     method image() =imagen
     var property position =game.at(8,3) 
@@ -42,6 +42,10 @@ object personajePrincipal{
 		}
 	)
     }
+    //Algo como esto, así de simple se puede hacer para los ataques a los enemigos. Si se hace los de la imagen con transparencia que puse en el otro archivo
+
+
+
     ///Estos dos metodos agregue
     method monedas() = monedas
     method botin(valor){monedas += valor}
@@ -52,6 +56,8 @@ object personajePrincipal{
     method siguienteNivel(unNivel) {
       nivel=unNivel
     }
+
+    //Se puede utilizar el toString para pasar de nivel. Entonces al invocarlo es nivel + toString o algo así y los niveles se llaman nivel1, nivel2, etc.
 
     //movimientos
     method moverseHaciaArriba() {
@@ -86,7 +92,7 @@ object personajePrincipal{
         monedas = monedas - unCosto
     }
 
-    method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual })
+    method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual }) //Con esto se puede simplificar sin necesidad de tener una lista de torres en el jugador. No es necesario si evaluas en la acción directamente
 
     method mejorarTorre(unaTorre){
         const costo = unaTorre.costoMejora()

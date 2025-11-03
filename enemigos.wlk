@@ -74,3 +74,14 @@ object map {
   var property position =game.at(14,5) //14,5
   method image() ="idlTroll.png" 
 }
+
+/*
+¿Movimiento inteligente de Enemigo?:        ==> Algo que me gustaría implementar si puedo
+- El enemigo debe saber su propia posición
+- El enemigo debe saber la posición del castillo
+- El movimiento del enemigo debe consistir en intentar reducir la diferencia entre su posición y la del castillo (se puede utilizar su valor absoluto)
+- Función con lista de movimientos: Izquierda, Arriba, Derecha, Abajo.
+    Con eso va guardando la posición anterior (para no regresar sobre sus pasos)
+    Va a ir probando de las 3 posiciones restantes (no cuenta por donde viene) y evalúa donde está la siguiente instancia de "camino"
+- clase camino va a ser un objeto invisible que se coloca para delimitar el camino que va a poder recorrer el enemigo. Si no hay objeto no puede moverse
+*/

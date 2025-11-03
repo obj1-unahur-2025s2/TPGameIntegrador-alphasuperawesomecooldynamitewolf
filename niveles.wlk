@@ -14,6 +14,7 @@ class Nivel{
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador=[]
     const pantalla   //pasar la imagen de clase Pantalla al crear el nivel.
+    //const fondoNivelActual ==> Aca declaramos la imagen del fondo al instanciar el nivel. Y lo pasamos como parametro como game.boardGround(fondoNivelActual)
     // Inicializa el nivel                  
     method iniciar(){
 
@@ -23,9 +24,13 @@ class Nivel{
         game.addVisual(personajePrincipal)
         game.addVisual(castillo)
         self.generarOleada()
+<<<<<<< HEAD
         game.boardGround("fondo.png")
         
 
+=======
+        game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
+>>>>>>> b4d71024114a965f03598d390a9ea56e6d8d579e
     }
 
     method mapeoEnemigo() {
@@ -73,7 +78,7 @@ class Nivel{
             enemigosGenerados += 1
             enemigosVivos += 1
 
-            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo())
+            const troll =new Enemigo(vida=100,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
             game.addVisual(troll)
             troll.iniciar()
             game.schedule( 5000, {self.generarOleada()})
@@ -84,7 +89,7 @@ class Nivel{
     method enemigoMuerto(){
         enemigosVivos -= 1
         if(enemigosVivos == 0){
-            self.pasarSiguienteNivel()
+            self.pasarSiguienteNivel() //Tiene que haber un mensaje, pantalla o algo que suavice la trancisión de un nivel a otro. Que no quede llamado así de una porque ni te va a dar tiempo a ver que ganaste el nivel y pasas al siguiente.
         }
     }
 
@@ -122,6 +127,11 @@ object torresOpciones {
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
         return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+        //Para simplificar se puede hacer que el nombre de la instancia de cada torre se realice con un toString. De esa manera cada instancia repite el nombre base de la torre y le suma 1 al número de torre. Como hicieron con el pacman con los fantasmas. "const rivales = [new Rival(numero = 1), new Rival(numero = 2)]" Algo así era. Y la línea de codigo de clase es "method image() = "rival" + numero.toString() + ".png".
+        //De esa manera en vez de instanciar con
+        //const torre1 = new TorreNormal... bla bla bla.
+        //Lo podemos hacer directamente ==> const torres = [new TorreNormal....... , new TorreNormal.....]
+    
     }  
     
     
@@ -132,6 +142,7 @@ object torresOpciones {
             
 		}   //adaptarlo despues.
 	    )
+    //Se me ocurrió basandonos en lo que hizo cristian con su monopoly. Podemos a las imagenes de las torres dejarles un margen con transparencia que equivale al alcance en celdas. Posicionar la torre al instalarla restando en x e y la cantidad de posiciones desde la posición del cursor hasta el vertice inferior izquierdo de la imagen (donde debería crearse realmente). Entonces simplemente hacemos un onCollideDo de objetos sin necesidad de posiciones, listas ni nada. Solo para determinar a que enemigo le impacta.
     }
     method obtenerTorreNormal() = torres.get(0)
     method obtenerTorreCañon() = torres.get(1)
@@ -155,5 +166,13 @@ object torresOpciones {
 
 }
 //---------(Entorno)--------
+<<<<<<< HEAD
 const nivelUnoFondo=new Pantalla(imagen="nivel1Fondo.png")
 const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+=======
+const nivelUnoFondo=new Pantalla(imagen="nivel2Fondo.png")
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+
+
+//Los controles cristian dijo como recomendación mandarlo a un archivo llamado controles o similar. Y que en el game llames a las funciones del objeto controles.
+>>>>>>> b4d71024114a965f03598d390a9ea56e6d8d579e
