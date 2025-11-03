@@ -1,8 +1,7 @@
 import castillo.*
 import wollok.game.*
 import juegoBase.*
-import niveles.*
-import enemigos.map
+//import enemigos.map
 
 
 program DefensorDelCastillo {

@@ -23,16 +23,11 @@ class Nivel{
         pantalla.iniciar()
         game.addVisual(personajePrincipal)
         game.addVisual(castillo)
-        self.generarOleada()
-<<<<<<< HEAD
-        game.boardGround("fondo.png")
-        
+        self.generarOleada()        
 
-=======
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
->>>>>>> b4d71024114a965f03598d390a9ea56e6d8d579e
-    }
 
+    }
     method mapeoEnemigo() {
         const soloEnemigo=[]
         soloEnemigo.addAll(ubicacionesCamino) // evitar errores por paso de referencia.
