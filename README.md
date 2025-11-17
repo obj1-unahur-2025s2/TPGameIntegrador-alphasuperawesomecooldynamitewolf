@@ -1,14 +1,18 @@
-# Nombre del juego (<- borrar y completar)
+# Orcs Defense
 
 ## Equipo de desarrollo
 
-- Alguien
-- Persona
-- etc.
+- Elias Llorens: [@Llorenss85](https://github.com/Llorenss85)
+- Fabricio Pereyra: [@fabriciopereyra2004a-rgb](https://github.com/fabriciopereyra2004a-rgb)
+- Juan Belforte: [@NamuKimeraVT](https://github.com/)
+- Martin Galleti: [@TinchoProjects](https://github.com/TinchoProjects)
+- Nahuel: [@nawuelito](https://github.com/nawuelito)
+- Tomas Cardenas: [@TomasCardenas932](https://github.com/TomasCardenas932)
+
 
 ## Capturas
 
-(agregar)
+![gameplay](./Screenshots/Captura%20de%20pantalla%202025-11-14%20143155.png)
 
 ## Reglas de Juego / Instrucciones
 

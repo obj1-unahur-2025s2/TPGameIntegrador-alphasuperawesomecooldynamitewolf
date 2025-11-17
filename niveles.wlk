@@ -5,6 +5,7 @@ import castillo.*
 import wollok.game.*
 import pantalla.* 
 import menu.*
+import controles.*
 class Nivel{
     var nivel
     var enemigosPorOleada 
@@ -28,13 +29,17 @@ class Nivel{
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
 
     }
+    //a cada enemigo se le agrega a su lista de posiciones todas las posiciones posibles
     method mapeoEnemigo() {
         const soloEnemigo=[]
         soloEnemigo.addAll(ubicacionesCamino) // evitar errores por paso de referencia.
         return soloEnemigo
     } 
+
+    //ubicaciones actuales tanto cursor como de las torres
     method ubicacionActualJugador() =ubicacionActualJugador 
     method ubicacionesPosibles() =ubicacionesPosiblesDeTorre 
+    //Posiciones de las torres, cursor
     method ubicacionSiguienteA(pos) {
         if(ubicacionActualJugador.size() !=ubicacionesPosiblesDeTorre.size()-1){
             ubicacionActualJugador.add(pos)
@@ -68,6 +73,7 @@ class Nivel{
         }
     }
     method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
+    //Metodo encargado de generar la oleada de enemigos
     method generarOleada(){
         if(enemigosGenerados < enemigosPorOleada){
             enemigosGenerados += 1
@@ -88,6 +94,7 @@ class Nivel{
         }
     }
 
+    //Pasa a siguiente nivel una vez que gana
     method pasarSiguienteNivel(){
         nivel += 1
         enemigosPorOleada += 2  // Cada nivel más difícil
@@ -102,72 +109,8 @@ class Nivel{
 
 
 ///usos, se podria utilizar para saber cuantas torres hay para ubicar,  si es que en algun nivel especifico ya no se permite dicha torre etc.
-object torresOpciones {
-  //listar torres posibles que se pueden elegir 
-    const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
-   
-    const torres=[]
-    method image() ="cursor.png"
-    var property position = game.at(1, 3) 
-    
-    method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
-    
-    //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
-    method torreSeleccionada(x,y) {
-        torres.clear() //<- elimina para poder crear repeticion. 
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
-        torreNormal.elegirDiseño(0)
-        torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
-        torreCañon.elegirDiseño(1)
-        torres.add(torreCañon)
-        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
-        //Para simplificar se puede hacer que el nombre de la instancia de cada torre se realice con un toString. De esa manera cada instancia repite el nombre base de la torre y le suma 1 al número de torre. Como hicieron con el pacman con los fantasmas. "const rivales = [new Rival(numero = 1), new Rival(numero = 2)]" Algo así era. Y la línea de codigo de clase es "method image() = "rival" + numero.toString() + ".png".
-        //De esa manera en vez de instanciar con
-        //const torre1 = new TorreNormal... bla bla bla.
-        //Lo podemos hacer directamente ==> const torres = [new TorreNormal....... , new TorreNormal.....]
-    
-    }  
-    
-    
-    method sensar() {
-        game.onCollideDo(
-		self,
-		{ algo =>
-            
-		}   //adaptarlo despues.
-	    )
-    //Se me ocurrió basandonos en lo que hizo cristian con su monopoly. Podemos a las imagenes de las torres dejarles un margen con transparencia que equivale al alcance en celdas. Posicionar la torre al instalarla restando en x e y la cantidad de posiciones desde la posición del cursor hasta el vertice inferior izquierdo de la imagen (donde debería crearse realmente). Entonces simplemente hacemos un onCollideDo de objetos sin necesidad de posiciones, listas ni nada. Solo para determinar a que enemigo le impacta.
-    }
-    method obtenerTorreNormal() = torres.get(0)
-    method obtenerTorreCañon() = torres.get(1)
-    //movimientos
-    method moverseHaciaArriba() {
-        if(self.position().y() >1 and self.position().y() <6 ){
-		self.position(self.position().up(1))
-        self.sensar()}
-        else{
-            position=game.at(1,3)
-        }
-	}
-    method moverseHaciaAbajo()  {
-        if(self.position().y() >3){
-		self.position(self.position().down(1))
-        self.sensar()}
-        else{
-            position=game.at(1,0)   
-        }
-	}
 
-}
 //---------(Entorno)--------
-<<<<<<< HEAD
 const nivelUnoFondo=new Pantalla(imagen="nivel1Fondo.png")
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-=======
-const nivelUnoFondo=new Pantalla(imagen="nivel2Fondo.png")
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-
-
-//Los controles cristian dijo como recomendación mandarlo a un archivo llamado controles o similar. Y que en el game llames a las funciones del objeto controles.
->>>>>>> b4d71024114a965f03598d390a9ea56e6d8d579e
+const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

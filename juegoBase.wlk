@@ -3,11 +3,13 @@ import enemigos.*
 import niveles.*
 import wollok.game.*
 import menu.*
+import controles.*
+
 
 
 object juego {
   method iniciar() {
-    game.title("juego Del Castillo")
+    game.title("Orcs defense")
     game.height(10)
     game.width(20)
     game.boardGround("fondo.png")
@@ -30,21 +32,9 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   }
   method iniciarNivel() {
     game.addVisual(torresOpciones)
-    self.configurarTeclas()
+    controles.configurarTeclas()
     console.println(niveles)
     niveles.first().iniciar()
-
-  }
-  method configurarTeclas() {
-    //movimientos jugador  //meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
-	  keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
-	  keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
-    	//teclas de opciones torres 
-    keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
-      //teclas opciones
-
-    keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
-    keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
 
   }
   method obtenerNivel() = nivelPrueba
@@ -54,30 +44,15 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   }
   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
 }
-class Castillo{
-  //Las defensas y ataques mejor numeros altos (100 o 500) para facilitar las escalas y usar así siempre números enteros
-  var defensa = nivelCastillo * 10
-  var nivelCastillo = 1
-  
-  method subirNivel(){
-    nivelCastillo = nivelCastillo + 1
-  }
-  
-  method recibirDaño(nivelDaño){
-    defensa = defensa - nivelDaño
-  }
-}
-
 
 class Torre{
   var nivelTorre
   const costo
   const daño
-  const rango
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const diseñoTorre=["torre1.png","torre2.png"] //falta agregar mas imagenes ... 
   var imagen="torre.png"
-  var property  position 
+  const property  position 
   method image() = imagen
   method subirNivel(){
     nivelTorre = nivelTorre + 1
@@ -88,75 +63,48 @@ class Torre{
   method obtenerDiseñoDeLista(num)=diseñoTorre.get(num) // es para obtener el diseño. (al hacerlos nosotros, ya deberiamos saber cuantos diseños hay, y asi no poener fuera del indice)
   method costo() =costo 
   method atacar() = daño + nivelTorre
-  method asignarUbicacion(unaPosicion) {
-    position=unaPosicion
-    
-  }
   method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
-  method rangoEfectivo() {
-    return [
-      position.up(rango),position.down(rango),position.left(rango),position.right(rango), arriba.siguientePosicion(position.up(rango)),
-      abajo.siguientePosicion(position.down(rango)),
-      izquierda.siguientePosicion(position.left(rango)),
-      derecha.siguientePosicion(position.right(rango))
-    ]
-  }
-
-  //No estoy seguro si funcionara, pero me parece una forma rapida de saber si un enemigo esta en el rango de la torre
-  method estaEnRango(unEnemigo) {
-    game.schedule(1700, {self.rangoEfectivo().contains(unEnemigo.posicionActual()) })
-    console.println(self.rangoEfectivo().contains(unEnemigo.posicionActual()))
-    console.println(self.rangoEfectivo())
-  }
-
-
 }
 
-object arriba {
-  method siguientePosicion(pos) = pos.up(1)
-}
-object abajo {
-  method siguientePosicion(pos) = pos.down(1)
-}
-object izquierda {
-  method siguientePosicion(pos) = pos.left(1)
-}
-object derecha {
-  method siguientePosicion(pos) = pos.right(1)
-}
+object torresOpciones {
+  //listar torres posibles que se pueden elegir 
+    const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
+    const torres=[]
 
-class Proyectil{
-  //
-  const daño
-  var imagen
-  var property position 
-  const diseñoProyectil = []
-
-
-  method obtenerDiseñoDeLista(num)=diseñoProyectil.get(num) 
-  method elegirDiseño(num) {
-    imagen=self.obtenerDiseñoDeLista(num) //Me lo robe por que puede servir muejejeje
-  }
-
-  method infligirDañoA(unEnemigo){
-    unEnemigo.recibirDaño(daño)
-  }
-
-  method mover(direccion) {
-    position = direccion.siguientePosicion(position)
-  }
-
-  method hayEnemigo(unEnemigo){
-    return unEnemigo.position() == position
-  }
-
-  method viajarProyectilHacia(direccion, unEnemigo){
-    if(self.hayEnemigo(unEnemigo)){
-      self.infligirDañoA(unEnemigo)
-    }
-    else{
-      self.mover(direccion)
-    }
-  }
+    method image() ="cursor.png"
+    var property position = game.at(1, 3) 
+    
+    method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
+    
+    //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
+    method torreSeleccionada(pos) {
+        torres.clear() //<- elimina para poder crear repeticion. 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(izquierda.diagonalInferior(pos).get(0),izquierda.diagonalInferior(pos).get(1)),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres. No tocar bajo ninguna circunstancia
+        torreNormal.elegirDiseño(0)
+        torres.add(torreNormal)
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,position=game.at(izquierda.diagonalInferior(pos).get(0),izquierda.diagonalInferior(pos).get(1)),positionOpcion=opciones.get(1))//No tocar bajo ninguna circunstancia
+        torreCañon.elegirDiseño(1)
+        torres.add(torreCañon)
+        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+    }  
+    method obtenerTorreNormal() = torres.get(0)
+    method obtenerTorreCañon() = torres.get(1)
+    //movimientos de las torres, recomiendo dejar aca y no moverlo a controles para que sea mas entendible
+    method moverseHaciaArriba() {
+        if(self.position().y() >1 and self.position().y() <6 ){
+		self.position(self.position().up(1))
+        }
+        else{
+            position=game.at(1,3)
+        }
+	  }
+    method moverseHaciaAbajo()  {
+        if(self.position().y() >3){
+		self.position(self.position().down(1))
+        }
+        else{
+            position=game.at(1,0)   
+        }
+	  }
 }

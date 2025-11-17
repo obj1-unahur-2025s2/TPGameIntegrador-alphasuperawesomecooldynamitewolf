@@ -1,13 +1,13 @@
 import armas.*
 import castillo.*
 import wollok.game.*
-import niveles.torresOpciones
+import juegoBase.torresOpciones
 
 //const enemigo1 = new Enemigo(posiciones = nivelPrueba.ubicacionesCamino()) Ejemplo de como tendría que ser la instanciación de los enemigos con los demas atributos
 
 class Enemigo{
     var vida //diferencias de vidas y hits
-    var daño
+    const daño
     var rango
     var imagen //variar al recibir un ataque
     const posiciones
@@ -20,14 +20,15 @@ class Enemigo{
             vida -= cantidadDaño
             ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
         }
-        self.morir()
+        else{
+            self.morir()
+        }
     }
 
     method vida() = vida
     method image() =imagen
     method iniciar() {
         self.avanzar()
-       
     } 
     method avanzar() {
         if(posiciones.size() !=0){//caso base, ya no hay posiciones.
@@ -45,12 +46,7 @@ class Enemigo{
     }
     ///Hay que ponerle un limite de que parte del juego deberia aparecer aleatoriamente
     method soltarMoneda(){
-    const posMoneda = game.at(
-    (0..game.width()-1).anyOne(),
-    (0..game.height()-1).anyOne())
-
-    const moneda = new Moneda(valor = self.valor(), position = posMoneda)
-    game.addVisual(moneda)
+        personajePrincipal.recogerMonedas(self.valor())
     }
 
     method estaVivo() = vida > 0
@@ -60,14 +56,14 @@ class Enemigo{
         game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
     }
     
-    method valor() = 50 
+    method valor() = 5
     
 }
 
 ///Opcion un jefe final poderoso, lo hago objeto por que es uno solo por el momento 
 
 class JefeFinal inherits Enemigo{
-    
+    override method valor() = 10
 }
 //para ver posiciones, borrar si hace falta:
 object map {
