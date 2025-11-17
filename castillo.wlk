@@ -10,7 +10,8 @@ object castillo {
     method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
-            vida -= cantidadDaño
+            vida-=cantidadDaño
+            console.println(vida)
         }
         // else{
         //     self.morir()
@@ -72,6 +73,7 @@ object personajePrincipal{
     }
     method recogerMonedas(cantMonedas){monedas += cantMonedas} ///Actualizar
     //Todos los metodos relacionados al poner torres
+    method torres() = torres
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position)
     method torreCosto() =self.torreSeleccionada().costo()  
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())

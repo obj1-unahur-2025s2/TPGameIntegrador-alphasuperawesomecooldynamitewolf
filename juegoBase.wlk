@@ -65,6 +65,10 @@ class Torre{
   method atacar() = daño + nivelTorre
   method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
+
+  method atacarEnemigo(unEnemigo) {
+    unEnemigo.recibirDaño(self.atacar())
+  }
 }
 
 object torresOpciones {

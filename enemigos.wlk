@@ -7,7 +7,7 @@ import juegoBase.torresOpciones
 
 class Enemigo{
     var vida //diferencias de vidas y hits
-    const daño
+    const property daño
     var rango
     var imagen //variar al recibir un ataque
     const posiciones
@@ -34,15 +34,13 @@ class Enemigo{
         if(posiciones.size() !=0){//caso base, ya no hay posiciones.
             position=game.at(posiciones.first().get(0),posiciones.first().get(1)) // obtiene la primera posicion a la cual debe ir
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
-            posiciones.remove(posiciones.first()) // remueve su priemra posicion
+            posiciones.remove(posiciones.first()) // remueve su primera posicion
             game.schedule(1200, { self.avanzar()}) // activa recursion
         }
     }
     method morir(){
-        if(!self.estaVivo()){
         game.removeVisual(self)
         self.soltarMoneda()
-        }
     }
     ///Hay que ponerle un limite de que parte del juego deberia aparecer aleatoriamente
     method soltarMoneda(){
@@ -51,6 +49,15 @@ class Enemigo{
 
     method estaVivo() = vida > 0
     
+    method recibirDaño(){
+        if(self.estaVivo()){
+            vida -= 3
+        }
+        else{
+            self.morir()
+        }
+    }
+
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
         game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
