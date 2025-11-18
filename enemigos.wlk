@@ -1,14 +1,14 @@
 import armas.*
 import castillo.*
 import wollok.game.*
-///import armas.torresOpciones
+///import juegoBase.torresOpciones
 
 //const enemigo1 = new Enemigo(posiciones = nivelPrueba.ubicacionesCamino()) Ejemplo de como tendría que ser la instanciación de los enemigos con los demas atributos
 
 class Enemigo{
     var vida //diferencias de vidas y hits
     const property daño
-    ///var rango
+    var rango
     var imagen //variar al recibir un ataque
     const posiciones
     const nivelAct
@@ -55,9 +55,9 @@ class Enemigo{
 
     method estaVivo() = vida > 0
 
-    method recibirDaño(){
+    method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
-            vida -= 3
+            vida -= cantidadDaño
             console.println(vida)
         }
         else{

@@ -30,7 +30,7 @@ class Torre{
   method atacarEnemigo(unEnemigo) {
     console.println("PROBANDO")
     unEnemigo.recibirDaño(self.atacar())
-  } 
+  }
 
 }
 
