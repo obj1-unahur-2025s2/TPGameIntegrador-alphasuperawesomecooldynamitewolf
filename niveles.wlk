@@ -80,7 +80,7 @@ class Nivel{
             enemigosGenerados += 1
             enemigosVivos += 1
 
-            const troll =new Enemigo(vida=9,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
+            const troll =new Enemigo(vida=500,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
             enemigos.add(troll)
             game.addVisual(troll)
             troll.iniciar()

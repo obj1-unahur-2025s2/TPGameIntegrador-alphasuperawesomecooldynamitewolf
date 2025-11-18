@@ -12,6 +12,7 @@ object castillo {
         if(self.estaVivo()){
             vida-=cantidadDaño
             console.println(vida)
+            
         }
         // else{
         //     self.morir()
@@ -28,7 +29,7 @@ object castillo {
 object personajePrincipal{
     method posicionActual() =position 
     var nivel= nivelPrueba
-    const torres = [] //Cual sería la ventaja de guardar la lista de torres en el mapa en vez de evaluar en el momento de la acción (poner, mejorar, sacar) si hay una instancia de clase torre en la posición? Y delegar que hace en casa caso a cada función.
+    const  torres = [] //Cual sería la ventaja de guardar la lista de torres en el mapa en vez de evaluar en el momento de la acción (poner, mejorar, sacar) si hay una instancia de clase torre en la posición? Y delegar que hace en casa caso a cada función.
     var imagen="cursorTorre.png"
     method image() = imagen
     var property position =game.at(8,3) 
@@ -41,11 +42,12 @@ object personajePrincipal{
 		}
 	)
     }
+
     //Algo como esto, así de simple se puede hacer para los ataques a los enemigos. Si se hace los de la imagen con transparencia que puse en el otro archivo
 
     ///Estos dos metodos agregue
     method adaptar(algo) {
-        imagen=algo.cursor()//No se para que sirve esto, responder quien lo lea
+        imagen=algo.cursor()//No se para que sirve esto, responder quien lo lea <- NO SIRVE CARLHO, (mentira ni idea)
     }
     method siguienteNivel(unNivel) {
       nivel=unNivel

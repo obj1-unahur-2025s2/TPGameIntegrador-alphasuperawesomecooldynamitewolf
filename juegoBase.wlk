@@ -67,8 +67,10 @@ class Torre{
   method cursor() ="cursorTorre.png" 
 
   method atacarEnemigo(unEnemigo) {
+    console.println("PROBANDO")
     unEnemigo.recibirDaño(self.atacar())
   }
+
 }
 
 object torresOpciones {

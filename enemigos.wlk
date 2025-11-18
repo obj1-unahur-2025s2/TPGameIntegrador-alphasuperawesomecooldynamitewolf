@@ -18,6 +18,7 @@ class Enemigo{
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
+            
             ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
         }
         else{
@@ -32,15 +33,20 @@ class Enemigo{
     } 
     method avanzar() {
         if(posiciones.size() !=0){//caso base, ya no hay posiciones.
-            position=game.at(posiciones.first().get(0),posiciones.first().get(1)) // obtiene la primera posicion a la cual debe ir
+         
+            position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
+            game.onCollideDo(self, {torre=>self.avanzar(); torre.atacarEnemigo(self)})
+            console.println(vida)
+             
             game.schedule(1200, { self.avanzar()}) // activa recursion
         }
     }
     method morir(){
-        game.removeVisual(self)
         self.soltarMoneda()
+        game.removeVisual(self)
+        
     }
     ///Hay que ponerle un limite de que parte del juego deberia aparecer aleatoriamente
     method soltarMoneda(){
@@ -48,10 +54,11 @@ class Enemigo{
     }
 
     method estaVivo() = vida > 0
-    
+
     method recibirDaño(){
         if(self.estaVivo()){
             vida -= 3
+            console.println(vida)
         }
         else{
             self.morir()
