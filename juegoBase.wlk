@@ -4,7 +4,7 @@ import niveles.*
 import wollok.game.*
 import menu.*
 import controles.*
-
+import armas.*
 
 
 object juego {
@@ -45,6 +45,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
 }
 
+/*
 class Torre{
   var nivelTorre
   const costo
@@ -69,7 +70,7 @@ class Torre{
   method atacarEnemigo(unEnemigo) {
     console.println("PROBANDO")
     unEnemigo.recibirDaño(self.atacar())
-  }
+  } 
 
 }
 
@@ -114,3 +115,4 @@ object torresOpciones {
         }
 	  }
 }
+*/
