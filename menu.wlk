@@ -2,6 +2,8 @@ import pantalla.*
 import niveles.*
 import controles.*
 import juegoBase.*
+import armas.*
+
 
 object menu {
     const menu =[[7,1],[11,1]]

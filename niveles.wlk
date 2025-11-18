@@ -5,7 +5,9 @@ import castillo.*
 import wollok.game.*
 import pantalla.* 
 import menu.*
+import armas.*
 import controles.*
+
 class Nivel{
     const property enemigos = []
     var nivel

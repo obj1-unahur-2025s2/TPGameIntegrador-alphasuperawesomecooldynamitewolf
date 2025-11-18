@@ -3,7 +3,7 @@ import menu.*
 import juegoBase.*
 import castillo.*
 import niveles.*
-
+import armas.*
 
 object controles {
     method configurarTeclas() {
