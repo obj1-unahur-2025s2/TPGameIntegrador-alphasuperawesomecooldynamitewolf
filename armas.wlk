@@ -27,6 +27,7 @@ class Torre{
   method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
 
+  method activarRango() { game.onCollideDo(self, {enemigo=>self.atacarEnemigo(enemigo); console.println("ALO")})}
   method atacarEnemigo(unEnemigo) {
     console.println("PROBANDO")
     unEnemigo.recibirDaño(self.atacar())
@@ -53,8 +54,10 @@ object torresOpciones {
         const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,position=game.at(izquierda.diagonalInferior(pos).get(0),izquierda.diagonalInferior(pos).get(1)),positionOpcion=opciones.get(1))//No tocar bajo ninguna circunstancia
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
-        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+        self.encontrarTorre().activarRango() //activa el rango de deteccion de la torre. (lo hago acá porque si l)
+        return self.encontrarTorre()
     }  
+    method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     method obtenerTorreNormal() = torres.get(0)
     method obtenerTorreCañon() = torres.get(1)
     //movimientos de las torres, recomiendo dejar aca y no moverlo a controles para que sea mas entendible
@@ -65,7 +68,7 @@ object torresOpciones {
         else{
             position=game.at(1,3)
         }
-	  }
+	  } 
     method moverseHaciaAbajo()  {
         if(self.position().y() >3){
 		self.position(self.position().down(1))

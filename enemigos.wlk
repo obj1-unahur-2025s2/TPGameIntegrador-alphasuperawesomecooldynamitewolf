@@ -37,11 +37,11 @@ class Enemigo{
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
-            game.onCollideDo(self, {torre=>self.avanzar(); torre.atacarEnemigo(self)})
             console.println(vida)
-             
+            
             game.schedule(1200, { self.avanzar()}) // activa recursion
         }
+
     }
     method morir(){
         self.soltarMoneda()

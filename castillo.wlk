@@ -84,6 +84,7 @@ object personajePrincipal{
         if (self.sePuedeAgregarTorre()){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
+            
             self.gastarMonedas(self.torreCosto())
         }
         
