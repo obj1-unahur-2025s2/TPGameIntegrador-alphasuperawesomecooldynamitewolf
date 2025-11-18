@@ -15,7 +15,7 @@ class Enemigo{
     var property position =game.at(0, 0)
     const posicioActual=[]
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
-    method recibirDaño(cantidadDaño){
+    /*method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida -= cantidadDaño
             
@@ -24,7 +24,7 @@ class Enemigo{
         else{
             self.morir()
         }
-    }
+    }*/
 
     method vida() = vida
     method image() =imagen

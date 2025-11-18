@@ -5,6 +5,8 @@ import juegoBase.*
 import pantalla.*
 import menu.*
 import niveles.*
+import armas.*
+
 //import enemigos.map 
 
 
