@@ -82,7 +82,7 @@ class Nivel{
             enemigosGenerados += 1
             enemigosVivos += 1
 
-            const troll =new Enemigo(vida=500,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
+            const troll =new Enemigo(vida=9,daño=10,rango=10,imagen="idleTroll.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
             enemigos.add(troll)
             game.addVisual(troll)
             troll.iniciar()
@@ -117,4 +117,4 @@ class Nivel{
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel1Fondo.png")
 const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=15, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=10, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

@@ -14,6 +14,7 @@ class Enemigo{
     const nivelAct
     var property position =game.at(0, 0)
     const posicioActual=[]
+    method post()= position
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
     /*method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
@@ -32,39 +33,43 @@ class Enemigo{
         self.avanzar()
     }  
     method avanzar() {
-        if(posiciones.size() !=0){//caso base, ya no hay posiciones.
+        if(posiciones.size() !=0 and self.estaVivo()){//caso base, ya no hay posiciones.
          
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
+            console.println(self.estaVivo())
+            console.println(position)
             console.println(vida)
-            
-            game.schedule(1200, { self.avanzar()}) // activa recursion
+            game.schedule(1200, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
         }
 
     }
     method morir(){
         self.soltarMoneda()
         game.removeVisual(self)
-        
+        return 0
     }
     ///Hay que ponerle un limite de que parte del juego deberia aparecer aleatoriamente
     method soltarMoneda(){
         personajePrincipal.recogerMonedas(self.valor())
+        console.println("tengo:")
+        console.println(personajePrincipal.monedas())
+        console.println("monedas")
     }
 
     method estaVivo() = vida > 0
 
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
-            vida -= cantidadDaño
-            console.println(vida)
-        }
-        else{
-            self.morir()
+            vida = self.calcularDaño(cantidadDaño)
         }
     }
-
+    method calcularDaño(unDaño) {
+    if(unDaño<vida){return vida - unDaño} 
+    else{return self.morir()}
+    }
+    
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
         game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas

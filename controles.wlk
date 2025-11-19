@@ -37,13 +37,13 @@ object abajo {
 }
 object izquierda {
   method siguientePosicion(pos) = pos.left(1)
-  method diagonalInferior(pos) = self.retorno(abajo.siguientePosicion(self.siguientePosicion(pos)))
-  method diagonalSuperior(pos) = self.retorno(arriba.siguientePosicion(self.siguientePosicion(pos)))
-  method retorno(pos)= [pos.x(),pos.y()]
+  method diagonalInferior(pos) = abajo.siguientePosicion(self.siguientePosicion(pos))
+  method diagonalSuperior(pos) = arriba.siguientePosicion(self.siguientePosicion(pos))
+
 }
 object derecha {
   method siguientePosicion(pos) = pos.right(1)
-  method diagonalInferior(pos) = self.retorno(abajo.siguientePosicion(self.siguientePosicion(pos)))
-  method diagonalSuperior(pos) = self.retorno(arriba.siguientePosicion(self.siguientePosicion(pos)))
-  method retorno(pos)= [pos.x(),pos.y()]
+  method diagonalInferior(pos) = abajo.siguientePosicion(self.siguientePosicion(pos))
+  method diagonalSuperior(pos) = arriba.siguientePosicion(self.siguientePosicion(pos))
+
 }

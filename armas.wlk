@@ -8,6 +8,7 @@ import controles.*
 
 class Torre{
   var nivelTorre
+  const rango
   const costo
   const daño
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
@@ -27,10 +28,22 @@ class Torre{
   method posicionDeOpcion() =positionOpcion 
   method cursor() ="cursorTorre.png" 
 
-  method activarRango() { game.onCollideDo(self, {enemigo=>self.atacarEnemigo(enemigo); console.println("ALO")})}
-  method atacarEnemigo(unEnemigo) {
-    console.println("PROBANDO")
-    unEnemigo.recibirDaño(self.atacar())
+    method rangoEfectivo() {
+    return [
+        position.up(rango),position.down(rango),position.left(rango),position.right(rango), arriba.siguientePosicion(position.up(rango)),
+        abajo.siguientePosicion(position.down(rango)),
+        izquierda.siguientePosicion(position.left(rango)),
+        derecha.siguientePosicion(position.right(rango)),
+        izquierda.diagonalInferior(position),
+        izquierda.diagonalSuperior(position),
+        derecha.diagonalInferior(position),
+        derecha.diagonalSuperior(position)
+        ]
+  }
+
+  method atacarSiEstaEnRango(unEnemigo) {
+    if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
+        game.schedule(1700, {unEnemigo.recibirDaño(self.atacar())})
   }
 
 }
@@ -46,16 +59,15 @@ object torresOpciones {
     method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
     
     //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
-    method torreSeleccionada(pos) {
+    method torreSeleccionada(x,y) {
         torres.clear() //<- elimina para poder crear repeticion. 
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,position=game.at(izquierda.diagonalInferior(pos).get(0),izquierda.diagonalInferior(pos).get(1)),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres. No tocar bajo ninguna circunstancia
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,position=game.at(izquierda.diagonalInferior(pos).get(0),izquierda.diagonalInferior(pos).get(1)),positionOpcion=opciones.get(1))//No tocar bajo ninguna circunstancia
+        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
-        self.encontrarTorre().activarRango() //activa el rango de deteccion de la torre. (lo hago acá porque si l)
-        return self.encontrarTorre()
+        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     }  
     method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     method obtenerTorreNormal() = torres.get(0)

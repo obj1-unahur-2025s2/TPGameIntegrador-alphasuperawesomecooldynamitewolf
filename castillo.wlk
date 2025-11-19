@@ -30,6 +30,10 @@ object personajePrincipal{
     method posicionActual() =position 
     var nivel= nivelPrueba
     const  torres = [] //Cual sería la ventaja de guardar la lista de torres en el mapa en vez de evaluar en el momento de la acción (poner, mejorar, sacar) si hay una instancia de clase torre en la posición? Y delegar que hace en casa caso a cada función.
+    const property torresPuestas = []
+    method agregarTorresPuestas(unaTorre) {
+      torresPuestas.add(unaTorre)
+    } 
     var imagen="cursorTorre.png"
     method image() = imagen
     var property position =game.at(8,3) 
@@ -76,7 +80,7 @@ object personajePrincipal{
     method recogerMonedas(cantMonedas){monedas += cantMonedas} ///Actualizar
     //Todos los metodos relacionados al poner torres
     method torres() = torres
-    method torreSeleccionada() =torresOpciones.torreSeleccionada(position)
+    method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())
     
@@ -84,7 +88,7 @@ object personajePrincipal{
         if (self.sePuedeAgregarTorre()){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
-            
+            self.agregarTorresPuestas(self.torreSeleccionada())
             self.gastarMonedas(self.torreCosto())
         }
         
