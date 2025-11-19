@@ -12,7 +12,7 @@ class Torre{
   const costo
   const daño
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
-  const diseñoTorre=["torre1.png","torre2.png"] //falta agregar mas imagenes ... 
+  const diseñoTorre=["torre1.png","torre2.png","torre3.png"] //falta agregar mas imagenes ... 
   var imagen="torre.png"
   const property  position 
   method image() = imagen
@@ -45,30 +45,42 @@ class Torre{
     if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
         game.schedule(1700, {unEnemigo.recibirDaño(self.atacar())})
   }
+  method eliminar() {
+    game.removeVisual(self)
+    console.println("intento de eliminar")
+  }
 
 }
 
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
-    const opciones=[[1,3],[1,4]] //1,3 -> torre flecha // 1,4 -> torre cañon
+    const opciones=[[1,3],[1,4],[1,5]] //1,3 -> torre flecha // 1,4 -> torre cañon // 1,5 -> torre tesla
     const torres=[]
-
+    const torresExistentes=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
     
     method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
-    
+    method torreBuscada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+
     //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
     method torreSeleccionada(x,y) {
         torres.clear() //<- elimina para poder crear repeticion. 
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=10,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
+        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=3,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
         torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=4,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
+        const torreCañon=new Torre(nivelTorre=2,costo=10,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
         torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
-        return torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+        const torreTesla=new Torre(nivelTorre=3, costo=15, daño=20, rango=1,position=game.at(x,y),positionOpcion=opciones.get(2))
+        torreTesla.elegirDiseño(2)
+        torres.add(torreTesla)
+        torresExistentes.add(self.torreBuscada())
+        return self.torreBuscada()    
     }  
+    method partidaFinalizada() {
+      torresExistentes.forEach({ t=> game.removeVisual(t)})
+    }
     method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     method obtenerTorreNormal() = torres.get(0)
     method obtenerTorreCañon() = torres.get(1)

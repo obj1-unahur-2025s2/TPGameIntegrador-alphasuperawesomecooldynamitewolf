@@ -1,3 +1,4 @@
+import niveles.*
 import armas.*
 import castillo.*
 import wollok.game.*
@@ -8,10 +9,12 @@ import wollok.game.*
 class Enemigo{
     var vida //diferencias de vidas y hits
     const property daño
-    var rango
     var imagen //variar al recibir un ataque
+    const imagenIdle
+    const imagenDaño
     const posiciones
     const nivelAct
+
     var property position =game.at(0, 0)
     const posicioActual=[]
     method post()= position
@@ -26,6 +29,7 @@ class Enemigo{
             self.morir()
         }
     }*/
+    method partidaSigue() =nivelAct.partidaSigue() 
 
     method vida() = vida
     method image() =imagen
@@ -33,7 +37,7 @@ class Enemigo{
         self.avanzar()
     }  
     method avanzar() {
-        if(posiciones.size() !=0 and self.estaVivo()){//caso base, ya no hay posiciones.
+        if(posiciones.size() !=0 and self.estaVivo() and self.partidaSigue()) {//caso base, ya no hay posiciones.
          
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
@@ -63,6 +67,8 @@ class Enemigo{
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida = self.calcularDaño(cantidadDaño)
+            imagen=imagenDaño
+            game.schedule(850, {imagen=imagenIdle})
         }
     }
     method calcularDaño(unDaño) {

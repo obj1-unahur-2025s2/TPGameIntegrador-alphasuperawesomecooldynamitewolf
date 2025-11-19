@@ -5,31 +5,20 @@ import wollok.game.*
 import niveles.*
 
 object castillo {
-    var vida = 100
-    var property position =game.at(6, 0) 
+    var property position =game.at(8,0) 
     method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
-    method recibirDaño(cantidadDaño){
-        if(self.estaVivo()){
-            vida-=cantidadDaño
-            console.println(vida)
-            
-        }
-        // else{
-        //     self.morir()
-        // }
+    method activarColicion(){
+        game.onCollideDo( self,{enemigo=> juegoDelCastillo.perderPartida()})
     }
-
     
-    method estaVivo() = vida > 0
-    method cursor()="cursorCastillo.png" //polimorfismo en las estructura asi el cursor sabe como adaptarse 
-    method estaDestruido() = !self.estaVivo()
 }
 
 
 object personajePrincipal{
+    var monedas = 50
     method posicionActual() =position 
     var nivel= nivelPrueba
-    const  torres = [] //Cual sería la ventaja de guardar la lista de torres en el mapa en vez de evaluar en el momento de la acción (poner, mejorar, sacar) si hay una instancia de clase torre en la posición? Y delegar que hace en casa caso a cada función.
+    const  torres = []
     const property torresPuestas = []
     method agregarTorresPuestas(unaTorre) {
       torresPuestas.add(unaTorre)
@@ -71,7 +60,7 @@ object personajePrincipal{
         self.sensar()
     }
     //Metodos encargados del manejo de la economia
-    var monedas = 10
+
     method monedas() = monedas
     method puedePagar(costo) = monedas >= costo
     method gastarMonedas(unCosto){
@@ -85,7 +74,7 @@ object personajePrincipal{
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())
     
     method agregarTorre(){    
-        if (self.sePuedeAgregarTorre()){
+        if (juegoDelCastillo.juegoCorriendo() and self.sePuedeAgregarTorre() ){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
             self.agregarTorresPuestas(self.torreSeleccionada())
@@ -106,5 +95,9 @@ object personajePrincipal{
         torres.remove(unaTorre)
         game.removeVisual(unaTorre)
         }
+    }
+    method partidaFinalizada() {
+        torres.clear()
+        monedas=50
     }
 }

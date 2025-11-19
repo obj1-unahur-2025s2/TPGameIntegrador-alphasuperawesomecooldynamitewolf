@@ -23,25 +23,35 @@ object juego {
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
   var  property nivel = nivelPrueba
-  
+  var juegoCorriendo=true
   const niveles=[]
   const nivelesCompeltos=[]
 
   method agregarNiveles(unosNiveles) {
     niveles.add(unosNiveles)
   }
+  method vaciarNiveles() {
+    niveles.forEach({n => n.reiniciarPartida()})
+    niveles.clear()
+    console.println(" VACIE niveles")
+    console.println(niveles)
+  } 
   method iniciarNivel() {
-    game.addVisual(torresOpciones)
+    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
     controles.configurarTeclas()
     console.println(niveles)
-    niveles.first().iniciar()
+    self.obtenerNivel().iniciar()
 
   }
-  method obtenerNivel() = nivelPrueba
+  method obtenerNivel() = niveles.first()
   method pasarDeNivel() {
     nivelesCompeltos.add(nivel)
     nivel=self.nivelQueSigue()
   }
+  method volverAlMenu() {juegoCorriendo=true ; }
+  method reiniciarPartida() {juegoCorriendo=true ; self.obtenerNivel().reiniciarPartida()} 
+  method juegoCorriendo() =juegoCorriendo 
+  method perderPartida() {self.obtenerNivel().perderPartida(); juegoCorriendo=false; if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver);menuGameOver.seleccionNivel()} 
   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
 }
 
