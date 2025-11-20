@@ -7,15 +7,17 @@ import armas.*
 
 object controles {
     method configurarTeclas() {
-    //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
-	    keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
-	    keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
-    //teclas de opciones torres 
-        keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
-    //teclas opciones
-        keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
-        keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
-
+      if(!juegoDelCastillo.juegoCorriendo()){
+        console.println("INICIE CONTORLES")
+      //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
+        keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
+        keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
+      //teclas de opciones torres 
+          keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
+      //teclas opciones
+          keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
+          keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
+      }
   }
     //Manejo del menu mediante teclas
     method configurarTeclaMenu() {
@@ -28,9 +30,11 @@ object controles {
         keyboard.num2().onPressDo({menuNiveles.iniciarNivel2()})
         keyboard.num3().onPressDo({menuNiveles.iniciarNivel3()})
   }
-  method configurarTeclaMenuOver() {        
+  method configurarTeclaMenuOver() {      
+    if(!menuGameOver.overActivo()){  
     keyboard.i().onPressDo({menuGameOver.verNiveles()})
     keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
+    }
   }
 }
 

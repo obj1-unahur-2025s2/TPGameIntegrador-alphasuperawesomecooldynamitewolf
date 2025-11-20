@@ -6,7 +6,7 @@ import wollok.game.*
 
 //const enemigo1 = new Enemigo(posiciones = nivelPrueba.ubicacionesCamino()) Ejemplo de como tendría que ser la instanciación de los enemigos con los demas atributos
 
-class Enemigo{
+class Orco{
     var vida //diferencias de vidas y hits
     const property daño
     var imagen //variar al recibir un ataque
@@ -38,12 +38,11 @@ class Enemigo{
     }  
     method avanzar() {
         if(posiciones.size() !=0 and self.estaVivo() and self.partidaSigue()) {//caso base, ya no hay posiciones.
-         
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
-            game.schedule(1200, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
-        }
+            game.schedule(400, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
+        } //1200
 
     }
     method morir(){
@@ -78,10 +77,7 @@ class Enemigo{
     method valor() = 5
     
 }
-
-///Opcion un jefe final poderoso, lo hago objeto por que es uno solo por el momento 
-
-class JefeFinal inherits Enemigo{
+class OrcoRey inherits Orco{
     override method valor() = 10
 }
 //para ver posiciones, borrar si hace falta:

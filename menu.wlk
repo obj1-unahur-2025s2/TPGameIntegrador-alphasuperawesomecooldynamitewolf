@@ -9,22 +9,24 @@ class Menu{
     const niveles=[]
     const menuElementos=[] //se agrega las imagenes "entrenamiento" "iniciar" <- podria estar en una sola imagen, pero para animarlo estaria bueno que esté separado.
     var property position =game.at(0,0) 
+
     const imagen
     method image() =imagen 
-    method seleccionNivel() 
+    method seleccionNivel()
     method terminarMenu() {
       menuElementos.forEach({e => e.eliminar()})
       game.removeVisual(self)
     }
     method estaActivo() =menuElementos.size()>0 //esta activo si hay elementos dentro del menu. osea el menu esta activo. 
     method verNiveles() {
+      juegoDelCastillo.vaciarNiveles()
       niveles.add(nivelPrueba) //<- agregar la lista de todos los niveles, menos el tuto [nivel1,nivel2..]
       menuNiveles.iniciar()
       self.terminarMenu()
     }
 }
 object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
-  
+
     
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
@@ -34,7 +36,7 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
         game.addVisual(entrenamiento)
         menuElementos.add(play)
         menuElementos.add(entrenamiento) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
-
+        
     }
 
       method iniciarTutorial() {
@@ -52,7 +54,7 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
 
 
 object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.png") {
-  
+    var overActivo=false
     override method seleccionNivel() {
         controles.configurarTeclaMenuOver()
         const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
@@ -66,15 +68,15 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
         menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
 
     }
-
+    method overActivo() =overActivo 
     override method verNiveles(){
-      juegoDelCastillo.vaciarNiveles()
       menuNiveles.iniciar()
       self.terminarMenu()
       
     } 
         
     method reiniciarPartida(){
+      overActivo=true
       juegoDelCastillo.reiniciarPartida()
       self.terminarMenu()
     }    
@@ -92,30 +94,37 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
 object menuNiveles {
   var property position =game.at(0,0) 
   method image() = "selectorNiveles.png"
+  const sonido = game.sound("orcsAttacking.mp3")
   method iniciar() {
     if(!game.hasVisual(self)) game.addVisual(self)
     controles.teclasSelecNiveles()
     //todavia no interactua con los niveles.
 
   }
-  method iniciarNivel1() {
-    juegoDelCastillo.agregarNiveles(nivel1)
-    juegoDelCastillo.iniciarNivel()
-    
-    const sonido = game.sound("orcsAttacking.mp3")
-    sonido.shouldLoop(true)
-    sonido.play()
-    self.terminarMenuNiveles()
+  method iniciarNivel1() {        
+
+    if(!juegoDelCastillo.tieneNiveles()){
+      sonido.shouldLoop(true)
+      sonido.play()
+
+      juegoDelCastillo.agregarNiveles(nivel1)
+      juegoDelCastillo.iniciarNivel()
+      self.terminarMenuNiveles()
+    }
   }
   method iniciarNivel2() {
+    if(!juegoDelCastillo.tieneNiveles()){
     juegoDelCastillo.agregarNiveles(nivel2)
     juegoDelCastillo.iniciarNivel()
     self.terminarMenuNiveles()
+    }
   }
   method iniciarNivel3() {
+    if(!juegoDelCastillo.tieneNiveles()){
     juegoDelCastillo.agregarNiveles(nivel3)
     juegoDelCastillo.iniciarNivel()
     self.terminarMenuNiveles()
+    }
   }
   method terminarMenuNiveles() {
     game.removeVisual(self)

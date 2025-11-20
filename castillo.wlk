@@ -23,41 +23,21 @@ object personajePrincipal{
     method agregarTorresPuestas(unaTorre) {
       torresPuestas.add(unaTorre)
     } 
-    var imagen="cursorTorre.png"
+    const  imagen="cursorTorre.png"
     method image() = imagen
     var property position =game.at(8,3) 
-    //secuencia del cursor y estrucutura de nivel
-    method sensar() {
-      	game.onCollideDo(
-		self,
-		{ algo =>
-			self.adaptar(algo)
-		}
-	)
-    }
-
-    //Algo como esto, así de simple se puede hacer para los ataques a los enemigos. Si se hace los de la imagen con transparencia que puse en el otro archivo
-
-    ///Estos dos metodos agregue
-    method adaptar(algo) {
-        imagen=algo.cursor()//No se para que sirve esto, responder quien lo lea <- NO SIRVE CARLHO, (mentira ni idea)
-    }
     method siguienteNivel(unNivel) {
       nivel=unNivel
     }
-
-    //Se puede utilizar el toString para pasar de nivel. Entonces al invocarlo es nivel + toString o algo así y los niveles se llaman nivel1, nivel2, etc.
 
     //movimientos, dejar aca para evitar confusion con los de torres
     method moverseHaciaArriba() {
         const pos=nivel.ubicacionSiguienteA([position.x(),position.y()])
         position= game.at(pos.get(0), pos.get(1))
-        self.sensar()
 	}
 	method moverseHaciaAbajo() {
 		const pos =nivel.ubicacionAnterior()
         position=game.at(pos.get(0),pos.get(1))
-        self.sensar()
     }
     //Metodos encargados del manejo de la economia
 
@@ -94,10 +74,11 @@ object personajePrincipal{
     if (torres.contains(unaTorre)){
         torres.remove(unaTorre)
         game.removeVisual(unaTorre)
-        }
+    }
     }
     method partidaFinalizada() {
         torres.clear()
         monedas=50
+
     }
 }
