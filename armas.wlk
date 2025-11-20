@@ -62,20 +62,20 @@ class Torre{
 class TorreNormal inherits Torre{
   override method costo() = 3
   override method diseño() = "torre1.png"
-  override method atacar() = super() + self.costo()
+  //override method atacar() = super() + self.costo()
 }
 
 class TorreCañon inherits Torre{
   override method costo() = 5
   override method diseño() = "torre2.png"
-  override method atacar() = super() + self.costo()
+  //override method atacar() = super() + self.costo()
 
 }
 
 class TorreTesla inherits Torre{
   override method costo() = 8
   override method diseño() = "torre3.png"
-  override method atacar() = super() + self.costo()
+  //override method atacar() = super() + self.costo()
 }
 
 
@@ -138,16 +138,18 @@ object torresOpciones {
     )
     torres.add(tesla)
 
-    const seleccionada = torres.find({
+    /*const seleccionada = torres.find({
         t => t.posicionDeOpcion() == self.posicionActualComoColeccion()
     })
 
     if (seleccionada != null) {
         game.addVisual(seleccionada)
         torresExistentes.add(seleccionada)
-    }
+    }*/
 
-    return seleccionada
+    return torres.find({
+        t => t.posicionDeOpcion() == self.posicionActualComoColeccion()
+    })
 }
 
     method partidaFinalizada() {
