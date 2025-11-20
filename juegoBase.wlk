@@ -21,7 +21,7 @@ object juego {
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
-  var  property nivel = nivel1
+  var  property nivel = nivelPrueba
   var juegoCorriendo=false
   const niveles=[]
   const nivelesCompeltos=[]

@@ -106,18 +106,16 @@ object menuNiveles {
     if(!juegoDelCastillo.tieneNiveles()){
       sonido.shouldLoop(true)
       sonido.play()
-
       juegoDelCastillo.agregarNiveles(nivel1)
-      juegoDelCastillo.agregarNiveles(nivel2)
       juegoDelCastillo.iniciarNivel()
       self.terminarMenuNiveles()
     }
   }
   method iniciarNivel2() {
     if(!juegoDelCastillo.tieneNiveles()){
-    juegoDelCastillo.agregarNiveles(nivel2)
-    juegoDelCastillo.iniciarNivel()
-    self.terminarMenuNiveles()
+      juegoDelCastillo.agregarNiveles(nivel2)
+      juegoDelCastillo.iniciarNivel()
+      self.terminarMenuNiveles()
     }
   }
   method iniciarNivel3() {

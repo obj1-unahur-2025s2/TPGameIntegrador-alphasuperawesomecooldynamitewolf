@@ -2,7 +2,7 @@
 
 ## Equipo de desarrollo
 
-- Elias Llorens, diseño grafico inicial y desarrollo: [@Llorenss85](https://github.com/Llorenss85)
+- Elias Llorens, diseño grafico inicial y desarrollo, organizacion General: [@Llorenss85](https://github.com/Llorenss85)
 - Fabricio Pereyra, desarrollo: [@fabriciopereyra2004a-rgb](https://github.com/fabriciopereyra2004a-rgb)
 - Juan Belforte: [@NamuKimeraVT](https://github.com/)
 - Martin Galletti, organizacion y desarrollo: [@TinchoProjects](https://github.com/TinchoProjects)

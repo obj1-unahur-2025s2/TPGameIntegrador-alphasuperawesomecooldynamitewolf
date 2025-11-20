@@ -77,8 +77,8 @@ object personajePrincipal{
     }
     }
     method partidaFinalizada() {
-        torresPuestas.forEach({t => t.eliminarTorre(self)})
-        monedas= 6
+        torres.clear()
+        monedas=6
 
     }
 }
