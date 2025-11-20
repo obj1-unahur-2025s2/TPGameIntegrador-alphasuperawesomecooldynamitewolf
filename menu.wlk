@@ -101,6 +101,10 @@ object menuNiveles {
   method iniciarNivel1() {
     juegoDelCastillo.agregarNiveles(nivel1)
     juegoDelCastillo.iniciarNivel()
+    
+    const sonido = game.sound("orcsAttacking.mp3")
+    sonido.shouldLoop(true)
+    sonido.play()
     self.terminarMenuNiveles()
   }
   method iniciarNivel2() {
