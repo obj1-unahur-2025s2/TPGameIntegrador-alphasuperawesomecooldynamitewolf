@@ -9,23 +9,25 @@ import controles.*
 class Torre{
   var nivelTorre
   const rango
-  const costo
+  ///const costo
   const daño
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
-  const diseñoTorre=["torre1.png","torre2.png","torre3.png"] //falta agregar mas imagenes ... 
-  var imagen="torre.png"
+  ///const diseñoTorre=["torre1.png","torre2.png","torre3.png"] //falta agregar mas imagenes ... 
+///  var imagen="torre.png"
   const property  position 
-  method image() = imagen
+
+///  method image() = self.diseño()
+  
   method subirNivel(){
     nivelTorre = nivelTorre + 1
   }
-  method elegirDiseño(num) {
+  /*method elegirDiseño(num) {
     imagen=self.obtenerDiseñoDeLista(num) // num =torre Diseño -> numero , puede ser las diferentes torres,esto para facilitar la adicion de la imagen a la torre.
   }
   method obtenerDiseñoDeLista(num)=diseñoTorre.get(num) // es para obtener el diseño. (al hacerlos nosotros, ya deberiamos saber cuantos diseños hay, y asi no poener fuera del indice)
-  method costo() =costo 
-  method atacar() = daño + nivelTorre
+  */
   method posicionDeOpcion() =positionOpcion 
+
   method cursor() ="cursorTorre.png" 
 
     method rangoEfectivo() {
@@ -49,8 +51,33 @@ class Torre{
     game.removeVisual(self)
     console.println("intento de eliminar")
   }
+  method image() = self.diseño()
+  method diseño()
+  method atacar() = daño + nivelTorre
+  method costo()
+
 
 }
+
+class TorreNormal inherits Torre{
+  override method costo() = 3
+  override method diseño() = "torre1.png"
+  override method atacar() = super() + self.costo()
+}
+
+class TorreCañon inherits Torre{
+  override method costo() = 5
+  override method diseño() = "torre2.png"
+  override method atacar() = super() + self.costo()
+
+}
+
+class TorreTesla inherits Torre{
+  override method costo() = 8
+  override method diseño() = "torre3.png"
+  override method atacar() = super() + self.costo()
+}
+
 
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
@@ -64,20 +91,65 @@ object torresOpciones {
     method torreBuscada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
 
     //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
-    method torreSeleccionada(x,y) {
+    /*method torreSeleccionada(x,y) {
         torres.clear() //<- elimina para poder crear repeticion. 
-        const torreNormal=new Torre(nivelTorre=1,costo=2,daño=3,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
-        torreNormal.elegirDiseño(0)
+        const torreNormal= new TorreNormal(nivelTorre=1, daño=3,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
+        ///torreNormal.elegirDiseño(0)
         torres.add(torreNormal)
-        const torreCañon=new Torre(nivelTorre=2,costo=10,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
-        torreCañon.elegirDiseño(1)
+        
+        const torreCañon=new TorreCañon(nivelTorre=2,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
+        ///torreCañon.elegirDiseño(1)
         torres.add(torreCañon)
-        const torreTesla=new Torre(nivelTorre=3, costo=15, daño=20, rango=1,position=game.at(x,y),positionOpcion=opciones.get(2))
-        torreTesla.elegirDiseño(2)
+
+        const torreTesla=new TorreTesla(nivelTorre=3, daño=20, rango=1,position=game.at(x,y),positionOpcion=opciones.get(2))
+        ///torreTesla.elegirDiseño(2)
         torres.add(torreTesla)
         torresExistentes.add(self.torreBuscada())
         return self.torreBuscada()    
-    }  
+    } */ 
+
+    method torreSeleccionada(x, y) {
+    torres.clear()
+
+    const normal = new TorreNormal(
+        nivelTorre = 1,
+        daño = 3,
+        rango = 2,
+        position = game.at(x, y),
+        positionOpcion = opciones.get(0)
+    )
+    torres.add(normal)
+
+    const canon = new TorreCañon(
+        nivelTorre = 2,
+        daño = 15,
+        rango = 1,
+        position = game.at(x, y),
+        positionOpcion = opciones.get(1)
+    )
+    torres.add(canon)
+
+    const tesla = new TorreTesla(
+        nivelTorre = 3,
+        daño = 20,
+        rango = 1,
+        position = game.at(x, y),
+        positionOpcion = opciones.get(2)
+    )
+    torres.add(tesla)
+
+    const seleccionada = torres.find({
+        t => t.posicionDeOpcion() == self.posicionActualComoColeccion()
+    })
+
+    if (seleccionada != null) {
+        game.addVisual(seleccionada)
+        torresExistentes.add(seleccionada)
+    }
+
+    return seleccionada
+}
+
     method partidaFinalizada() {
       torresExistentes.forEach({ t=> game.removeVisual(t)})
     }
@@ -102,52 +174,3 @@ object torresOpciones {
         }
 	  }
 }
-/*class Torre1{
-    var nivel 
-    var vida
-    var velocidadAtaque
-    var rango
-    var costo
-    var daño
-    var position 
-
-    method estaVivo() = vida > 0
-    
-
-    //Se puede sacar el "recibir ataque" ya que no va a estar implementado. No lo saco por si algo depende por algún motivo de esto. No quiero romper el código
-    method recibirAtaque(cantidadDaño){
-        if(self.estaVivo()){
-            vida -= cantidadDaño
-            ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
-        }
-        ///self.morir()
-    }
-    /*method morir(){
-        if(!self.estaVivo()){
-
-        }
-    }
-
-    method position() = position
-
-    method atacar(unObjeto){
-        unObjeto.recibirDaño(daño)
-        game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
-
-    }
-    
-    method nivelMaximo() = nivel == 3
-    
-    method subirNivel(){
-        if(!self.nivelMaximo()){
-            nivel += 1
-            velocidadAtaque = 5
-            costo = 20 
-        }
-    }
-    
-    method costo() = costo
-    
-    method costoMejora() = costo * 2 
-}
-*/
