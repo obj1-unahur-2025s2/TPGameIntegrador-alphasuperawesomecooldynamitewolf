@@ -34,6 +34,19 @@ class Nivel{
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
 
     }
+
+    method todosLosEnemigosGenerados(){
+        return enemigosPorOleada == enemigosGenerados
+    }
+
+    method todosLosEnemigosAcabados(){
+        return enemigosVivos == 0
+    }
+
+    method partidaGanada(){
+        return self.todosLosEnemigosGenerados() && self.todosLosEnemigosAcabados()
+    }
+    
     method perderPartida(){
         self.eliminarEnemigos();
         game.removeVisual(personajePrincipal)
@@ -113,6 +126,8 @@ class Nivel{
             game.addVisual(orco)
             orco.iniciar()
             self.generarOleada()
+            } else{
+            juegoDelCastillo.ganarPartida()
             }
         })
         }
@@ -130,6 +145,7 @@ class Nivel{
     method pasarSiguienteNivel(){
         nivel += 1
         enemigosPorOleada += 2  // Cada nivel más difícil
+        
     }
     method pantalla() = pantalla.iniciar()
     /*method nivelFinal(){
@@ -146,6 +162,6 @@ class Nivel{
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
 const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
 const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=10, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel1= new Nivel(nivel=1,enemigosPorOleada=20, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel1= new Nivel(nivel=1,enemigosPorOleada=3, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 const nivel2= new Nivel(nivel=2,enemigosPorOleada=35, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 const nivel3= new Nivel(nivel=3,enemigosPorOleada=45, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

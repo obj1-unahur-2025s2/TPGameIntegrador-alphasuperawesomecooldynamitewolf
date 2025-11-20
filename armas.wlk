@@ -45,7 +45,7 @@ class Torre{
 
   method atacarSiEstaEnRango(unEnemigo) {
     if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
-        game.schedule(1700, {unEnemigo.recibirDaño(self.atacar())})
+        game.schedule(600, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {
     game.removeVisual(self)
@@ -73,7 +73,7 @@ class TorreCañon inherits Torre{
 }
 
 class TorreTesla inherits Torre{
-  override method costo() = 8
+  override method costo() = 10
   override method diseño() = "torre3.png"
   //override method atacar() = super() + self.costo()
 }
@@ -122,7 +122,7 @@ object torresOpciones {
 
     const canon = new TorreCañon(
         nivelTorre = 2,
-        daño = 15,
+        daño = 5,
         rango = 1,
         position = game.at(x, y),
         positionOpcion = opciones.get(1)

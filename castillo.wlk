@@ -15,7 +15,7 @@ object castillo {
 
 
 object personajePrincipal{
-    var monedas = 50
+    var monedas = 6
     method posicionActual() =position 
     var nivel= nivelPrueba
     const  torres = []
@@ -78,7 +78,7 @@ object personajePrincipal{
     }
     method partidaFinalizada() {
         torres.clear()
-        monedas=50
+        monedas= 6
 
     }
 }
