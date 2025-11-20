@@ -41,7 +41,7 @@ class Orco{
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
-            game.schedule(400, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
+            game.schedule(1200, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
         } //1200
 
     }
