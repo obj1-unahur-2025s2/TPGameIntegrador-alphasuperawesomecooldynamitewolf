@@ -108,6 +108,7 @@ object menuNiveles {
       sonido.play()
 
       juegoDelCastillo.agregarNiveles(nivel1)
+      juegoDelCastillo.agregarNiveles(nivel2)
       juegoDelCastillo.iniciarNivel()
       self.terminarMenuNiveles()
     }

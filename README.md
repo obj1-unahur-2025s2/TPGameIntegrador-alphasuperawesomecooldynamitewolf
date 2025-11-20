@@ -5,7 +5,7 @@
 - Elias Llorens, diseño grafico inicial y desarrollo: [@Llorenss85](https://github.com/Llorenss85)
 - Fabricio Pereyra, desarrollo: [@fabriciopereyra2004a-rgb](https://github.com/fabriciopereyra2004a-rgb)
 - Juan Belforte: [@NamuKimeraVT](https://github.com/)
-- Martin Galleti, organizacion y desarrollo: [@TinchoProjects](https://github.com/TinchoProjects)
+- Martin Galletti, organizacion y desarrollo: [@TinchoProjects](https://github.com/TinchoProjects)
 - Nahuel: [@nawuelito](https://github.com/nawuelito)
 - Tomas Cardenas, musica, diseño grafico final y un poco desarrollo: [@TomasCardenas932](https://github.com/TomasCardenas932)
 

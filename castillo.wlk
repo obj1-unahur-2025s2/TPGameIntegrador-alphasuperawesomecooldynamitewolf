@@ -71,13 +71,13 @@ object personajePrincipal{
         }
     }
     method eliminarTorre(unaTorre){
-    if (torres.contains(unaTorre)){
+    if (torresPuestas.contains(unaTorre)){
         torres.remove(unaTorre)
         game.removeVisual(unaTorre)
     }
     }
     method partidaFinalizada() {
-        torres.clear()
+        torresPuestas.forEach({t => t.eliminarTorre(self)})
         monedas= 6
 
     }
