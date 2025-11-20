@@ -15,7 +15,7 @@ class Nivel{
     var enemigosGenerados =0
     var enemigosVivos=0                 //x,y
     var partidaSigue=true
-    const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[15,6]] //debe estar ordenada //[8,3] es tomado como game.at()
+    const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador=[]
     const pantalla   //pasar la imagen de clase Pantalla al crear el nivel.
