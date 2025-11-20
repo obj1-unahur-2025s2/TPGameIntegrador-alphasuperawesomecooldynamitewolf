@@ -2,12 +2,12 @@
 
 ## Equipo de desarrollo
 
-- Elias Llorens: [@Llorenss85](https://github.com/Llorenss85)
-- Fabricio Pereyra: [@fabriciopereyra2004a-rgb](https://github.com/fabriciopereyra2004a-rgb)
+- Elias Llorens, diseño grafico inicial y desarrollo: [@Llorenss85](https://github.com/Llorenss85)
+- Fabricio Pereyra, desarrollo: [@fabriciopereyra2004a-rgb](https://github.com/fabriciopereyra2004a-rgb)
 - Juan Belforte: [@NamuKimeraVT](https://github.com/)
-- Martin Galleti: [@TinchoProjects](https://github.com/TinchoProjects)
+- Martin Galleti, organizacion y desarrollo: [@TinchoProjects](https://github.com/TinchoProjects)
 - Nahuel: [@nawuelito](https://github.com/nawuelito)
-- Tomas Cardenas: [@TomasCardenas932](https://github.com/TomasCardenas932)
+- Tomas Cardenas, musica, diseño grafico final y un poco desarrollo: [@TomasCardenas932](https://github.com/TomasCardenas932)
 
 
 ## Capturas
