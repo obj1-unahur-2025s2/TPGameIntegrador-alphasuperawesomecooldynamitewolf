@@ -16,11 +16,12 @@
 ![gameplay](./Screenshots/Menu.png)
 ![gameplay](./Screenshots/Seleccion.png)
 ![gameplay](./Screenshots/OleadaDeJefe.png)
-![gameplay](./Screenshots/)
 
 ## Reglas de Juego / Instrucciones
 
 ## Controles
+### General
+- M: Abre el menu de los controles junto con las reglas
 ### Eleccion de torres
 - W:Sube en la eleccion de torres posibles.
 - S:Baja en la eleccion de torres posibles.
