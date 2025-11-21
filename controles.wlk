@@ -30,9 +30,11 @@ object controles {
 
   }
     method teclasSelecNiveles() {
-        keyboard.num1().onPressDo({menuNiveles.iniciarNivel1()})
-        keyboard.num2().onPressDo({menuNiveles.iniciarNivel2()})
-        keyboard.num3().onPressDo({menuNiveles.iniciarNivel3()})
+      if(!juegoDelCastillo.juegoCorriendo()){
+          keyboard.num1().onPressDo({menuNiveles.iniciarNivel1()})
+          keyboard.num2().onPressDo({menuNiveles.iniciarNivel2()})
+          keyboard.num3().onPressDo({menuNiveles.iniciarNivel3()})
+      }
   }
   method configurarTeclaMenuOver() {      
     if(!menuGameOver.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
