@@ -5,6 +5,7 @@ import wollok.game.*
 import menu.*
 import controles.*
 import armas.*
+import intro.*
 
 
 object juego {
@@ -13,8 +14,8 @@ object juego {
     game.height(10)
     game.width(20)
     game.boardGround("fondo.png")
-    game.addVisual(menu)
-    menu.seleccionNivel()
+    game.addVisual(secuencia)
+    secuencia.saltar()
     game.start()
     
   } 

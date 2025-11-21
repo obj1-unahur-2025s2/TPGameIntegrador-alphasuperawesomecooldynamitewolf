@@ -4,6 +4,7 @@ import juegoBase.*
 import castillo.*
 import niveles.*
 import armas.*
+import intro.*
 
 object controles {
     method configurarTeclas() {
@@ -19,6 +20,9 @@ object controles {
           keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
       }
   }
+    method controlesIntro() {
+        keyboard.shift().onPressDo({secuencia.saltar()})
+    }
     //Manejo del menu mediante teclas
     method configurarTeclaMenu() {
         keyboard.i().onPressDo({menu.verNiveles()})
