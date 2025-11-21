@@ -2,6 +2,7 @@ import wollok.game.*
 import pantalla.*
 import controles.*
 import menu.*
+import juegoBase.*
 
 class Intros{
     var property position =game.origin()
@@ -30,6 +31,9 @@ object secuencia{
     var property position =game.origin()
     const frames = [intro1, intro2, intro3]
     method saltar(){
+        self.saltarFrame()
+    }
+    method saltarFrame() {
         if(lastVisual != null) game.removeVisual(lastVisual)
         if(frames.size() > 0){
             lastVisual = frames.first()
@@ -38,6 +42,12 @@ object secuencia{
         }
         else{
             lastVisual = null
+            self.agregarMenu()
+        }
+    }
+    method agregarMenu() {
+        console.println(juegoDelCastillo.juegoCorriendo())
+        if(!game.hasVisual(menu) and !juegoDelCastillo.juegoCorriendo()){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
             game.addVisual(menu)
             menu.seleccionNivel()
         }

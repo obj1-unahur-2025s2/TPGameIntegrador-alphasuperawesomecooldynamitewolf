@@ -21,7 +21,7 @@ object controles {
       }
   }
     method controlesIntro() {
-        keyboard.shift().onPressDo({secuencia.saltar()})
+        keyboard.space().onPressDo({secuencia.saltar()})
     }
     //Manejo del menu mediante teclas
     method configurarTeclaMenu() {
