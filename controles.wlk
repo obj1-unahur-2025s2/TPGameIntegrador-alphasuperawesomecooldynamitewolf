@@ -43,10 +43,10 @@ object controles {
     }
   }
   method configurarTeclaSiguienteOver(){
-    if(!menuNextLevel.overActivo()){
+//    if(!juegoDelCastillo.juegoCorriendo()){
       keyboard.e().onPressDo({menuNextLevel.iniciarSiguienteNivel()})
-      keyboard.r().onPressDo({menuNextLevel.reiniciarPartida()})
-    }
+      keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
+//    }
   }
 }
 

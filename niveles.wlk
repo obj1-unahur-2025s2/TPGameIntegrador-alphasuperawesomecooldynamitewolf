@@ -51,6 +51,7 @@ class Nivel{
         game.removeVisual(personajePrincipal)
         game.removeVisual(castillo)
         self.eliminarEnemigos();
+        pantalla.eliminar()
         partidaSigue= false
     }
 /*

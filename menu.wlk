@@ -89,7 +89,7 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
     method reiniciarPosition() =menu.get(1) 
 
 }
-
+/*
 object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanado.png") {
     var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
     //esto habilita imagenes dentro del entorno.
@@ -125,6 +125,34 @@ object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanad
     method nextLevelPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
 
+}*/
+
+object menuNextLevel{
+  var property position =game.at(0,0) 
+  method image() = "fondoNextLevel.jpeg"
+
+  method iniciar() {
+    if(!game.hasVisual(self)) game.addVisual(self)
+    controles.configurarTeclaSiguienteOver()
+    //todavia no interactua con los niveles.
+  }
+
+  method iniciarSiguienteNivel(){
+    juegoDelCastillo.iniciarNivel(1)
+    //juegoDelCastillo.partidaGanada()
+    self.terminarMenu()
+  }
+
+  method iniciarNivel(unNivel) {        
+    //if(!juegoDelCastillo.tieneNiveles()){
+      //juegoDelCastillo.agregarNiveles(nivel1)
+      juegoDelCastillo.iniciarNivel(unNivel)
+      self.terminarMenu()
+    //}
+  }
+  method terminarMenu() {
+    game.removeVisual(self)
+  }
 }
 
 object menuNiveles {
