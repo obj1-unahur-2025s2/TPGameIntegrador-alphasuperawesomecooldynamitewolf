@@ -1,3 +1,4 @@
+import juegoBase.*
 import niveles.*
 import armas.*
 import castillo.* 
@@ -64,11 +65,7 @@ class Orco{
             game.schedule(850, {imagen=imagenIdle})
         }
     }
-    method calcularDaño(unDaño) {
-    if(unDaño<vida){return vida - unDaño} 
-    else{return self.morir()}
-    }
-    
+    method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
         ///game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
@@ -79,6 +76,10 @@ class Orco{
 }
 class OrcoRey inherits Orco{
     override method valor() = 10
+    override method morir(){
+        juegoDelCastillo.ganarPartida()
+        return 0
+    }
 }
 //para ver posiciones, borrar si hace falta:
 object map {

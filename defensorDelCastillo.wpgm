@@ -14,8 +14,4 @@ import intro.*
 program DefensorDelCastillo {
 
 	juego.iniciar()
-
-	
-	//game.addVisualCharacter(map)
-
 }

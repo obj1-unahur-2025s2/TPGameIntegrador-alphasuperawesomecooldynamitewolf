@@ -6,16 +6,19 @@ import niveles.*
 
 object castillo {
     var property position =game.at(8,0) 
-    var vida = 100
     method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
     method activarColision(){
         game.onCollideDo( self,{enemigo=> enemigo.atacar(self)})
     }
     
+    //Manejo de todo el puterio de la vida
+    var vida = 3
+    method vida() = vida
+    method reiniciarVida() {
+        vida = 3
+    }
     method recibirDaño(cantidad){
-    vida -= cantidad
-    contadorVida.actualizarVida(vida)
-    game.say(self, "Me saco " + cantidad + " de vida")
+    vida = 0.max(vida-cantidad)
     if(vida <= 0){
         juegoDelCastillo.partidaFinalizada()
     }}
@@ -23,10 +26,15 @@ object castillo {
 }
 
 object contadorVida{
-    var vidaActual = 100
-    method actualizarVida(nuevaVida){vidaActual = nuevaVida}
+    // var vidaActual = 3
+    // method actualizarVida(nuevaVida){vidaActual = nuevaVida}
     method position() = game.at(2, 8) // esquina superior izquierda
-    method text() = "Vida: " + vidaActual
+    method text() = "Vida: " + castillo.vida()
+}
+
+object contadorMoneda{
+    method position() = game.at(2, 9) // esquina superior izquierda
+    method text() = "Monedas: " + personajePrincipal.monedas()
 }
 
 

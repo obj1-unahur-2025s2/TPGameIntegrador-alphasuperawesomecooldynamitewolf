@@ -46,7 +46,7 @@ class Torre{
 
   method atacarSiEstaEnRango(unEnemigo) {
     if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo() and torreActiva)
-        game.schedule(600, {unEnemigo.recibirDaño(self.atacar())})
+        game.schedule(100, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {
     torreActiva=false
@@ -97,7 +97,7 @@ object torresOpciones {
 
     const normal = new TorreNormal(
         nivelTorre = 1,
-        daño = 3,
+        daño = 30,
         rango = 2,
         position = game.at(x, y),
         positionOpcion = opciones.get(0)
@@ -106,7 +106,7 @@ object torresOpciones {
 
     const canon = new TorreCañon(
         nivelTorre = 2,
-        daño = 5,
+        daño = 50,
         rango = 1,
         position = game.at(x, y),
         positionOpcion = opciones.get(1)

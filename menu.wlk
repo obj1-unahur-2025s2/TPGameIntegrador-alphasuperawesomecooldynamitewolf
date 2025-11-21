@@ -19,7 +19,7 @@ class Menu{
     }
     method estaActivo() =menuElementos.size()>0 //esta activo si hay elementos dentro del menu. osea el menu esta activo. 
     method verNiveles() {
-      juegoDelCastillo.vaciarNiveles()
+      // juegoDelCastillo.vaciarNiveles()
       niveles.add(nivelPrueba) //<- agregar la lista de todos los niveles, menos el tuto [nivel1,nivel2..]
       menuNiveles.iniciar()
       self.terminarMenu()
@@ -42,7 +42,7 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
       method iniciarTutorial() {
       juegoDelCastillo.agregarNiveles(nivelPrueba) //<- agregar la lista de todos los niveles, y al principio el tuto [tuto,nivel1,nivel2..]
       self.terminarMenu()
-      juegoDelCastillo.iniciarNivel()
+      // juegoDelCastillo.iniciarNivel()
       game.removeVisual(self)
       
     }
@@ -71,7 +71,7 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
     }
     method overActivo() =overActivo 
     override method verNiveles(){
-      juegoDelCastillo.vaciarNiveles() //
+      // juegoDelCastillo.vaciarNiveles() //
       menuNiveles.iniciar()
       self.terminarMenu()
       
@@ -103,25 +103,25 @@ object menuNiveles {
   }
 
   method iniciarNivel1() {        
-    if(!juegoDelCastillo.tieneNiveles()){
-      juegoDelCastillo.agregarNiveles(nivel1)
-      juegoDelCastillo.iniciarNivel()
+    //if(!juegoDelCastillo.tieneNiveles()){
+      //juegoDelCastillo.agregarNiveles(nivel1)
+      juegoDelCastillo.iniciarNivel(0)
       self.terminarMenuNiveles()
-    }
+    //}
   }
   method iniciarNivel2() {
-    if(!juegoDelCastillo.tieneNiveles()){
-      juegoDelCastillo.agregarNiveles(nivel2)
-      juegoDelCastillo.iniciarNivel()
+    // if(!juegoDelCastillo.tieneNiveles()){
+      //juegoDelCastillo.agregarNiveles(nivel2)
+      juegoDelCastillo.iniciarNivel(1)
       self.terminarMenuNiveles()
-    }
+    // }
   }
   method iniciarNivel3() {
-    if(!juegoDelCastillo.tieneNiveles()){
-    juegoDelCastillo.agregarNiveles(nivel3)
-    juegoDelCastillo.iniciarNivel()
+    // if(!juegoDelCastillo.tieneNiveles()){
+    //juegoDelCastillo.agregarNiveles(nivel3)
+    juegoDelCastillo.iniciarNivel(2)
     self.terminarMenuNiveles()
-    }
+    // }
   }
   method terminarMenuNiveles() {
     game.removeVisual(self)
