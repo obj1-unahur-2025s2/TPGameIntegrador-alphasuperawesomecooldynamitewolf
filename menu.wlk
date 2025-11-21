@@ -108,11 +108,11 @@ object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanad
     }
     method overActivo() =overActivo 
     method iniciarSiguienteNivel(){
-      menuNiveles.iniciarNivel(juegoDelCastillo.nivel() + 1)
+      juegoDelCastillo.siguienteNivel()
+      menuNiveles.iniciarNivel(juegoDelCastillo.nivel())
       juegoDelCastillo.partidaGanada()
       self.terminarMenu()
-      
-    } 
+    }
         
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
       overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 

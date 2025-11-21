@@ -42,7 +42,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method iniciarNivel(unNivel) {
     nivel = unNivel
     sonido.shouldLoop(true)
-    sonido.play()
+    //sonido.play()
     controles.configurarTeclas()
     juegoCorriendo=true  //las teclas no se van a volver a iniciar. (sin las teclas sumas movimietos no previstos.)
     if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
@@ -79,13 +79,15 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method generarGameOver() {if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver) menuGameOver.seleccionNivel() personajePrincipal.partidaFinalizada()}
    method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
   
-  method generarNextLevel() {if(!game.hasVisual(menuNextLevel))game.addVisual(menuNextLevel) menuNextLevel.iniciarSiguienteNivel() personajePrincipal.partidaFinalizada()}
+  method generarNextLevel() {if(!game.hasVisual(menuNextLevel))game.addVisual(menuNextLevel) menuNextLevel.seleccionNivel() personajePrincipal.partidaFinalizada()}
   method partidaGanada() {
-      // pantallaVictoria.iniciar()
-      sonido.stop()
-    self.generarNextLevel()
+    //sonido.stop()
     torresOpciones.partidaFinalizada() 
     game.removeVisual(torresOpciones)
-    self.obtenerNivel(nivel).partidaGanada()
+    self.obtenerNivel(nivel).partidaFinalizada()
+    self.generarNextLevel()
+  }
+  method siguienteNivel(){
+    nivel = nivel + 1
   }
 }
