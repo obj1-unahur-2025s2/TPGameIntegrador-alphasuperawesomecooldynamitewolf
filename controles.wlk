@@ -9,7 +9,7 @@ import intro.*
 object controles {
     method configurarTeclas() {
       if(!juegoDelCastillo.juegoCorriendo()){ // si el juego  todavía no inició, configurame las teclas.
-        console.println("INICIE CONTORLES")
+        // console.println("INICIE CONTORLES")
       //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
         keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
         keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
