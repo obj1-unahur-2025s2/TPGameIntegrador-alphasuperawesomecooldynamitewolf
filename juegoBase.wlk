@@ -62,6 +62,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method reiniciarPartida() { 
     sonido.shouldLoop(true)
     sonido.play()
+    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
     self.obtenerNivel(nivel).reiniciarPartida()
 
   } 
@@ -69,6 +70,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
     sonido.stop()
     torresOpciones.partidaFinalizada() 
+    game.removeVisual(torresOpciones)
     self.obtenerNivel(nivel).partidaFinalizada()
     self.generarGameOver() //llama al menu GameOver para que vuevla con una pantalla.
   }  

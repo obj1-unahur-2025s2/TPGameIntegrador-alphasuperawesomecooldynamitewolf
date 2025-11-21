@@ -35,13 +35,17 @@ class Nivel{
         //if(enemigosGenerados>0){ enemigosGenerados=0 self.reiniciarPartida() console.println("Te lo reinicie")} else self.generarOleada()
         self.generarOleada()
         game.addVisual(castillo)     
-        game.addVisual(contadorVida)           
-        game.addVisual(contadorMoneda)           
+        self.agregarContadores()      
         castillo.activarColision()
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
 
     }
-
+    method agregarContadores() {
+        if(!game.hasVisual(contadorMoneda) and !game.hasVisual(contadorVida)){
+            game.addVisual(contadorVida)           
+            game.addVisual(contadorMoneda)     
+        }
+    }
     method partidaFinalizada(){
         enemigosGenerados=0
         game.removeVisual(personajePrincipal)

@@ -51,7 +51,7 @@ class Torre{
   method eliminar() {
     torreActiva=false
     game.removeVisual(self)
-    console.println("intento de eliminar")
+
   }
   method image() = self.diseño()
   method diseño()
@@ -83,18 +83,25 @@ class TorreTesla inherits Torre{
 
 object torresOpciones {
   //listar torres posibles que se pueden elegir 
-    const opciones=[[1,3],[1,4],[1,5]] //1,3 -> torre flecha // 1,4 -> torre cañon // 1,5 -> torre tesla
+    const opciones=[[1,3],[1,4],[1,5],[1,6]] //1,3 -> torre flecha // 1,4 -> torre cañon // 1,5 -> torre tesla // 1,6 -> eliminarTorre
     const torres=[]
     const torresExistentes=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
     
     method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
-    method torreBuscada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
-
+    method torreBuscada() =torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
+    method eliminarTorre(x,y) {
+      if(self.esPosibleEliminar()){ //elimina la torre si es posible
+        console.println("intento de eliminar")
+        torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }).forEach({t => t.eliminar()}) //torres Existentes guarda multiples instancias de las torres. por ende se eliminan estas con el forEach.
+        torresExistentes.removeAll( torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }))   //las torres que coincidan con la posicion de la celda actual. (del jugador)
+      }                   // remover todas las torres existentes , para un eficiente borrado despues.
+    }
+    method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()                                                                                                          
     method torreSeleccionada(x, y) {
     torres.clear() // sirve para poder comparar las 3 torres creadas, ya con la posicion pasada por parametro, y esta sea comparada por ->  torreBuscada() 
-
+    console.println("se agrego otra torre")
     const normal = new TorreNormal(
         nivelTorre = 1,
         daño = 30,
@@ -133,7 +140,7 @@ object torresOpciones {
     torresExistentes.add(self.torreBuscada())
     return self.torreBuscada()
 }
-
+    method posicionEliminar() =opciones.get(3)
     method partidaFinalizada() {
       if(torresExistentes.size()>0) torresExistentes.forEach({ t=> t.eliminar()})
       torresExistentes.clear()

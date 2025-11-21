@@ -39,7 +39,7 @@ object contadorMoneda{
 
 
 object personajePrincipal{
-    var monedas = 6
+    var monedas = 100
     method posicionActual() =position 
     var nivel= nivelPrueba
     const  torres = []
@@ -75,16 +75,31 @@ object personajePrincipal{
     method torres() = torres
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
+    method posicionValida() =  !torresOpciones.esPosibleEliminar() // revisa si la posicion del cursor no esté en "Eliminar"
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())  && juegoDelCastillo.juegoCorriendo()
     
     method agregarTorre(){    
-        if (juegoDelCastillo.juegoCorriendo() and self.sePuedeAgregarTorre() ){
+        console.println("intento de agfregares ")
+        console.println(self.posicionValida())
+       
+        if (juegoDelCastillo.juegoCorriendo() && self.posicionValida() && self.sePuedeAgregarTorre() ){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
             self.agregarTorresPuestas(self.torreSeleccionada())
             self.gastarMonedas(self.torreCosto())
         }
+        else{
+            self.eliminarSiEsPosible()
+        }
         
+    }
+    method eliminarSiEsPosible() {
+      if(!self.posicionValida() and  self.hayTorreEn(self.posicionActual())){ // si está en la posicion de eliminar, y hay torre en la celda actual, eliminarla.
+        //torres.find({t => t.position()== position}).eliminar() <- no funcional
+        torres.remove(torres.find{t => t.position()== position}) //remover de la lista
+        torresOpciones.eliminarTorre(position.x(),position.y()) // torreOpcion se encarga de eliminar sus referencias reales. 
+
+      }
     }
     method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual }) //Con esto se puede simplificar sin necesidad de tener una lista de torres en el jugador. No es necesario si evaluas en la acción directamente
     method mejorarTorre(unaTorre){
