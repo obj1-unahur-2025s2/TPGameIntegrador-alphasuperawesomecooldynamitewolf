@@ -1,6 +1,6 @@
 import niveles.*
 import armas.*
-import castillo.*
+import castillo.* 
 import wollok.game.*
 ///import juegoBase.torresOpciones
 
@@ -71,7 +71,7 @@ class Orco{
     
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
-        game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
+        ///game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
     }
     
     method valor() = 5

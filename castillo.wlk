@@ -6,10 +6,20 @@ import niveles.*
 
 object castillo {
     var property position =game.at(8,0) 
+    var vida = 100
     method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
     method activarColision(){
-        game.onCollideDo( self,{enemigo=> juegoDelCastillo.partidaFinalizada()})
+        game.onCollideDo( self,{enemigo=> enemigo.atacar(self)})
     }
+    
+    method recibirDaño(cantidad){
+    vida -= cantidad
+    game.say(self, "Me queda " + vida + " de vida")
+    if(vida <= 0){
+        juegoDelCastillo.partidaFinalizada()
+    }
+}
+
     
 }
 
