@@ -52,12 +52,14 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   }
    
   method obtenerNivel(unNivel) = niveles.get(unNivel)
+  /*
   method pasarDeNivel() {
     if(nivel <= 3){
       nivel = nivel + 1
       self.obtenerNivel(nivel).iniciar()
     }
   }
+  */
 
   method reiniciarPartida() { 
     sonido.shouldLoop(true)
@@ -77,9 +79,10 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method generarGameOver() {if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver) menuGameOver.seleccionNivel() personajePrincipal.partidaFinalizada()}
    method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
   
+  method generarNextLevel() {if(!game.hasVisual(menuNextLevel))game.addVisual(menuNextLevel) menuNextLevel.iniciarSiguienteNivel() personajePrincipal.partidaFinalizada()}
   method ganarPartida() {
       // pantallaVictoria.iniciar()
       self.partidaFinalizada()
-      self.pasarDeNivel()
+      self.generarNextLevel()
   }
 }
