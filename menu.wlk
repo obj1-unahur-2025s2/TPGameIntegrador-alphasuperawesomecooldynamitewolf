@@ -96,6 +96,42 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
 
 }
 
+object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanado.png") {
+    var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
+    //esto habilita imagenes dentro del entorno.
+    override method seleccionNivel() {
+        controles.configurarTeclaSiguienteOver()
+        const nextLevel= new Pantalla(imagen="nextLevel.png", position=game.at(self.nextLevelPosition().get(0),self.nextLevelPosition().get(1)))
+        const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
+        const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
+        game.addVisual(play)
+        game.addVisual(reiniciar)
+        game.addVisual(nextLevel)
+        menuElementos.add(play)
+        menuElementos.add(nextLevel)
+        menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
+
+    }
+    method overActivo() =overActivo 
+    method iniciarSiguienteNivel(){
+      juegoDelCastillo.siguienteNivel()
+      menuNiveles.iniciarNivel(juegoDelCastillo.nivel())
+      juegoDelCastillo.partidaGanada()
+      self.terminarMenu()
+    }
+        
+    method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
+      overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
+      juegoDelCastillo.reiniciarPartida()
+      self.terminarMenu()
+    }    
+
+    method siguienteNivel() = niveles 
+    method playPosition() =menu.get(0) 
+    method nextLevelPosition() =menu.get(2) 
+    method reiniciarPosition() =menu.get(1) 
+
+}
 
 object menuNiveles {
   var property position =game.at(0,0) 
@@ -108,27 +144,29 @@ object menuNiveles {
 
   }
 
-  method iniciarNivel1() {        
+  method iniciarNivel(unNivel) {        
     //if(!juegoDelCastillo.tieneNiveles()){
       //juegoDelCastillo.agregarNiveles(nivel1)
-      juegoDelCastillo.iniciarNivel(0)
+      juegoDelCastillo.iniciarNivel(unNivel)
       self.terminarMenuNiveles()
     //}
   }
-  method iniciarNivel2() {
+  /*
+  method iniciarNivel(unNivel) {
     // if(!juegoDelCastillo.tieneNiveles()){
       //juegoDelCastillo.agregarNiveles(nivel2)
-      juegoDelCastillo.iniciarNivel(1)
+      juegoDelCastillo.iniciarNivel(unNivel)
       self.terminarMenuNiveles()
     // }
   }
-  method iniciarNivel3() {
+  method iniciarNivel(unNivel) {
     // if(!juegoDelCastillo.tieneNiveles()){
     //juegoDelCastillo.agregarNiveles(nivel3)
-    juegoDelCastillo.iniciarNivel(2)
+    juegoDelCastillo.iniciarNivel(unNivel)
     self.terminarMenuNiveles()
     // }
   }
+  */
   method terminarMenuNiveles() {
     game.removeVisual(self)
   }

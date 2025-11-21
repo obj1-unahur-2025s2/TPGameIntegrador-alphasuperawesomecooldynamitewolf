@@ -77,7 +77,8 @@ class Orco{
 class OrcoRey inherits Orco{
     override method valor() = 10
     override method morir(){
-        juegoDelCastillo.ganarPartida()
+        super()
+        juegoDelCastillo.partidaGanada()
         return 0
     }
 }

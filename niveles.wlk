@@ -53,6 +53,15 @@ class Nivel{
         self.eliminarEnemigos();
         partidaSigue= false
     }
+/*
+    method partidaGanada(){
+        enemigosGenerados=0
+        game.removeVisual(personajePrincipal)
+        game.removeVisual(castillo)
+        self.eliminarEnemigos();
+        partidaSigue= false
+    }
+    */
     //a cada enemigo se le agrega a su lista de posiciones todas las posiciones posibles
     method mapeoEnemigo() {
         const soloEnemigo=[]
