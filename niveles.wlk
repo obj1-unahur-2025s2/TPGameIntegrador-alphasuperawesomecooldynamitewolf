@@ -34,7 +34,8 @@ class Nivel{
         game.addVisual(personajePrincipal)
         //if(enemigosGenerados>0){ enemigosGenerados=0 self.reiniciarPartida() console.println("Te lo reinicie")} else self.generarOleada()
         self.generarOleada()
-        game.addVisual(castillo)        
+        game.addVisual(castillo)     
+        game.addVisual(contadorVida)           
         castillo.activarColision()
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
 

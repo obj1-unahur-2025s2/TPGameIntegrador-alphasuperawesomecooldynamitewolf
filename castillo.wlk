@@ -14,13 +14,19 @@ object castillo {
     
     method recibirDaño(cantidad){
     vida -= cantidad
-    game.say(self, "Me queda " + vida + " de vida")
+    contadorVida.actualizarVida(vida)
+    game.say(self, "Me saco " + cantidad + " de vida")
     if(vida <= 0){
         juegoDelCastillo.partidaFinalizada()
-    }
+    }}
+    
 }
 
-    
+object contadorVida{
+    var vidaActual = 100
+    method actualizarVida(nuevaVida){vidaActual = nuevaVida}
+    method position() = game.at(2, 8) // esquina superior izquierda
+    method text() = "Vida: " + vidaActual
 }
 
 
