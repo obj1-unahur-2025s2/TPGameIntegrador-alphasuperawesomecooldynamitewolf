@@ -80,9 +80,12 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
    method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
   
   method generarNextLevel() {if(!game.hasVisual(menuNextLevel))game.addVisual(menuNextLevel) menuNextLevel.iniciarSiguienteNivel() personajePrincipal.partidaFinalizada()}
-  method ganarPartida() {
+  method partidaGanada() {
       // pantallaVictoria.iniciar()
-      self.partidaFinalizada()
-      self.generarNextLevel()
+      sonido.stop()
+    self.generarNextLevel()
+    torresOpciones.partidaFinalizada() 
+    game.removeVisual(torresOpciones)
+    self.obtenerNivel(nivel).partidaGanada()
   }
 }

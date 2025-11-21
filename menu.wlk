@@ -109,7 +109,7 @@ object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanad
     method overActivo() =overActivo 
     method iniciarSiguienteNivel(){
       menuNiveles.iniciarNivel(juegoDelCastillo.nivel() + 1)
-      juegoDelCastillo.ganarPartida()
+      juegoDelCastillo.partidaGanada()
       self.terminarMenu()
       
     } 
