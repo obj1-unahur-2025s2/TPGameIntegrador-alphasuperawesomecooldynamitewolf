@@ -7,8 +7,8 @@ import niveles.*
 object castillo {
     var property position =game.at(8,0) 
     method image() ="castillo.png" //Y si vemos de meterle efectos como de "deteriorado" cuando esté por debajo del 50% de vida y al llegar a 0 antes de sacarte del juego que cambie la imagen a un cúmulo de ladrillos y despues diga "Perdiste" por ejemplo
-    method activarColicion(){
-        game.onCollideDo( self,{enemigo=> juegoDelCastillo.perderPartida()})
+    method activarColision(){
+        game.onCollideDo( self,{enemigo=> juegoDelCastillo.partidaFinalizada()})
     }
     
 }
@@ -51,7 +51,7 @@ object personajePrincipal{
     method torres() = torres
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
-    method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())
+    method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())  && juegoDelCastillo.juegoCorriendo()
     
     method agregarTorre(){    
         if (juegoDelCastillo.juegoCorriendo() and self.sePuedeAgregarTorre() ){

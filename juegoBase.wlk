@@ -21,8 +21,9 @@ object juego {
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
+  const sonido = game.sound("orcsAttacking.mp3")
   var  property nivel = nivelPrueba
-  var juegoCorriendo=false
+  var juegoCorriendo=false //indicacion para los controles. si el juego todavia no iicio configura las teclas.
   const niveles=[]
   const nivelesCompeltos=[]
  
@@ -36,11 +37,13 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     console.println(" VACIE niveles")
     console.println(niveles)
   } 
-  method tieneNiveles() =niveles.size()>0 
+  method tieneNiveles() =niveles.size()>0 //util para teclas del selector nivel. impide que se agreguen multiple veces los niveles. (revisar Menu) 
   method iniciarNivel() {
+    sonido.shouldLoop(true)
+    sonido.play()
     controles.configurarTeclas()
-    juegoCorriendo=true
-    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
+    juegoCorriendo=true  //las teclas no se van a volver a iniciar. (sin las teclas sumas movimietos no previstos.)
+    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
     console.println(niveles)
     self.obtenerNivel().iniciar()
 
@@ -52,11 +55,17 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     niveles.remove(nivel)
     nivel=self.obtenerNivel()
   }
-  method volverAlMenu() {juegoCorriendo=true ; }
-  method reiniciarPartida() {if(self.tieneNiveles()){juegoCorriendo=true  self.obtenerNivel().reiniciarPartida()}} 
+
+  method reiniciarPartida() { sonido.shouldLoop(true) sonido.play()if(self.tieneNiveles()){self.obtenerNivel().reiniciarPartida()}} 
   method juegoCorriendo() =juegoCorriendo 
-  method perderPartida() {  self.obtenerNivel().perderPartida(); if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver);menuGameOver.seleccionNivel()} 
-  method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
+  method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
+    sonido.stop()
+    torresOpciones.partidaFinalizada() 
+    self.obtenerNivel().partidaFinalizada()
+    self.generarGameOver() //llama al menu GameOver para que vuevla con una pantalla.
+  }  
+  method generarGameOver() {if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver) menuGameOver.seleccionNivel() personajePrincipal.partidaFinalizada()}
+   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
   method borrarTodo(){
     personajePrincipal.partidaFinalizada()
 
@@ -66,7 +75,6 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     if(nivel.partidaGanada()){
       personajePrincipal.partidaFinalizada()
       self.pasarDeNivel()
-      game.clear()
       self.iniciarNivel()
     }
   }

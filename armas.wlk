@@ -9,6 +9,7 @@ import controles.*
 class Torre{
   var nivelTorre
   const rango
+  var torreActiva =true
   ///const costo
   const daño
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
@@ -44,10 +45,11 @@ class Torre{
   }
 
   method atacarSiEstaEnRango(unEnemigo) {
-    if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
+    if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo() and torreActiva)
         game.schedule(600, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {
+    torreActiva=false
     game.removeVisual(self)
     console.println("intento de eliminar")
   }
@@ -90,26 +92,8 @@ object torresOpciones {
     method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
     method torreBuscada() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
 
-    //metodo el cual genera torres, las cuales deben recibir por parametro la posicion asi son colocadas, (es posible que se generen varias constantes, como que no. porque son eliminadas al iniciar. )
-    /*method torreSeleccionada(x,y) {
-        torres.clear() //<- elimina para poder crear repeticion. 
-        const torreNormal= new TorreNormal(nivelTorre=1, daño=3,rango=2,position=game.at(x,y),positionOpcion=opciones.get(0)) //al iniciar las opciones se guardan en la lista las torres 
-        ///torreNormal.elegirDiseño(0)
-        torres.add(torreNormal)
-        
-        const torreCañon=new TorreCañon(nivelTorre=2,daño=15,rango=1,position=game.at(x,y),positionOpcion=opciones.get(1))
-        ///torreCañon.elegirDiseño(1)
-        torres.add(torreCañon)
-
-        const torreTesla=new TorreTesla(nivelTorre=3, daño=20, rango=1,position=game.at(x,y),positionOpcion=opciones.get(2))
-        ///torreTesla.elegirDiseño(2)
-        torres.add(torreTesla)
-        torresExistentes.add(self.torreBuscada())
-        return self.torreBuscada()    
-    } */ 
-
     method torreSeleccionada(x, y) {
-    torres.clear()
+    torres.clear() // sirve para poder comparar las 3 torres creadas, ya con la posicion pasada por parametro, y esta sea comparada por ->  torreBuscada() 
 
     const normal = new TorreNormal(
         nivelTorre = 1,
@@ -146,14 +130,13 @@ object torresOpciones {
         game.addVisual(seleccionada)
         torresExistentes.add(seleccionada)
     }*/
-
-    return torres.find({
-        t => t.posicionDeOpcion() == self.posicionActualComoColeccion()
-    })
+    torresExistentes.add(self.torreBuscada())
+    return self.torreBuscada()
 }
 
     method partidaFinalizada() {
-      torresExistentes.forEach({ t=> game.removeVisual(t)})
+      if(torresExistentes.size()>0) torresExistentes.forEach({ t=> t.eliminar()})
+      torresExistentes.clear()
     }
     method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     method obtenerTorreNormal() = torres.get(0)
@@ -161,7 +144,7 @@ object torresOpciones {
     //movimientos de las torres, recomiendo dejar aca y no moverlo a controles para que sea mas entendible
     method moverseHaciaArriba() {
         if(self.position().y() >1 and self.position().y() <6 ){
-		self.position(self.position().up(1))
+		      self.position(self.position().up(1))
         }
         else{
             position=game.at(1,3)
@@ -169,7 +152,7 @@ object torresOpciones {
 	  } 
     method moverseHaciaAbajo()  {
         if(self.position().y() >3){
-		self.position(self.position().down(1))
+		      self.position(self.position().down(1))
         }
         else{
             position=game.at(1,0)   

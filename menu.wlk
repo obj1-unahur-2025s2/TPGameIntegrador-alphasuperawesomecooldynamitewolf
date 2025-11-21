@@ -27,7 +27,7 @@ class Menu{
 }
 object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
 
-    
+    //esto habilita imagenes dentro del entorno.
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
@@ -54,7 +54,8 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
 
 
 object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.png") {
-    var overActivo=false
+    var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
+    //esto habilita imagenes dentro del entorno.
     override method seleccionNivel() {
         controles.configurarTeclaMenuOver()
         const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
@@ -70,19 +71,18 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
     }
     method overActivo() =overActivo 
     override method verNiveles(){
+      juegoDelCastillo.vaciarNiveles() //
       menuNiveles.iniciar()
       self.terminarMenu()
       
     } 
         
-    method reiniciarPartida(){
-      overActivo=true
+    method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
+      overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
       juegoDelCastillo.reiniciarPartida()
       self.terminarMenu()
     }    
-    method volverAlMenu() {
-      juegoDelCastillo.volverAlMenu()
-    }
+
     method niveles() =niveles 
     method playPosition() =menu.get(0) 
     method gameOverPosition() =menu.get(2) 
@@ -94,18 +94,16 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
 object menuNiveles {
   var property position =game.at(0,0) 
   method image() = "selectorNiveles.png"
-  const sonido = game.sound("orcsAttacking.mp3")
+
   method iniciar() {
     if(!game.hasVisual(self)) game.addVisual(self)
     controles.teclasSelecNiveles()
     //todavia no interactua con los niveles.
 
   }
-  method iniciarNivel1() {        
 
+  method iniciarNivel1() {        
     if(!juegoDelCastillo.tieneNiveles()){
-      sonido.shouldLoop(true)
-      sonido.play()
       juegoDelCastillo.agregarNiveles(nivel1)
       juegoDelCastillo.iniciarNivel()
       self.terminarMenuNiveles()

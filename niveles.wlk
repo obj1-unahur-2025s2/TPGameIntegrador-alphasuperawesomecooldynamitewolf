@@ -16,7 +16,7 @@ class Nivel{
     var enemigosVivos=0                 //x,y
     const cantidadDeRey=1
     var reysGenerados=0
-    var partidaSigue=true
+    var partidaSigue=true //sirve para las oleadas, ayuda a datenerlas
     const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador=[]
@@ -28,12 +28,14 @@ class Nivel{
     }
     method partidaSigue() =partidaSigue      
     method iniciar(){
-        
+        partidaSigue=true
         pantalla.iniciar()
-        if(!game.hasVisual(personajePrincipal))game.addVisual(personajePrincipal)
-        if(enemigosGenerados>0){ enemigosGenerados=0 self.reiniciarPartida() console.println("Te lo reinicie")} else self.generarOleada()
-        if(!game.hasVisual(castillo))game.addVisual(castillo)        
-        castillo.activarColicion()
+        enemigosVivos=enemigosPorOleada
+        game.addVisual(personajePrincipal)
+        //if(enemigosGenerados>0){ enemigosGenerados=0 self.reiniciarPartida() console.println("Te lo reinicie")} else self.generarOleada()
+        self.generarOleada()
+        game.addVisual(castillo)        
+        castillo.activarColision()
         game.boardGround("fondo.png") //Al ser clase, y reutilizarlo para los nivles habría que pasar la imagen del boarGround como parametro de alguna constante que la declaramos al instanciar el New Nivel
 
     }
@@ -46,14 +48,13 @@ class Nivel{
         return enemigosVivos == 0
     }
 
-    method partidaGanada(){
-        return self.todosLosEnemigosGenerados() && self.todosLosEnemigosAcabados()
-    }
+    method partidaGanada()= self.todosLosEnemigosGenerados() && self.todosLosEnemigosAcabados()
     
-    method perderPartida(){
-        self.eliminarEnemigos();
+    method partidaFinalizada(){
+        enemigosGenerados=0
         game.removeVisual(personajePrincipal)
         game.removeVisual(castillo)
+        self.eliminarEnemigos();
         partidaSigue= false
     }
     //a cada enemigo se le agrega a su lista de posiciones todas las posiciones posibles
@@ -79,15 +80,18 @@ class Nivel{
 
     } 
     method reiniciarPartida(){
-        if(!game.hasVisual(personajePrincipal))game.addVisual(personajePrincipal)
-        if(!game.hasVisual(castillo))game.addVisual(castillo)   
-        castillo.activarColicion()     
+        //agregar visuales al reiniciar
+        //if(!game.hasVisual(personajePrincipal))game.addVisual(personajePrincipal)
+        game.addVisual(castillo)  
+        castillo.activarColision() 
+        game.addVisual(personajePrincipal)
+        //activar colisión del
+        castillo.activarColision()     
         enemigosGenerados=0
+        reysGenerados=0
         console.println("REINCIO")
         partidaSigue=true
         enemigos.forEach({ e => game.removeVisual(e)})
-        personajePrincipal.partidaFinalizada()
-        torresOpciones.partidaFinalizada()
         enemigos.clear()
         console.println(enemigosPorOleada)
         
@@ -116,15 +120,13 @@ class Nivel{
     method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
     //Metodo encargado de generar la oleada de enemigos
     method generarOleada(){
-        console.println(enemigosGenerados < enemigosPorOleada )
-        console.println(partidaSigue)
         game.removeTickEvent("oleada orco")
             //game.schedule( 4000, {self.generarOleada()})
-        
+        console.println("genero oleada")
         game.onTick(3000, "oleada orco", {
             if((enemigosGenerados < enemigosPorOleada )and partidaSigue){
             enemigosGenerados += 1
-            enemigosVivos += 1
+            enemigosVivos -= 1
             //    var imagenIdle
             // var imgenDaño
             const orco =new Orco(vida=15,daño=10,imagen="idleTroll.png",imagenIdle="idleTroll.png",imagenDaño="idleTrollDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.

@@ -7,7 +7,7 @@ import armas.*
 
 object controles {
     method configurarTeclas() {
-      if(!juegoDelCastillo.juegoCorriendo()){
+      if(!juegoDelCastillo.juegoCorriendo()){ // si el juego  todavía no inició, configurame las teclas.
         console.println("INICIE CONTORLES")
       //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
         keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
@@ -31,9 +31,9 @@ object controles {
         keyboard.num3().onPressDo({menuNiveles.iniciarNivel3()})
   }
   method configurarTeclaMenuOver() {      
-    if(!menuGameOver.overActivo()){  
-    keyboard.i().onPressDo({menuGameOver.verNiveles()})
-    keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
+    if(!menuGameOver.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
+      keyboard.i().onPressDo({menuGameOver.verNiveles()})
+      keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
     }
   }
 }
