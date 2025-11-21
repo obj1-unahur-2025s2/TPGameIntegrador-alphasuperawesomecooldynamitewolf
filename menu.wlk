@@ -46,6 +46,12 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
       game.removeVisual(self)
       
     }
+    
+    
+    const pantallaControles = new Pantalla(imagen="controlesDelJuego.png", position=game.at(0,0))
+    method verControles(){
+      pantallaControles.iniciarSiNoEliminar()
+    }
 
     method niveles() =niveles 
     method playPosition() =menu.get(0) 

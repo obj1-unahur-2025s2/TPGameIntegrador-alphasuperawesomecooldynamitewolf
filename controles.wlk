@@ -27,6 +27,7 @@ object controles {
     method configurarTeclaMenu() {
         keyboard.i().onPressDo({menu.verNiveles()})
         keyboard.p().onPressDo({menu.iniciarTutorial()})
+        keyboard.m().onPressDo({menu.verControles()})
 
   }
     method teclasSelecNiveles() {

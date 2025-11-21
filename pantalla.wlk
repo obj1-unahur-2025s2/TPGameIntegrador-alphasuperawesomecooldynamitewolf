@@ -13,4 +13,12 @@ class Pantalla{
     		game.removeVisual(self)
     	}
     }
+
+    method iniciarSiNoEliminar(){
+        if(! game.hasVisual(self)){
+            self.iniciar()
+        }else{
+            self.eliminar()
+        }
+    }
 }
