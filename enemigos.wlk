@@ -3,6 +3,8 @@ import niveles.*
 import armas.*
 import castillo.* 
 import wollok.game.*
+import menu.*
+
 ///import juegoBase.torresOpciones
 
 //const enemigo1 = new Enemigo(posiciones = nivelPrueba.ubicacionesCamino()) Ejemplo de como tendría que ser la instanciación de los enemigos con los demas atributos
@@ -14,8 +16,7 @@ class Orco{
     const imagenIdle
     const imagenDaño
     const posiciones
-    const nivelAct
-
+    const nivelAct 
     var property position =game.at(0, 0)
     const posicioActual=[]
     method post()= position
@@ -62,7 +63,7 @@ class Orco{
         if(self.estaVivo()){
             vida = self.calcularDaño(cantidadDaño)
             imagen=imagenDaño
-            game.schedule(850, {imagen=imagenIdle})
+            game.schedule(2000, {imagen=imagenIdle})
         }
     }
     method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
@@ -77,8 +78,7 @@ class Orco{
 class OrcoRey inherits Orco{
     override method valor() = 10
     override method morir(){
-        super()
-        juegoDelCastillo.partidaGanada()
+        juegoDelCastillo.ganarPartida()
         return 0
     }
 }

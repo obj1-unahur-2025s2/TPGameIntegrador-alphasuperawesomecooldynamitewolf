@@ -26,7 +26,7 @@ object controles {
     //Manejo del menu mediante teclas
     method configurarTeclaMenu() {
         keyboard.i().onPressDo({menu.verNiveles()})
-        keyboard.p().onPressDo({menu.iniciarTutorial()})
+        //keyboard.p().onPressDo({menu.iniciarTutorial()})
         keyboard.m().onPressDo({menu.verControles()})
 
   }
@@ -38,16 +38,17 @@ object controles {
       }
   }
   method configurarTeclaMenuOver() {      
-    if(!menuGameOver.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
+    if(!menuGameOver.overActivo() and !menuNextLevel.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
       keyboard.i().onPressDo({menuGameOver.verNiveles()})
       keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
     }
   }
   method configurarTeclaSiguienteOver(){
-//    if(!juegoDelCastillo.juegoCorriendo()){
+    if(!menuNextLevel.overActivo() ){
+      keyboard.i().onPressDo({menuNextLevel.verNiveles()})
       keyboard.e().onPressDo({menuNextLevel.iniciarSiguienteNivel()})
-      keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
-//    }
+      keyboard.r().onPressDo({menuNextLevel.reiniciarPartida()})
+    }
   }
 }
 

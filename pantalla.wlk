@@ -6,8 +6,13 @@ class Pantalla{
 
     method iniciar() {
         if(! game.hasVisual(self)){
-            game.addVisual(self)}
+            game.addVisual(self)
         }
+        else{
+            game.removeVisual(self)
+            game.addVisual(self)
+        }
+    }
     method eliminar(){
     	if (game.hasVisual(self)){
     		game.removeVisual(self)

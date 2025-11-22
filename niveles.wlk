@@ -10,8 +10,8 @@ import controles.*
 
 class Nivel{
     const property enemigos = []
-    var nivel
-    var enemigosPorOleada 
+    const nivel // identificador -nivel
+    const enemigosPorOleada 
     var enemigosGenerados =0
     var enemigosVivos=0                 //x,y
     const cantidadDeRey=1
@@ -28,11 +28,12 @@ class Nivel{
     }
     method partidaSigue() =partidaSigue      
     method iniciar(){
+        enemigosGenerados=0
+        reysGenerados=0
         partidaSigue=true
         pantalla.iniciar()
         enemigosVivos=enemigosPorOleada
         game.addVisual(personajePrincipal)
-        //if(enemigosGenerados>0){ enemigosGenerados=0 self.reiniciarPartida() console.println("Te lo reinicie")} else self.generarOleada()
         self.generarOleada()
         game.addVisual(castillo)     
         self.agregarContadores()      
@@ -47,14 +48,18 @@ class Nivel{
         }
     }
     method partidaFinalizada(){
+        console.println("intente eliminarlo")
         enemigosGenerados=0
+        reysGenerados=0
         game.removeVisual(personajePrincipal)
         game.removeVisual(castillo)
         self.eliminarEnemigos();
-        pantalla.eliminar()
         partidaSigue= false
     }
-/*
+    method eliminarPantalla() {
+      pantalla.eliminar()
+    }
+/*  
     method partidaGanada(){
         enemigosGenerados=0
         game.removeVisual(personajePrincipal)
@@ -88,13 +93,14 @@ class Nivel{
     method reiniciarPartida(){
         //agregar visuales al reiniciar
         //if(!game.hasVisual(personajePrincipal))game.addVisual(personajePrincipal)
-        game.addVisual(castillo)  
+        if(!game.hasVisual(castillo)) game.addVisual(castillo)  
         castillo.activarColision() 
-        game.addVisual(personajePrincipal)
+        if(!game.hasVisual(personajePrincipal)) game.addVisual(personajePrincipal)   
         //activar colisión del
         castillo.activarColision()
         enemigosGenerados=0
         reysGenerados=0
+        console.println(reysGenerados)
         // console.println("REINCIO")
         partidaSigue=true
         enemigos.forEach({ e => game.removeVisual(e)})
@@ -174,7 +180,7 @@ class Nivel{
         
     }
     */
-    method pantalla() = pantalla.iniciar()
+
     /*method nivelFinal(){
         if(nivel == 10){
 
