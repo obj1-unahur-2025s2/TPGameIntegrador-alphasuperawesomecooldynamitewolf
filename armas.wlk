@@ -93,7 +93,6 @@ object torresOpciones {
     method torreBuscada() =torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     method eliminarTorre(x,y) {
       if(self.esPosibleEliminar()){ //elimina la torre si es posible
-        console.println("intento de eliminar")
         torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }).forEach({t => t.eliminar()}) //torres Existentes guarda multiples instancias de las torres. por ende se eliminan estas con el forEach.
         torresExistentes.removeAll( torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }))   //las torres que coincidan con la posicion de la celda actual. (del jugador)
       }                   // remover todas las torres existentes , para un eficiente borrado despues.
@@ -101,10 +100,9 @@ object torresOpciones {
     method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()                                                                                                          
     method torreSeleccionada(x, y) {
     torres.clear() // sirve para poder comparar las 3 torres creadas, ya con la posicion pasada por parametro, y esta sea comparada por ->  torreBuscada() 
-    console.println("se agrego otra torre")
     const normal = new TorreNormal(
         nivelTorre = 1,
-        daño = 30,
+        daño = 3,
         rango = 2,
         position = game.at(x, y),
         positionOpcion = opciones.get(0)
@@ -113,7 +111,7 @@ object torresOpciones {
 
     const canon = new TorreCañon(
         nivelTorre = 2,
-        daño = 50,
+        daño = 5,
         rango = 1,
         position = game.at(x, y),
         positionOpcion = opciones.get(1)

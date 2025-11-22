@@ -42,7 +42,6 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     controles.configurarTeclas()
     juegoCorriendo=true  //las teclas no se van a volver a iniciar. (sin las teclas sumas movimietos no previstos.)
     if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
-    console.println(niveles)
     self.obtenerNivel(unNivel).iniciar()
 
   }
@@ -97,7 +96,6 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     sonido.play()
     self.limpiarMenus()
     if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
-    console.println(nivel)
 
     self.obtenerNivel(self.irAsiguienteNivel()).iniciar()
 
@@ -110,7 +108,6 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
 
   method irAsiguienteNivel(){
     nivel = nivel + 1
-    console.println(nivel)
     return nivel
   }
 }

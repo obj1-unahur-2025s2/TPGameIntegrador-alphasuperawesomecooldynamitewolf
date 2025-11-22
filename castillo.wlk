@@ -12,10 +12,10 @@ object castillo {
     }
     
     //Manejo de todo el puterio de la vida
-    var vida = 3
+    var vida = 25
     method vida() = vida
     method reiniciarVida() {
-        vida = 3
+        vida = 25
     }
     method recibirDaño(cantidad){
     vida = 0.max(vida-cantidad)
@@ -39,7 +39,7 @@ object contadorMoneda{
 
 
 object personajePrincipal{
-    var monedas = 100
+    var monedas = 6
     method posicionActual() =position 
     var nivel= nivelPrueba
     const  torres = []
@@ -78,9 +78,7 @@ object personajePrincipal{
     method posicionValida() =  !torresOpciones.esPosibleEliminar() // revisa si la posicion del cursor no esté en "Eliminar"
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())   && juegoDelCastillo.nivelActual().partidaSigue()
     
-    method agregarTorre(){    
-        console.println("intento de agfregares ")
-        console.println(self.posicionValida())
+    method agregarTorre(){
        
         if (juegoDelCastillo.juegoCorriendo() && self.posicionValida() && self.sePuedeAgregarTorre() ){
             torres.add(self.torreSeleccionada())

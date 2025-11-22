@@ -46,7 +46,6 @@ object secuencia{
         }
     }
     method agregarMenu() {
-        console.println(juegoDelCastillo.juegoCorriendo())
         if(!game.hasVisual(menu) and !juegoDelCastillo.juegoCorriendo()){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
             game.addVisual(menu)
             menu.seleccionNivel()
