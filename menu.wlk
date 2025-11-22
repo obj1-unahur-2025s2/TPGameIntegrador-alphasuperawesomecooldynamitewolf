@@ -85,7 +85,7 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
 
 }
 
-object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
+object menuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
     var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
     //esto habilita imagenes dentro del entorno.
     override method seleccionNivel() {
@@ -93,12 +93,15 @@ object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanad
         overActivo=true
         if(!game.hasVisual(self)) game.addVisual(self)
         const nextLevel= new Pantalla(imagen="nextLevel.png", position=game.at(self.nextLevelPosition().get(0),self.nextLevelPosition().get(1)))
+        const siguiente = new Pantalla(imagen="siguiente.png", position=game.at(self.siguientelPosition().get(0),self.siguientelPosition().get(1)))
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
         const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
         game.addVisual(play)
         game.addVisual(reiniciar)
         game.addVisual(nextLevel)
+        game.addVisual(siguiente)
         menuElementos.add(play)
+        menuElementos.add(siguiente)
         menuElementos.add(nextLevel)
         menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
     }
@@ -124,9 +127,11 @@ object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanad
       juegoDelCastillo.reiniciarPartida()
 
     }    
-    method playPosition() =menu.get(0) 
+  
+    method siguientelPosition() =menu.get(3) 
     method nextLevelPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
+    method playPosition() =menu.get(0) 
 
 }
 object menuNiveles {
