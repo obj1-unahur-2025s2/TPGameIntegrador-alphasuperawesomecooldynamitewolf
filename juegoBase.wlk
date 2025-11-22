@@ -54,12 +54,13 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   }
   method nivelActual() =niveles.get(nivel) 
   method obtenerNivel(unNivel) = niveles.get(unNivel.min(2))
-  
+
   method reiniciarPartida() {  // reinicia  enteramente la partida.
     self.limpiarMenus()
     sonido.shouldLoop(true)
     sonido.play()
     if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
+    castillo.reiniciarVida()
     self.obtenerNivel(nivel).reiniciarPartida()
 
   } 
@@ -80,7 +81,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     game.removeVisual(personajePrincipal)
     game.removeVisual(torresOpciones)
     personajePrincipal.partidaFinalizada()
-  
+    castillo.reiniciarVida()  
     menuNextLevel.seleccionNivel()
   }
   method partidaNueva() { //si en el menu Next Level se tocó la Tecla E , se carga la siguiente partida.
