@@ -25,16 +25,21 @@ object castillo {
     
 }
 
-object contadorVida{
-    // var vidaActual = 3
-    // method actualizarVida(nuevaVida){vidaActual = nuevaVida}
-    method position() = game.at(2, 8) // esquina superior izquierda
-    method text() = "Vida: " + castillo.vida()
+/// Clase Contadores ///
+
+class Contador{
+    method position()
+    method text()
 }
 
-object contadorMoneda{
-    method position() = game.at(2, 9) // esquina superior izquierda
-    method text() = "Monedas: " + personajePrincipal.monedas()
+class ContadorVida inherits Contador{
+    override method position() = game.at(2, 8) // esquina superior izquierda
+    override method text() = "Vida: " + castillo.vida()
+}
+
+class ContadorMoneda inherits Contador{
+    override method position() = game.at(2, 9) // esquina superior izquierda
+    override method text() = "Monedas: " + personajePrincipal.monedas()
 }
 
 

@@ -54,15 +54,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   }
   method nivelActual() =niveles.get(nivel) 
   method obtenerNivel(unNivel) = niveles.get(unNivel.min(2))
-  /*
-  method pasarDeNivel() {
-    if(nivel <= 3){
-      nivel = nivel + 1
-      self.obtenerNivel(nivel).iniciar()
-    }
-  }
-  */
-
+  
   method reiniciarPartida() {  // reinicia  enteramente la partida.
     self.limpiarMenus()
     sonido.shouldLoop(true)

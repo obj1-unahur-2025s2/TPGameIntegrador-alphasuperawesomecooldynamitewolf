@@ -1,4 +1,3 @@
-import wollok //No se que se estaría importando.
 import castillo.*
 import enemigos.*
 import niveles.*
@@ -13,20 +12,11 @@ class Torre{
   ///const costo
   const daño
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
-  ///const diseñoTorre=["torre1.png","torre2.png","torre3.png"] //falta agregar mas imagenes ... 
-///  var imagen="torre.png"
   const property  position 
-
-///  method image() = self.diseño()
   
   method subirNivel(){
     nivelTorre = nivelTorre + 1
   }
-  /*method elegirDiseño(num) {
-    imagen=self.obtenerDiseñoDeLista(num) // num =torre Diseño -> numero , puede ser las diferentes torres,esto para facilitar la adicion de la imagen a la torre.
-  }
-  method obtenerDiseñoDeLista(num)=diseñoTorre.get(num) // es para obtener el diseño. (al hacerlos nosotros, ya deberiamos saber cuantos diseños hay, y asi no poener fuera del indice)
-  */
   method posicionDeOpcion() =positionOpcion 
 
   method cursor() ="cursorTorre.png" 
@@ -53,8 +43,7 @@ class Torre{
     game.removeVisual(self)
 
   }
-  method image() = self.diseño()
-  method diseño()
+  method image()
   method atacar() = daño + nivelTorre
   method costo()
 
@@ -63,20 +52,20 @@ class Torre{
 
 class TorreNormal inherits Torre{
   override method costo() = 3
-  override method diseño() = "torre1.png"
+  override method image() = "torre1.png"
   //override method atacar() = super() + self.costo()
 }
 
 class TorreCañon inherits Torre{
   override method costo() = 5
-  override method diseño() = "torre2.png"
+  override method image() = "torre2.png"
   //override method atacar() = super() + self.costo()
 
 }
 
 class TorreTesla inherits Torre{
   override method costo() = 10
-  override method diseño() = "torre3.png"
+  override method image() = "torre3.png"
   //override method atacar() = super() + self.costo()
 }
 
@@ -126,15 +115,6 @@ object torresOpciones {
         positionOpcion = opciones.get(2)
     )
     torres.add(tesla)
-
-    /*const seleccionada = torres.find({
-        t => t.posicionDeOpcion() == self.posicionActualComoColeccion()
-    })
-
-    if (seleccionada != null) {
-        game.addVisual(seleccionada)
-        torresExistentes.add(seleccionada)
-    }*/
     torresExistentes.add(self.torreBuscada())
     return self.torreBuscada()
 }
@@ -144,8 +124,6 @@ object torresOpciones {
       torresExistentes.clear()
     }
     method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
-    method obtenerTorreNormal() = torres.get(0)
-    method obtenerTorreCañon() = torres.get(1)
     //movimientos de las torres, recomiendo dejar aca y no moverlo a controles para que sea mas entendible
     method moverseHaciaArriba() {
         if(self.position().y() >1 and self.position().y() <6 ){

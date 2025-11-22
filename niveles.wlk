@@ -147,33 +147,13 @@ class Nivel{
         }
                 
     } 
-    // Llamar cuando un enemigo muere
-    /*method enemigoMuerto(){
-        enemigosVivos -= 1
-        if(enemigosVivos == 0){
-            self.pasarSiguienteNivel() //Tiene que haber un mensaje, pantalla o algo que suavice la trancisión de un nivel a otro. Que no quede llamado así de una porque ni te va a dar tiempo a ver que ganaste el nivel y pasas al siguiente.
-        }
-    }*/
-
-    //Pasa a siguiente nivel una vez que gana
-    
-    /*
-    method pasarSiguienteNivel(){
-        nivel += 1
-        enemigosPorOleada += 2  // Cada nivel más difícil
-        
-    }
-    */
-
-    /*method nivelFinal(){
-        if(nivel == 10){
-
-        }
-    }*/
 }
 
 
 ///usos, se podria utilizar para saber cuantas torres hay para ubicar,  si es que en algun nivel especifico ya no se permite dicha torre etc.
+///Contadores
+const contadorVida = new ContadorVida()
+const contadorMoneda = new ContadorMoneda()
 
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")

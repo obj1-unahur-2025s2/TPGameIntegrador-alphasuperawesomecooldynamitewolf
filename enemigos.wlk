@@ -21,16 +21,6 @@ class Orco{
     const posicioActual=[]
     method post()= position
     method posicionActual() = game.at(posicioActual.last().get(0),posicioActual.last().get(1))
-    /*method recibirDaño(cantidadDaño){
-        if(self.estaVivo()){
-            vida -= cantidadDaño
-            
-            ///game.say("Me queda" + self.vida()) /// Revisar por las dudas
-        }
-        else{
-            self.morir()
-        }
-    }*/
     method partidaSigue() =nivelAct.partidaSigue() 
 
     method vida() = vida
@@ -69,7 +59,6 @@ class Orco{
     method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
     method atacar(unObjeto){
         unObjeto.recibirDaño(daño)
-        ///game.say(unObjeto, "Me queda" + unObjeto.vida()) /// Revisar por las dudas
     }
     
     method valor() = 5
