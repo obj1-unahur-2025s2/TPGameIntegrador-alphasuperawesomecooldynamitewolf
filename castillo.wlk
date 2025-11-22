@@ -76,7 +76,7 @@ object personajePrincipal{
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
     method posicionValida() =  !torresOpciones.esPosibleEliminar() // revisa si la posicion del cursor no esté en "Eliminar"
-    method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())  && juegoDelCastillo.juegoCorriendo()
+    method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())   && juegoDelCastillo.nivelActual().partidaSigue()
     
     method agregarTorre(){    
         console.println("intento de agfregares ")

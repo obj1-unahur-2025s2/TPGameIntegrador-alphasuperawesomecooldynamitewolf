@@ -6,7 +6,6 @@ import armas.*
 
 class Menu{
     const menu =[]
-    const niveles=[]
     const menuElementos=[] //se agrega las imagenes "entrenamiento" "iniciar" <- podria estar en una sola imagen, pero para animarlo estaria bueno que esté separado.
     var property position =game.at(0,0) 
 
@@ -14,20 +13,19 @@ class Menu{
     method image() =imagen 
     method seleccionNivel()
     method terminarMenu() {
-      menuElementos.forEach({e => e.eliminar()})
-      game.removeVisual(self)
+      if(game.hasVisual(self)){
+          menuElementos.forEach({e => e.eliminar()})
+          game.removeVisual(self)
+      }
     }
     method estaActivo() =menuElementos.size()>0 //esta activo si hay elementos dentro del menu. osea el menu esta activo. 
     method verNiveles() {
       // juegoDelCastillo.vaciarNiveles()
-      niveles.add(nivelPrueba) //<- agregar la lista de todos los niveles, menos el tuto [nivel1,nivel2..]
       menuNiveles.iniciar()
-      self.terminarMenu()
     }
 }
 object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
-
-    //esto habilita imagenes dentro del entorno.
+      //esto habilita imagenes dentro del entorno.
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
@@ -39,31 +37,23 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
         
     }
 
-      method iniciarTutorial() {
-      juegoDelCastillo.agregarNiveles(nivelPrueba) //<- agregar la lista de todos los niveles, y al principio el tuto [tuto,nivel1,nivel2..]
-      self.terminarMenu()
-      // juegoDelCastillo.iniciarNivel()
-      game.removeVisual(self)
-      
-    }
     
-    
+
     const pantallaControles = new Pantalla(imagen="controlesDelJuego.png", position=game.at(0,0))
     method verControles(){
       pantallaControles.iniciarSiNoEliminar()
     }
-
-    method niveles() =niveles 
     method playPosition() =menu.get(0) 
     method entrenamientoPosition() =menu.get(1) 
 }
 
 
 object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.png") {
-    var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
     //esto habilita imagenes dentro del entorno.
+    var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.) 
     override method seleccionNivel() {
         controles.configurarTeclaMenuOver()
+        overActivo=true
         const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
         const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
@@ -76,91 +66,74 @@ object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.
 
     }
     method overActivo() =overActivo 
-    override method verNiveles(){
+
+  //  override method verNiveles(){
       // juegoDelCastillo.vaciarNiveles() //
-      menuNiveles.iniciar()
-      self.terminarMenu()
+    //  menuNiveles.iniciar()
+      //self.terminarMenu()
       
-    } 
+    //} 
         
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
       overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
       juegoDelCastillo.reiniciarPartida()
-      self.terminarMenu()
     }    
 
-    method niveles() =niveles 
     method playPosition() =menu.get(0) 
     method gameOverPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
 
 }
-/*
-object menuNextLevel inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="nivelGanado.png") {
+
+object menuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
     var overActivo=false // <-es utilizado para que la tecla Riniciar no sea ejecutada  varias veces. (ya que al inovcar seleccionNivel este llama a configurar su teclas.)
     //esto habilita imagenes dentro del entorno.
     override method seleccionNivel() {
         controles.configurarTeclaSiguienteOver()
+        overActivo=true
+        if(!game.hasVisual(self)) game.addVisual(self)
         const nextLevel= new Pantalla(imagen="nextLevel.png", position=game.at(self.nextLevelPosition().get(0),self.nextLevelPosition().get(1)))
+        const siguiente = new Pantalla(imagen="siguiente.png", position=game.at(self.siguientelPosition().get(0),self.siguientelPosition().get(1)))
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
         const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
         game.addVisual(play)
         game.addVisual(reiniciar)
         game.addVisual(nextLevel)
+        game.addVisual(siguiente)
         menuElementos.add(play)
+        menuElementos.add(siguiente)
         menuElementos.add(nextLevel)
         menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
-
     }
+
+     override method verNiveles(){
+      menuNiveles.iniciar()
+
+
+    } 
     method overActivo() =overActivo 
     method iniciarSiguienteNivel(){
-      juegoDelCastillo.siguienteNivel()
-      menuNiveles.iniciarNivel(juegoDelCastillo.nivel())
-      juegoDelCastillo.partidaGanada()
-      self.terminarMenu()
+      juegoDelCastillo.partidaNueva()
+      //juegoDelCastillo.partidaGanada()
+
     }
+    
+    method iniciarNivel(unNivel) {        
+      juegoDelCastillo.iniciarNivel(unNivel)
+  }
         
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
       overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
       juegoDelCastillo.reiniciarPartida()
-      self.terminarMenu()
-    }    
 
-    method siguienteNivel() = niveles 
-    method playPosition() =menu.get(0) 
+    }    
+  
+    method siguientelPosition() =menu.get(3) 
     method nextLevelPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
+    method playPosition() =menu.get(0) 
 
-}*/
-
-object menuNextLevel{
-  var property position =game.at(0,0) 
-  method image() = "fondoNextLevel.jpeg"
-
-  method iniciar() {
-    if(!game.hasVisual(self)) game.addVisual(self)
-    controles.configurarTeclaSiguienteOver()
-    //todavia no interactua con los niveles.
-  }
-
-  method iniciarSiguienteNivel(){
-    juegoDelCastillo.iniciarNivel(1)
-    //juegoDelCastillo.partidaGanada()
-    self.terminarMenu()
-  }
-
-  method iniciarNivel(unNivel) {        
-    //if(!juegoDelCastillo.tieneNiveles()){
-      //juegoDelCastillo.agregarNiveles(nivel1)
-      juegoDelCastillo.iniciarNivel(unNivel)
-      self.terminarMenu()
-    //}
-  }
-  method terminarMenu() {
-    game.removeVisual(self)
-  }
 }
-
 object menuNiveles {
   var property position =game.at(0,0) 
   method image() = "selectorNiveles.png"
@@ -179,23 +152,7 @@ object menuNiveles {
       self.terminarMenuNiveles()
     //}
   }
-  /*
-  method iniciarNivel(unNivel) {
-    // if(!juegoDelCastillo.tieneNiveles()){
-      //juegoDelCastillo.agregarNiveles(nivel2)
-      juegoDelCastillo.iniciarNivel(unNivel)
-      self.terminarMenuNiveles()
-    // }
-  }
-  method iniciarNivel(unNivel) {
-    // if(!juegoDelCastillo.tieneNiveles()){
-    //juegoDelCastillo.agregarNiveles(nivel3)
-    juegoDelCastillo.iniciarNivel(unNivel)
-    self.terminarMenuNiveles()
-    // }
-  }
-  */
   method terminarMenuNiveles() {
-    game.removeVisual(self)
+    if(game.hasVisual(self))game.removeVisual(self)
   }
 }
