@@ -11,9 +11,12 @@ class Torre{
   var torreActiva =true
   ///const costo
   const daño
+  const audioConstruccion="hammer.mp3"
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const property  position 
-  
+  method reporducirAudioConstruir() {
+    game.sound(audioConstruccion).play()
+  }
   method subirNivel(){
     nivelTorre = nivelTorre + 1
   }

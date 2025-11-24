@@ -22,12 +22,13 @@ object juego {
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
-
+ 
   var  property nivel = 0//Numero
   var juegoCorriendo=false //indicacion para los controles. si el juego todavia no iicio configura las teclas.
   const niveles=[nivel1 , nivel2 , nivel3]
   const nivelesCompeltos=[]
   const sonido = game.sound("orcsAttacking.mp3")
+
   method agregarNiveles(unNivel) {
     if(!niveles.contains(unNivel)){
       niveles.add(unNivel)
@@ -55,6 +56,10 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     self.iniciarNivel(nivel)
 
   } 
+  method reproducirGameOver() {
+    const sonidoGameOver= game.sound("gameOver.mp3")
+   sonidoGameOver.play()
+  }
   method juegoCorriendo() =juegoCorriendo 
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
     sonido.stop()
@@ -62,8 +67,13 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     castillo.reiniciarVida()
     torresOpciones.partidaFinalizada()     
     game.removeVisual(torresOpciones)
+    self.reproducirGameOver()
     self.generarGameOver() //llama al menu GameOver para que vuevla con una pantalla.
   }  
+  method reproducirVictoria() {
+    const sonidoVictoria= game.sound("victoria.mp3")
+    sonidoVictoria.play()
+  }
   method ganarPartida() { //metodo el cual llama el rey orco al morir, esté despues llama al menu nextLvel
     sonido.stop()
     torresOpciones.partidaFinalizada() 
@@ -72,6 +82,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     game.removeVisual(torresOpciones)
     personajePrincipal.partidaFinalizada()
     castillo.reiniciarVida()  
+    self.reproducirVictoria()
     menuNextLevel.seleccionNivel()
   }
   method partidaNueva() { //si en el menu Next Level se tocó la Tecla E , se carga la siguiente partida.

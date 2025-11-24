@@ -41,8 +41,14 @@ class Orco{
         } //1200
 
     }
+    method reproducirMuerte() {
+        const sonidoMuerte=game.sound("rip.mp3")
+        sonidoMuerte.play()
+    
+    }
     method morir(){
         self.soltarMoneda()
+        self.reproducirMuerte()
         game.removeVisual(self)
         return 0
     }
@@ -56,19 +62,28 @@ class Orco{
     }
 
     method estaVivo() = vida > 0
-
+    method reproducirDaño(){
+        const sonidoDaño=game.sound("damage.mp3")
+        sonidoDaño.play()
+    }
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
             vida = self.calcularDaño(cantidadDaño)
             imagen=imagenDaño
+            self.reproducirDaño()
             game.schedule(2000, {imagen=imagenIdle})
         }
+    }
+    method reproducirDañoCastillo() {
+        const sonidoCastleDamage=game.sound("damageCasttle.mp3")
+        sonidoCastleDamage.play()
     }
     method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
     method atacar(unObjeto){
         if(game.hasVisual(self) and self.estaVivo()){
             console.println("ataque al castillo !!")
             unObjeto.recibirDaño(daño)
+            self.reproducirDañoCastillo()
             game.schedule(3000,{if(unObjeto.estaVivo()) self.atacar(unObjeto) })
         }    
         

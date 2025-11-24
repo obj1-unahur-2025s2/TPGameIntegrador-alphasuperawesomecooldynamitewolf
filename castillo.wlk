@@ -12,10 +12,10 @@ object castillo {
     }
     
     //Manejo de todo el puterio de la vida
-    var vida = 25 //25
+    var vida = 35 //50
     method vida() = vida
     method reiniciarVida() {
-        vida = 25
+        vida = 35
     }
     method recibirDaño(cantidad){
     vida = 0.max(vida-cantidad)
@@ -91,6 +91,7 @@ object personajePrincipal{
             game.addVisual(self.torreSeleccionada())
             self.agregarTorresPuestas(self.torreSeleccionada())
             self.gastarMonedas(self.torreCosto())
+            self.torreSeleccionada().reporducirAudioConstruir()
         }
         else{
             self.eliminarSiEsPosible()

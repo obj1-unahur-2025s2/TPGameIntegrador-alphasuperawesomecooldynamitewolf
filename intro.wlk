@@ -6,26 +6,34 @@ import juegoBase.*
 
 class Intros{
     var property position =game.origin()
+    const audio
     const imagen
     method image() = imagen
     method iniciar()
+    method silenciarSiEsPosible() {
+      audio.volume(0)
+    }
 }
-object intro1 inherits Intros (imagen = "intro1.jpeg"){
+object intro1 inherits Intros (audio=game.sound("audio1.mp3"), imagen = "intro1.jpeg"){
     override method iniciar(){
         controles.controlesIntro()
         game.addVisual(self)
+        game.schedule(1000,{audio.play()})
     }
 }
-object intro2 inherits Intros (imagen = "intro2.jpeg"){
+object intro2 inherits Intros (audio=game.sound ("audio2.mp3"),imagen = "intro2.jpeg"){
     override method iniciar(){
+        audio.play()
         game.addVisual(self)
     }
 }
-object intro3 inherits Intros (imagen = "intro3.jpeg"){
+object intro3 inherits Intros (audio=game.sound ("audio3.mp3") ,imagen = "intro3.jpeg"){
     override method iniciar(){
+        audio.play()
         game.addVisual(self)
     }
 }
+//alguna razon se ejecuta primero el silencio.
 object secuencia{
     var lastVisual = null
     var property position =game.origin()
@@ -33,8 +41,13 @@ object secuencia{
     method saltar(){
         self.saltarFrame()
     }
+    method bajarVolumen() {
+      if(!frames.isEmpty()){
+        frames.first().silenciarSiEsPosible()
+      }
+    }
     method saltarFrame() {
-        if(lastVisual != null) game.removeVisual(lastVisual)
+        if(lastVisual != null) lastVisual.silenciarSiEsPosible() game.removeVisual(lastVisual)
         if(frames.size() > 0){
             lastVisual = frames.first()
             frames.first().iniciar()
