@@ -8,7 +8,7 @@ import intro.*
 
 object controles {
     method configurarTeclas() {
-      if(!juegoDelCastillo.juegoCorriendo()){ // si el juego  todavía no inició, configurame las teclas.
+      //if(!juegoDelCastillo.juegoCorriendo()){ // si el juego  todavía no inició, configurame las teclas.
       //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
         keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
         keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
@@ -17,7 +17,7 @@ object controles {
       //teclas opciones
           keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
           keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
-      }
+      //}
   }
     method controlesIntro() {
         keyboard.space().onPressDo({secuencia.saltar()})
@@ -30,24 +30,25 @@ object controles {
 
   }
     method teclasSelecNiveles() {
-      if(!juegoDelCastillo.juegoCorriendo()){
+    //if(!juegoDelCastillo.juegoCorriendo()){
           keyboard.num1().onPressDo({menuNiveles.iniciarNivel(0)})
           keyboard.num2().onPressDo({menuNiveles.iniciarNivel(1)})
           keyboard.num3().onPressDo({menuNiveles.iniciarNivel(2)})
-      }
+        }
+  method configurarTeclaGeneral() {      
+    //if(!menuGameOver.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
+      keyboard.i().onPressDo({menu.verNiveles()})
+      keyboard.r().onPressDo({menu.reiniciarPartida()})
+      
+    //}
   }
-  method configurarTeclaMenuOver() {      
-    if(!menuGameOver.overActivo() and !menuNextLevel.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
-      keyboard.i().onPressDo({menuGameOver.verNiveles()})
-      keyboard.r().onPressDo({menuGameOver.reiniciarPartida()})
-    }
+  method configurarReglas() {
+    keyboard.m().onPressDo({menu.verControles()})
   }
   method configurarTeclaSiguienteOver(){
-    if(!menuNextLevel.overActivo() ){
-      keyboard.i().onPressDo({menuNextLevel.verNiveles()})
+      self.configurarTeclaGeneral()
       keyboard.e().onPressDo({menuNextLevel.iniciarSiguienteNivel()})
-      keyboard.r().onPressDo({menuNextLevel.reiniciarPartida()})
-    }
+
   }
 }
 

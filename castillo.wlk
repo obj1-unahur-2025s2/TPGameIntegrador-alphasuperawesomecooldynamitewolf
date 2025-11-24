@@ -12,16 +12,17 @@ object castillo {
     }
     
     //Manejo de todo el puterio de la vida
-    var vida = 25
+    var vida = 25 //25
     method vida() = vida
     method reiniciarVida() {
         vida = 25
     }
     method recibirDaño(cantidad){
     vida = 0.max(vida-cantidad)
-    if(vida <= 0){
-        juegoDelCastillo.partidaFinalizada()
+    if(!self.estaVivo()){
+        juegoDelCastillo.partidaFinalizada() 
     }}
+    method estaVivo()=vida > 0
     
 }
 
@@ -44,7 +45,7 @@ class ContadorMoneda inherits Contador{
 
 
 object personajePrincipal{
-    var monedas = 6
+    var monedas = 6 //6
     method posicionActual() =position 
     var nivel= nivelPrueba
     const  torres = []

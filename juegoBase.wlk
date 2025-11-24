@@ -22,60 +22,50 @@ object juego {
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
-  const sonido = game.sound("orcsAttacking.mp3")
+
   var  property nivel = 0//Numero
   var juegoCorriendo=false //indicacion para los controles. si el juego todavia no iicio configura las teclas.
   const niveles=[nivel1 , nivel2 , nivel3]
   const nivelesCompeltos=[]
- 
+  const sonido = game.sound("orcsAttacking.mp3")
   method agregarNiveles(unNivel) {
     if(!niveles.contains(unNivel)){
       niveles.add(unNivel)
     }
   }
+
   method tieneNiveles() =niveles.size()>0 //util para teclas del selector nivel. impide que se agreguen multiple veces los niveles. (revisar Menu) 
   method iniciarNivel(unNivel) { 
-    self.limpiarMenus()
-    nivel=unNivel
-    sonido.shouldLoop(true)
+    game.clear()
     sonido.play()
+    sonido.shouldLoop(true)
+    nivel=unNivel
+    controles.configurarReglas()
     controles.configurarTeclas()
     juegoCorriendo=true  //las teclas no se van a volver a iniciar. (sin las teclas sumas movimietos no previstos.)
-    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
+    game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
     self.obtenerNivel(unNivel).iniciar()
 
-  }
-  method limpiarMenus() { //se elimina cualquier pantalla que esté iniciada de menu.
-    menu.terminarMenu()
-    menuNiveles.terminarMenuNiveles()
-    menuNextLevel.terminarMenu() 
-    menuGameOver.terminarMenu()
-    menu.terminarMenu()
   }
   method nivelActual() =niveles.get(nivel) 
   method obtenerNivel(unNivel) = niveles.get(unNivel.min(2))
 
   method reiniciarPartida() {  // reinicia  enteramente la partida.
-    self.limpiarMenus()
-    sonido.shouldLoop(true)
-    sonido.play()
-    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
-    castillo.reiniciarVida()
-    self.obtenerNivel(nivel).reiniciarPartida()
+    game.clear()
+    self.iniciarNivel(nivel)
 
   } 
   method juegoCorriendo() =juegoCorriendo 
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
     sonido.stop()
     self.obtenerNivel(nivel).partidaFinalizada()
-    torresOpciones.partidaFinalizada() 
+    castillo.reiniciarVida()
+    torresOpciones.partidaFinalizada()     
     game.removeVisual(torresOpciones)
-    self.limpiarMenus()
     self.generarGameOver() //llama al menu GameOver para que vuevla con una pantalla.
   }  
   method ganarPartida() { //metodo el cual llama el rey orco al morir, esté despues llama al menu nextLvel
     sonido.stop()
-    self.limpiarMenus()
     torresOpciones.partidaFinalizada() 
     self.obtenerNivel(nivel).partidaFinalizada()
     game.removeVisual(personajePrincipal)
@@ -85,22 +75,13 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     menuNextLevel.seleccionNivel()
   }
   method partidaNueva() { //si en el menu Next Level se tocó la Tecla E , se carga la siguiente partida.
-    sonido.shouldLoop(true)
-    sonido.play()
-    self.limpiarMenus()
-    if(!game.hasVisual(torresOpciones)) game.addVisual(torresOpciones)
-
-    self.obtenerNivel(self.irAsiguienteNivel()).iniciar()
-
+    self.iniciarNivel(self.irAsiguienteNivel())
     
   }
   method generarGameOver() {if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver) menuGameOver.seleccionNivel() personajePrincipal.partidaFinalizada()} // genera el menu game over
    method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
-  
-  //method generarNextLevel() {if(!game.hasVisual(menuNextLevel))game.addVisual(menuNextLevel) menuNextLevel.seleccionNivel() personajePrincipal.partidaFinalizada()}
-
   method irAsiguienteNivel(){
-    nivel = nivel + 1
+    nivel = (nivel + 1).min(2)
     return nivel
   }
 }

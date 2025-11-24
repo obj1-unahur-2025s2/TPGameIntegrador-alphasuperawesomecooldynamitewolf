@@ -46,7 +46,7 @@ object secuencia{
         }
     }
     method agregarMenu() {
-        if(!game.hasVisual(menu) and !juegoDelCastillo.juegoCorriendo()){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
+        if(!game.hasVisual(menu)){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
             game.addVisual(menu)
             menu.seleccionNivel()
         }

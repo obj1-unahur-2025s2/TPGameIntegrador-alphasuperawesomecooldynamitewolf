@@ -14,6 +14,7 @@ class Orco{
     const property daño
     var imagen //variar al recibir un ataque
     const imagenIdle
+    const imagenRun
     const imagenDaño
     const posiciones
     const nivelAct 
@@ -29,11 +30,14 @@ class Orco{
         self.avanzar()
     }  
     method avanzar() {
+        console.println("avance")
+        game.schedule(850,{imagen=imagenIdle})
         if(posiciones.size() !=0 and self.estaVivo() and self.partidaSigue()) {//caso base, ya no hay posiciones.
+            imagen=imagenRun
             position=game.at(posiciones.first().get(0),posiciones.first().get(1))
             posicioActual.add([position.x(),position.y()]) // agrega esa posiciosion -> por si la torreta quiere saber donde está , sirve esto , solo falta un  getter
             posiciones.remove(posiciones.first()) // remueve su primera posicion
-            game.schedule(1200, {personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
+            game.schedule(900, { if(self.vida()>0)personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)}) self.avanzar()}) // activa recursion
         } //1200
 
     }
@@ -41,6 +45,10 @@ class Orco{
         self.soltarMoneda()
         game.removeVisual(self)
         return 0
+    }
+    method eliminar() {
+      vida=0
+      if(game.hasVisual(self))game.removeVisual(self)
     }
     ///Hay que ponerle un limite de que parte del juego deberia aparecer aleatoriamente
     method soltarMoneda(){
@@ -58,7 +66,13 @@ class Orco{
     }
     method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
     method atacar(unObjeto){
-        unObjeto.recibirDaño(daño)
+        if(game.hasVisual(self) and self.estaVivo()){
+            console.println("ataque al castillo !!")
+            unObjeto.recibirDaño(daño)
+            game.schedule(3000,{if(unObjeto.estaVivo()) self.atacar(unObjeto) })
+        }    
+        
+
     }
     
     method valor() = 5

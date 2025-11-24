@@ -22,7 +22,7 @@ class Torre{
   method cursor() ="cursorTorre.png" 
 
     method rangoEfectivo() {
-    return [
+    return  [
         position.up(rango),position.down(rango),position.left(rango),position.right(rango), arriba.siguientePosicion(position.up(rango)),
         abajo.siguientePosicion(position.down(rango)),
         izquierda.siguientePosicion(position.left(rango)),
@@ -35,7 +35,8 @@ class Torre{
   }
 
   method atacarSiEstaEnRango(unEnemigo) {
-    if(self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo() and torreActiva)
+
+    if(torreActiva and self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
         game.schedule(100, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {

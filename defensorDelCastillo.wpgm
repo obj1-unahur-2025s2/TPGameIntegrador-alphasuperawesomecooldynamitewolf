@@ -16,3 +16,6 @@ program DefensorDelCastillo {
 	//cambiar el objeto a la clase
 	juego.iniciar()
 }
+
+//iniciar nivel de nuevo -> son doble
+//reiniciar nivel -> son triple 
