@@ -6,8 +6,8 @@ import armas.*
 
 class Menu{
     var overActivo=false 
-    const menu =[]
-    const menuElementos=[] //se agrega las imagenes "entrenamiento" "iniciar" <- podria estar en una sola imagen, pero para animarlo estaria bueno que esté separado.
+    const menu =[] // menus <- posiciones
+    const menuElementos=[] //elementos que existen dentro del entorno
     var property position =game.at(0,0) 
 
     const imagen
@@ -20,18 +20,16 @@ class Menu{
       }
     }
     method estaActivo() =menuElementos.size()>0 //esta activo si hay elementos dentro del menu. osea el menu esta activo. 
-    method verNiveles() {
-      // juegoDelCastillo.vaciarNiveles()
-      menuNiveles.iniciar()
-    }
+
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
       overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
       juegoDelCastillo.reiniciarPartida()
 
     }    
 }
-object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
-      //esto habilita imagenes dentro del entorno.
+
+//clase del menu de inicio. (pantalla despues de la intro)
+class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
@@ -42,51 +40,18 @@ object menu inherits Menu(menu =[[7,1],[11,1]],imagen="juegoInicio.jpeg") {
         menuElementos.add(entrenamiento) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
         
     }
-
-    
-
     const pantallaControles = new Pantalla(imagen="controlesDelJuego.png", position=game.at(0,0))
     method verControles(){
       pantallaControles.iniciarSiNoEliminar()
     }
+    method verNiveles() {
+      menuNiveles.iniciar()
+    }
     method playPosition() =menu.get(0) 
     method entrenamientoPosition() =menu.get(1) 
 }
-
-
-object menuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.png") {
-    //esto habilita imagenes dentro del entorno.
-       override method seleccionNivel() {
-        controles.configurarTeclaGeneral()
-        overActivo=true
-        const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
-        const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
-        const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
-        game.addVisual(play)
-        game.addVisual(reiniciar)
-        game.addVisual(gameOver)
-        menuElementos.add(play)
-        menuElementos.add(gameOver)
-        menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
-        
-    }
-    method overActivo() =overActivo 
-    
-  //  override method verNiveles(){
-      // juegoDelCastillo.vaciarNiveles() //
-    //  menuNiveles.iniciar()
-      //self.terminarMenu()
-      
-    //} 
-
-    method playPosition() =menu.get(0) 
-    method gameOverPosition() =menu.get(2) 
-    method reiniciarPosition() =menu.get(1) 
-
-}
-
-object menuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
-    //esto habilita imagenes dentro del entorno.
+//
+class MenuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
     override method seleccionNivel() {
         controles.configurarTeclaSiguienteOver()
         overActivo=true
@@ -112,13 +77,32 @@ object menuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="niv
     method iniciarNivel(unNivel) {        
       juegoDelCastillo.iniciarNivel(unNivel)
   }
-        
-
-  
     method siguientelPosition() =menu.get(3) 
     method nextLevelPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
     method playPosition() =menu.get(0) 
+
+}
+class MenuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.png") {
+    //esto habilita imagenes dentro del entorno.
+       override method seleccionNivel() {
+        controles.configurarTeclaGeneral()
+        overActivo=true
+        const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
+        const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
+        const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
+        game.addVisual(play)
+        game.addVisual(reiniciar)
+        game.addVisual(gameOver)
+        menuElementos.add(play)
+        menuElementos.add(gameOver)
+        menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
+        
+    }
+    method overActivo() =overActivo 
+    method playPosition() =menu.get(0) 
+    method gameOverPosition() =menu.get(2) 
+    method reiniciarPosition() =menu.get(1) 
 
 }
 object menuNiveles {

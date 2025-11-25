@@ -9,31 +9,37 @@ import intro.*
 
 
 object juego {
+  const menusActivos=[]
+  method menus() =menusActivos 
   method iniciar() {
     game.title("Orcs defense")
     game.height(10)
     game.width(20)
     game.boardGround("fondo.png")
     game.addVisual(secuencia)
+    self.configurarEntorno()
     secuencia.saltar()
     game.start()
     
+  }
+  //configura los menus del juego. 
+  method configurarEntorno() {
+    const menu = new MenuInicio()
+    const menuNextLevel= new MenuNextLevel()
+    const menuGameOver=new MenuGameOver()
+    menusActivos.addAll([menu,menuNextLevel,menuGameOver])
   } 
+    method  obtenerMenuInicial()=menusActivos.get(0)
+    method  obtenerMenuNextLevel()=menusActivos.get(1)
+    method  obtenerMenuGameOver()=menusActivos.get(2)
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
  
   var  property nivel = 0//Numero
-  var juegoCorriendo=false //indicacion para los controles. si el juego todavia no iicio configura las teclas.
   const niveles=[nivel1 , nivel2 , nivel3]
   const nivelesCompeltos=[]
   const sonido = game.sound("orcsAttacking.mp3")
-
-  method agregarNiveles(unNivel) {
-    if(!niveles.contains(unNivel)){
-      niveles.add(unNivel)
-    }
-  }
 
   method tieneNiveles() =niveles.size()>0 //util para teclas del selector nivel. impide que se agreguen multiple veces los niveles. (revisar Menu) 
   method iniciarNivel(unNivel) { 
@@ -41,10 +47,11 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     sonido.play()
     sonido.shouldLoop(true)
     nivel=unNivel
+
+    castillo.reiniciarVida()  
     controles.configurarReglas()
     controles.configurarTeclas()
-    juegoCorriendo=true  //las teclas no se van a volver a iniciar. (sin las teclas sumas movimietos no previstos.)
-    game.addVisual(torresOpciones) //se pregunta porque juegoDelCastillo es un objeto que no muere. por ende es propenso a insertar multiple veces el menu.
+    game.addVisual(torresOpciones) 
     self.obtenerNivel(unNivel).iniciar()
 
   }
@@ -60,11 +67,9 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     const sonidoGameOver= game.sound("gameOver.mp3")
    sonidoGameOver.play()
   }
-  method juegoCorriendo() =juegoCorriendo 
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
     sonido.stop()
     self.obtenerNivel(nivel).partidaFinalizada()
-    castillo.reiniciarVida()
     torresOpciones.partidaFinalizada()     
     game.removeVisual(torresOpciones)
     self.reproducirGameOver()
@@ -74,23 +79,24 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     const sonidoVictoria= game.sound("victoria.mp3")
     sonidoVictoria.play()
   }
-  method ganarPartida() { //metodo el cual llama el rey orco al morir, esté despues llama al menu nextLvel
+  method ganarPartida() {  // lo llama Nivel al terminar de evaluar las condiciones de victoria.
     sonido.stop()
     torresOpciones.partidaFinalizada() 
     self.obtenerNivel(nivel).partidaFinalizada()
-    game.removeVisual(personajePrincipal)
-    game.removeVisual(torresOpciones)
-    personajePrincipal.partidaFinalizada()
-    castillo.reiniciarVida()  
     self.reproducirVictoria()
-    menuNextLevel.seleccionNivel()
+    game.removeVisual(torresOpciones)
+    juego.obtenerMenuNextLevel().seleccionNivel()
   }
   method partidaNueva() { //si en el menu Next Level se tocó la Tecla E , se carga la siguiente partida.
     self.iniciarNivel(self.irAsiguienteNivel())
     
   }
-  method generarGameOver() {if(!game.hasVisual(menuGameOver))game.addVisual(menuGameOver) menuGameOver.seleccionNivel() personajePrincipal.partidaFinalizada()} // genera el menu game over
-   method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
+  method generarGameOver() {
+      game.addVisual(juego.obtenerMenuGameOver())
+      juego.obtenerMenuGameOver().seleccionNivel()
+      personajePrincipal.partidaFinalizada()
+    }
+  method nivelQueSigue()= niveles.filter({ n => nivelesCompeltos.any({ nc => n !=nc})}).first() // filtrame por los niveles que no están dentro de los niveles pasados por el jugador
   method irAsiguienteNivel(){
     nivel = (nivel + 1).min(2)
     return nivel

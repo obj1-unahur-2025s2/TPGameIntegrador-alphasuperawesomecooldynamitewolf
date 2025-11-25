@@ -10,6 +10,7 @@ import controles.*
 
 class Nivel{
     const property enemigos = []
+    const property enemigosReys = []
     const nivel // identificador -nivel
     const enemigosPorOleada 
     const dificultad
@@ -26,10 +27,11 @@ class Nivel{
     // Inicializa el nivel
     method eliminarEnemigos(){
         enemigos.forEach({ e => e.eliminar()}) //elimina sus visuales.
+        enemigosReys.forEach({ e => e.eliminar()})
     } 
     method partidaSigue() =partidaSigue      
     method iniciar(){
-        enemigosGenerados=0
+        enemigosGenerados =0
         reysGenerados=0
         partidaSigue=true
         pantalla.iniciar()
@@ -51,11 +53,9 @@ class Nivel{
     method partidaFinalizada(){
         self.eliminarEnemigos();
         game.removeVisual(personajePrincipal)
+        personajePrincipal.partidaFinalizada()
         game.removeVisual(castillo)
         partidaSigue= false
-    }
-    method eliminarPantalla() {
-      pantalla.eliminar()
     }
     //a cada enemigo se le agrega a su lista de posiciones todas las posiciones posibles
     method mapeoEnemigo() {
@@ -110,29 +110,33 @@ class Nivel{
             console.println("generé un orco")
             enemigosGenerados += 1
             enemigosVivos += 1
-            // var imagenIdle
-            // var imgenDaño
             const orco =new Orco(vida=1+(dificultad*5),daño=10,imagen="idleTroll.png",imagenIdle="idleTroll.png",imagenRun="runTroll.png",imagenDaño="idleTrollDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
             enemigos.add(orco)
             game.addVisual(orco)
             orco.iniciar()
             self.generarOleada()
             }else{
-                reysGenerados+=1
                 self.generarRey()
             } 
         })
         }
 
     method generarRey() {
-        if(reysGenerados<=cantidadDeRey and partidaSigue){
+        if(reysGenerados<cantidadDeRey and partidaSigue){
+            reysGenerados+=1
             const orcoRey =new OrcoRey(vida=5* (dificultad*10),daño=15,imagen="idleTrollMiniBoss.png",imagenIdle="idleTrollMiniBoss.png",imagenRun="runTroll.png",imagenDaño="idleTrollMiniBossDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo())
             enemigos.add(orcoRey)
+            enemigosReys.add(orcoRey) 
             game.addVisual(orcoRey)
             orcoRey.iniciar()
         }
                 
     } 
+    method vicotoriaSeLogro(){ //esto lo llama el orco rey al morir.
+        if(!enemigosReys.isEmpty() and enemigosReys.all({e => !e.estaVivo()})){/// Ningun rey añadido a la lista de orcos reyes, deben de estar vivos.
+            juegoDelCastillo.ganarPartida()
+        }
+    }
 }
 
 
@@ -146,5 +150,5 @@ const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
 const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
 const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 const nivel1= new Nivel(nivel=1, dificultad =1,enemigosPorOleada=3, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel2= new Nivel(nivel=2,dificultad =2, enemigosPorOleada=8, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel3= new Nivel(nivel=3, dificultad =3,enemigosPorOleada=12, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel2= new Nivel(nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel3= new Nivel(nivel=3, dificultad =3,enemigosPorOleada=8,  cantidadDeRey =3 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

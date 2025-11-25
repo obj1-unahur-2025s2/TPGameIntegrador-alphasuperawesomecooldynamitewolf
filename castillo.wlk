@@ -32,15 +32,19 @@ class Contador{
     method position()
     method text()
 }
-
+object paleta {
+     const property blanco = "#000000"
+}   
 class ContadorVida inherits Contador{
-    override method position() = game.at(2, 8) // esquina superior izquierda
-    override method text() = "Vida: " + castillo.vida()
+    override method position() = game.at(2, 8)
+    override method text() =  castillo.vida().toString()
+    method textColor() = paleta.blanco()
 }
 
 class ContadorMoneda inherits Contador{
-    override method position() = game.at(2, 9) // esquina superior izquierda
-    override method text() = "Monedas: " + personajePrincipal.monedas()
+    override method position() = game.at(5, 9) 
+    override method text() =  personajePrincipal.monedas().toString()
+    method textColor() = paleta.blanco()
 }
 
 
@@ -86,7 +90,7 @@ object personajePrincipal{
     
     method agregarTorre(){
        
-        if (juegoDelCastillo.juegoCorriendo() && self.posicionValida() && self.sePuedeAgregarTorre() ){
+        if (self.posicionValida() && self.sePuedeAgregarTorre() ){
             torres.add(self.torreSeleccionada())
             game.addVisual(self.torreSeleccionada())
             self.agregarTorresPuestas(self.torreSeleccionada())
@@ -123,6 +127,5 @@ object personajePrincipal{
     method partidaFinalizada() {
         torres.clear()
         monedas=6
-
     }
 }

@@ -90,7 +90,7 @@ object torresOpciones {
         torresExistentes.removeAll( torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }))   //las torres que coincidan con la posicion de la celda actual. (del jugador)
       }                   // remover todas las torres existentes , para un eficiente borrado despues.
     }
-    method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()                                                                                                          
+    method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()       //lo llama el jugador principal.                                                                                                   
     method torreSeleccionada(x, y) {
     torres.clear() // sirve para poder comparar las 3 torres creadas, ya con la posicion pasada por parametro, y esta sea comparada por ->  torreBuscada() 
     const normal = new TorreNormal(
@@ -113,7 +113,7 @@ object torresOpciones {
 
     const tesla = new TorreTesla(
         nivelTorre = 3,
-        daño = 20,
+        daño = 18,
         rango = 1,
         position = game.at(x, y),
         positionOpcion = opciones.get(2)

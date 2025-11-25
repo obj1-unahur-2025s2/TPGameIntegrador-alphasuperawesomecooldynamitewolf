@@ -41,11 +41,6 @@ object secuencia{
     method saltar(){
         self.saltarFrame()
     }
-    method bajarVolumen() {
-      if(!frames.isEmpty()){
-        frames.first().silenciarSiEsPosible()
-      }
-    }
     method saltarFrame() {
         if(lastVisual != null) lastVisual.silenciarSiEsPosible() game.removeVisual(lastVisual)
         if(frames.size() > 0){
@@ -58,10 +53,11 @@ object secuencia{
             self.agregarMenu()
         }
     }
+    method obtenerMenu() =juego.obtenerMenuInicial()
     method agregarMenu() {
-        if(!game.hasVisual(menu)){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
-            game.addVisual(menu)
-            menu.seleccionNivel()
+        if(!game.hasVisual(self.obtenerMenu())){ // si la  instancia menu no esta declarada y el juego del castillo todavia no inició entonces agrega el menu.
+            game.addVisual(self.obtenerMenu())
+            self.obtenerMenu().seleccionNivel()
         }
     }
 }

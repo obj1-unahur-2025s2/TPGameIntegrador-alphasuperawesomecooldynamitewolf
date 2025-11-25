@@ -8,13 +8,11 @@ import intro.*
 
 object controles {
     method configurarTeclas() {
-      //if(!juegoDelCastillo.juegoCorriendo()){ // si el juego  todavía no inició, configurame las teclas.
       //movimientos jugador meter limitaciones y q no salga del mapa , y solo ubicar en  donde se pueda situar 
         keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
         keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
       //teclas de opciones torres 
-          keyboard.space().onPressDo({personajePrincipal.agregarTorre()}) //Z para poner la torre normal 
-      //teclas opciones
+          keyboard.space().onPressDo({personajePrincipal.agregarTorre()})
           keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
           keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
       //}
@@ -22,32 +20,29 @@ object controles {
     method controlesIntro() {
         keyboard.space().onPressDo({secuencia.saltar()})
     }
-    //Manejo del menu mediante teclas
+    //Manejo del menu mediante teclas -> el cual el juego conoce
     method configurarTeclaMenu() {
-        keyboard.i().onPressDo({menu.verNiveles()})
+        keyboard.i().onPressDo({juego.obtenerMenuInicial().verNiveles()})
         //keyboard.p().onPressDo({menu.iniciarTutorial()})
-        keyboard.m().onPressDo({menu.verControles()})
+        keyboard.m().onPressDo({juego.obtenerMenuInicial().verControles()})
 
   }
     method teclasSelecNiveles() {
-    //if(!juegoDelCastillo.juegoCorriendo()){
           keyboard.num1().onPressDo({menuNiveles.iniciarNivel(0)})
           keyboard.num2().onPressDo({menuNiveles.iniciarNivel(1)})
           keyboard.num3().onPressDo({menuNiveles.iniciarNivel(2)})
         }
   method configurarTeclaGeneral() {      
-    //if(!menuGameOver.overActivo()){   // si ya se activó el menu game Over, entonces No volver a configurar.
-      keyboard.i().onPressDo({menu.verNiveles()})
-      keyboard.r().onPressDo({menu.reiniciarPartida()})
+      keyboard.i().onPressDo({juego.obtenerMenuInicial().verNiveles()})
+      keyboard.r().onPressDo({juego.obtenerMenuInicial().reiniciarPartida()})
       
-    //}
   }
   method configurarReglas() {
-    keyboard.m().onPressDo({menu.verControles()})
+    keyboard.m().onPressDo({juego.obtenerMenuInicial().verControles()})
   }
   method configurarTeclaSiguienteOver(){
       self.configurarTeclaGeneral()
-      keyboard.e().onPressDo({menuNextLevel.iniciarSiguienteNivel()})
+      keyboard.e().onPressDo({juego.obtenerMenuNextLevel().iniciarSiguienteNivel()})
 
   }
 }
