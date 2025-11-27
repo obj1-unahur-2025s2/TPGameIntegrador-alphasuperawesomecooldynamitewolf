@@ -112,16 +112,12 @@ object menuNiveles {
   method iniciar() {
     if(!game.hasVisual(self)) game.addVisual(self)
     controles.teclasSelecNiveles()
-    //todavia no interactua con los niveles.
 
   }
 
   method iniciarNivel(unNivel) {        
-    //if(!juegoDelCastillo.tieneNiveles()){
-      //juegoDelCastillo.agregarNiveles(nivel1)
       juegoDelCastillo.iniciarNivel(unNivel)
       self.terminarMenuNiveles()
-    //}
   }
   method terminarMenuNiveles() {
     if(game.hasVisual(self))game.removeVisual(self)

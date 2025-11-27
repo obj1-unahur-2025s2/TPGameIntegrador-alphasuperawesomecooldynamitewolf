@@ -81,17 +81,22 @@ object torresOpciones {
     const torresExistentes=[]
     method image() ="cursor.png"
     var property position = game.at(1, 3) 
-    
+    method torres() =torresExistentes 
     method posicionActualComoColeccion() =[position.x(),position.y()] // "como coleccion" refiere a  la posicion que refleja dentro del menu, y esta la mete en una coleccion para luego comparar.
-    method torreBuscada() =torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
-    method eliminarTorre(x,y) {
+    
+    method torreExistenteBuscada(unaPostion) = torresExistentes.find({ t=>t.position() ==unaPostion  }) //metodo el cual usa unicamente eliminar torre.
+    method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()       //revisa si la posicion es correcta para eliminar.    
+    method eliminarTorre(unaPostion) {
       if(self.esPosibleEliminar()){ //elimina la torre si es posible
-        torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }).forEach({t => t.eliminar()}) //torres Existentes guarda multiples instancias de las torres. por ende se eliminan estas con el forEach.
-        torresExistentes.removeAll( torresExistentes.filter({ t=>t.position().y() ==y and t.position().x() ==x  }))   //las torres que coincidan con la posicion de la celda actual. (del jugador)
-      }                   // remover todas las torres existentes , para un eficiente borrado despues.
+        self.torreExistenteBuscada(unaPostion).eliminar() // elimina la torre dentro de la lista. 
+        torresExistentes.remove(self.torreExistenteBuscada(unaPostion))   //remueve la torre existente dentro de la lista de torres existentes
+      }                  
     }
-    method esPosibleEliminar()  =  opciones.get(3) == self.posicionActualComoColeccion()       //lo llama el jugador principal.                                                                                                   
-    method torreSeleccionada(x, y) {
+
+    method torreBuscada() =torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()}) // para repeticion                                                                                             
+    
+    method torreSeleccionada(x, y) { // X, Y -> porque el game.at necesita dos numeros. no una posicion entera.
+
     torres.clear() // sirve para poder comparar las 3 torres creadas, ya con la posicion pasada por parametro, y esta sea comparada por ->  torreBuscada() 
     const normal = new TorreNormal(
         nivelTorre = 1,
@@ -119,15 +124,22 @@ object torresOpciones {
         positionOpcion = opciones.get(2)
     )
     torres.add(tesla)
-    torresExistentes.add(self.torreBuscada())
     return self.torreBuscada()
-}
+} 
+    method elegirTorre(){ //metodo el cual llama el jugador al poner la torre, si  se evaluo correctamente, se pone el visual de la torre acá.
+      self.agregarTorreExistente(self.torreBuscada())
+    }
+    method agregarTorreExistente(unaTorre) { // agrega la torre dentro de torresOpcioens, esto evita  que en el caso de que se quiera repetir dentro de la lista.
+      if(!torresExistentes.any({ t => t.position() == unaTorre.position()}) ){ 
+        torresExistentes.add(unaTorre)
+        game.addVisual(unaTorre)
+      }
+    }
     method posicionEliminar() =opciones.get(3)
     method partidaFinalizada() {
       if(torresExistentes.size()>0) torresExistentes.forEach({ t=> t.eliminar()})
       torresExistentes.clear()
     }
-    method encontrarTorre() = torres.find({t=> t.posicionDeOpcion() == self.posicionActualComoColeccion()})
     //movimientos de las torres, recomiendo dejar aca y no moverlo a controles para que sea mas entendible
     method moverseHaciaArriba() {
         if(self.position().y() >1 and self.position().y() <6 ){

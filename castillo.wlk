@@ -52,17 +52,15 @@ object personajePrincipal{
     var monedas = 6 //6
     method posicionActual() =position 
     var nivel= nivelPrueba
-    const  torres = []
-    const property torresPuestas = []
-    method agregarTorresPuestas(unaTorre) {
-      torresPuestas.add(unaTorre)
-    } 
+
+    //const  torres = []
     const  imagen="cursorTorre.png"
     method image() = imagen
     var property position =game.at(8,3) 
     method siguienteNivel(unNivel) {
       nivel=unNivel
     }
+    //method torres()=torres
 
     //movimientos, dejar aca para evitar confusion con los de torres
     method moverseHaciaArriba() {
@@ -82,18 +80,15 @@ object personajePrincipal{
     }
     method recogerMonedas(cantMonedas){monedas += cantMonedas} ///Actualizar
     //Todos los metodos relacionados al poner torres
-    method torres() = torres
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
-    method posicionValida() =  !torresOpciones.esPosibleEliminar() // revisa si la posicion del cursor no esté en "Eliminar"
+    method posicionValida() =  !torresOpciones.esPosibleEliminar() // Revisa si la posicion del cursor no esté en "Eliminar"
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())   && juegoDelCastillo.nivelActual().partidaSigue()
     
     method agregarTorre(){
        
         if (self.posicionValida() && self.sePuedeAgregarTorre() ){
-            torres.add(self.torreSeleccionada())
-            game.addVisual(self.torreSeleccionada())
-            self.agregarTorresPuestas(self.torreSeleccionada())
+            torresOpciones.elegirTorre() //le dice a torres Opcioens (menu izquierdo) que guarde esa torre.
             self.gastarMonedas(self.torreCosto())
             self.torreSeleccionada().reporducirAudioConstruir()
         }
@@ -104,28 +99,21 @@ object personajePrincipal{
     }
     method eliminarSiEsPosible() {
       if(!self.posicionValida() and  self.hayTorreEn(self.posicionActual())){ // si está en la posicion de eliminar, y hay torre en la celda actual, eliminarla.
-        //torres.find({t => t.position()== position}).eliminar() <- no funcional
-        torres.remove(torres.find{t => t.position()== position}) //remover de la lista
-        torresOpciones.eliminarTorre(position.x(),position.y()) // torreOpcion se encarga de eliminar sus referencias reales. 
-
+        torresOpciones.eliminarTorre(position) // torres opciones se encarga de hacer el trabajo de eliminar.
       }
     }
-    method hayTorreEn(positionActual) = torres.any({ t => t.position() == positionActual }) //Con esto se puede simplificar sin necesidad de tener una lista de torres en el jugador. No es necesario si evaluas en la acción directamente
+    method hayTorreEn(positionActual) = torresOpciones.torres().any({ t => t.position() == positionActual }) //Con esto se puede simplificar sin necesidad de tener una lista de torres en el jugador. No es necesario si evaluas en la acción directamente
+        method partidaFinalizada() {
+        monedas=6
+    }
+    //usar en proxima Version del juego:  
     method mejorarTorre(unaTorre){
         const costo = unaTorre.costoMejora()
-        if (torres.contains(unaTorre) && self.puedePagar(costo)) {
+        if (torresOpciones.torres().contains(unaTorre) && self.puedePagar(costo)) {
             unaTorre.subirNivel()
             self.gastarMonedas(costo)
         }
     }
-    method eliminarTorre(unaTorre){
-    if (torresPuestas.contains(unaTorre)){
-        torres.remove(unaTorre)
-        game.removeVisual(unaTorre)
-    }
-    }
-    method partidaFinalizada() {
-        torres.clear()
-        monedas=6
-    }
+    
+
 }

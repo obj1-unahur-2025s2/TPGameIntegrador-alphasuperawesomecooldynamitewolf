@@ -31,7 +31,7 @@ class Orco{
     }  
     method evaluarMiEntorno() {
       if(self.vida()>0){
-        personajePrincipal.torresPuestas().forEach({t=>t.atacarSiEstaEnRango(self)})
+        torresOpciones.torres().forEach({t=>t.atacarSiEstaEnRango(self)})
       }
     }
     method avanzar() {
