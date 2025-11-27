@@ -5,27 +5,19 @@ import juegoBase.*
 import armas.*
 
 class Menu{
-    var overActivo=false 
     const menu =[] // menus <- posiciones
     const menuElementos=[] //elementos que existen dentro del entorno
     var property position =game.at(0,0) 
 
     const imagen
     method image() =imagen 
-    method seleccionNivel()
-    method terminarMenu() {
-      if(game.hasVisual(self)){
-          menuElementos.forEach({e => e.eliminar()})
-          game.removeVisual(self)
-      }
-    }
+    method seleccionNivel() 
     method estaActivo() =menuElementos.size()>0 //esta activo si hay elementos dentro del menu. osea el menu esta activo. 
 
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
-      overActivo=true // impide que la tecla reiniciar se pueda ejecutar de nuevo. Ya que la tecla reiniciar ya está en uso. 
       juegoDelCastillo.reiniciarPartida()
-
     }    
+
 }
 
 //clase del menu de inicio. (pantalla despues de la intro)
@@ -40,7 +32,7 @@ class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
         menuElementos.add(entrenamiento) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
         
     }
-    const pantallaControles = new Pantalla(imagen="controlesDelJuego.png", position=game.at(0,0))
+    const pantallaControles = new Pantalla(imagen="fondoReglas2.png", position=game.at(0,0))
     method verControles(){
       pantallaControles.iniciarSiNoEliminar()
     }
@@ -54,7 +46,6 @@ class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
 class MenuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
     override method seleccionNivel() {
         controles.configurarTeclaSiguienteOver()
-        overActivo=true
         if(!game.hasVisual(self)) game.addVisual(self)
         const nextLevel= new Pantalla(imagen="nextLevel.png", position=game.at(self.nextLevelPosition().get(0),self.nextLevelPosition().get(1)))
         const siguiente = new Pantalla(imagen="siguiente.png", position=game.at(self.siguientelPosition().get(0),self.siguientelPosition().get(1)))
@@ -69,14 +60,11 @@ class MenuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nive
         menuElementos.add(nextLevel)
         menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
     }
-    method overActivo() =overActivo 
+
     method iniciarSiguienteNivel(){
       juegoDelCastillo.partidaNueva()
     }
     
-    method iniciarNivel(unNivel) {        
-      juegoDelCastillo.iniciarNivel(unNivel)
-  }
     method siguientelPosition() =menu.get(3) 
     method nextLevelPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
@@ -87,7 +75,6 @@ class MenuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.p
     //esto habilita imagenes dentro del entorno.
        override method seleccionNivel() {
         controles.configurarTeclaGeneral()
-        overActivo=true
         const gameOver= new Pantalla(imagen="gameOver.png", position=game.at(self.gameOverPosition().get(0),self.gameOverPosition().get(1)))
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
         const reiniciar = new Pantalla(imagen="reiniciar.png" ,position=game.at(self.reiniciarPosition().get(0),self.reiniciarPosition().get(1))) 
@@ -99,7 +86,6 @@ class MenuGameOver inherits Menu(menu =[[7,1],[11,1],[7,4]],imagen="filterOver.p
         menuElementos.add(reiniciar) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
         
     }
-    method overActivo() =overActivo 
     method playPosition() =menu.get(0) 
     method gameOverPosition() =menu.get(2) 
     method reiniciarPosition() =menu.get(1) 
@@ -120,6 +106,6 @@ object menuNiveles {
       self.terminarMenuNiveles()
   }
   method terminarMenuNiveles() {
-    if(game.hasVisual(self))game.removeVisual(self)
+    game.removeVisual(self)
   }
 }

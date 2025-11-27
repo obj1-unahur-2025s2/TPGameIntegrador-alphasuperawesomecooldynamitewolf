@@ -49,11 +49,15 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     nivel=unNivel
 
     castillo.reiniciarVida()  
-    controles.configurarReglas()
     controles.configurarTeclas()
     game.addVisual(torresOpciones) 
     self.obtenerNivel(unNivel).iniciar()
-
+    self.iniciarReglas()
+  }
+  method iniciarReglas(){
+      juego.obtenerMenuInicial().verControles() // le dice al juego que inicie su visual de las reglas.
+      game.schedule(5500, {juego.obtenerMenuInicial().verControles() controles.configurarReglas() })  // cuando pasen 5 segundos volvela a llamar (esta sabe que al llamarla de nuevo se tiene que eliminar).
+                                                                                    // configura las teclas de forma permanente.
   }
   method nivelActual() =niveles.get(nivel) 
   method obtenerNivel(unNivel) = niveles.get(unNivel.min(2))

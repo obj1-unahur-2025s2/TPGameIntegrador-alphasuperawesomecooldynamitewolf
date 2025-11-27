@@ -37,7 +37,7 @@ class Nivel{
         pantalla.iniciar()
         enemigosVivos=enemigosPorOleada
         game.addVisual(personajePrincipal)
-        self.generarOleada()
+        game.schedule(2000, {self.generarOleada()})
         game.addVisual(castillo)     
         self.agregarContadores()      
         castillo.activarColision()
