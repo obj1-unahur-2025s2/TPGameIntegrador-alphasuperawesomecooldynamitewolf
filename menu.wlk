@@ -1,3 +1,4 @@
+import castillo.*
 import pantalla.*
 import niveles.*
 import controles.*
@@ -62,6 +63,7 @@ class MenuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nive
     }
 
     method iniciarSiguienteNivel(){
+      personajePrincipal.reiniciarKills()
       juegoDelCastillo.partidaNueva()
     }
     

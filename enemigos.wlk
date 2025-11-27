@@ -54,6 +54,7 @@ class Orco{
         vida=0
         self.soltarMoneda()
         self.reproducirMuerte()
+        personajePrincipal.aumentarKills()
         game.removeVisual(self)
         return 0
     }

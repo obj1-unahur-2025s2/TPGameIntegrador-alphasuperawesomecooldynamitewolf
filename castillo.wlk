@@ -33,7 +33,7 @@ class Contador{
     method text()
 }
 object paleta {
-     const property blanco = "#000000"
+     const property blanco = "#ffffffff"
 }   
 class ContadorVida inherits Contador{
     override method position() = game.at(2, 8)
@@ -47,12 +47,26 @@ class ContadorMoneda inherits Contador{
     method textColor() = paleta.blanco()
 }
 
+class ContadorEnemigos inherits Contador{
+    override method position() = game.at(2, 9) 
+    override method text() =  personajePrincipal.kills().toString()
+    method textColor() = paleta.blanco()
+}
 
 object personajePrincipal{
     var monedas = 6 //6
     method posicionActual() =position 
     var nivel= nivelPrueba
 
+    //Contador de kills
+    var kills = 0
+    method kills() = kills 
+    method aumentarKills() {
+        kills += 1
+    }
+    method reiniciarKills(){
+        kills = 0
+    } 
     //const  torres = []
     const  imagen="cursorTorre.png"
     method image() = imagen

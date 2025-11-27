@@ -45,8 +45,9 @@ class Nivel{
 
     }
     method agregarContadores() {
-        if(!game.hasVisual(contadorMoneda) and !game.hasVisual(contadorVida)){
+        if(!game.hasVisual(contadorEnemigos) && !game.hasVisual(contadorMoneda) && !game.hasVisual(contadorVida)){
             game.addVisual(contadorVida)           
+            game.addVisual(contadorEnemigos)           
             game.addVisual(contadorMoneda)     
         }
     }
@@ -124,7 +125,7 @@ class Nivel{
     method generarRey() {
         if(reysGenerados<cantidadDeRey and partidaSigue){
             reysGenerados+=1
-            const orcoRey =new OrcoRey(vida=5* (dificultad*10),daño=15,imagen="idleTrollMiniBoss.png",imagenIdle="idleTrollMiniBoss.png",imagenRun="runTroll.png",imagenDaño="idleTrollMiniBossDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo())
+            const orcoRey =new OrcoRey(vida=5* (dificultad*10),daño=15,imagen="idleTrollMiniBoss.png",imagenIdle="idleTrollMiniBoss.png",imagenRun="runTrollMiniBoss.png",imagenDaño="idleTrollMiniBossDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo())
             enemigos.add(orcoRey)
             enemigosReys.add(orcoRey) 
             game.addVisual(orcoRey)
@@ -144,6 +145,7 @@ class Nivel{
 ///Contadores
 const contadorVida = new ContadorVida()
 const contadorMoneda = new ContadorMoneda()
+const contadorEnemigos = new ContadorEnemigos()
 
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
