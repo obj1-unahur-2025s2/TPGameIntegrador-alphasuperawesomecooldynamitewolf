@@ -14,20 +14,20 @@ class Intros{
       audio.stop()
     }
 }
-object intro1 inherits Intros (audio=game.sound("audio1.mp3"), imagen = "intro1.jpeg"){
+object intro1 inherits Intros (audio=game.sound("audio1.mp3"), imagen = "intro1.png"){
     override method iniciar(){
         controles.controlesIntro()
         game.addVisual(self)
         game.schedule(1000,{audio.play()})
     }
 }
-object intro2 inherits Intros (audio=game.sound ("audio2.mp3"),imagen = "intro2.jpeg"){
+object intro2 inherits Intros (audio=game.sound ("audio2.mp3"),imagen = "intro2.png"){
     override method iniciar(){
         audio.play()
         game.addVisual(self)
     }
 }
-object intro3 inherits Intros (audio=game.sound ("audio3.mp3") ,imagen = "intro3.jpeg"){
+object intro3 inherits Intros (audio=game.sound ("audio3.mp3") ,imagen = "intro3.png"){
     override method iniciar(){
         audio.play()
         game.addVisual(self)
