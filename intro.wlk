@@ -11,7 +11,7 @@ class Intros{
     method image() = imagen
     method iniciar()
     method silenciarSiEsPosible() {
-      audio.volume(0)
+      audio.stop()
     }
 }
 object intro1 inherits Intros (audio=game.sound("audio1.mp3"), imagen = "intro1.jpeg"){

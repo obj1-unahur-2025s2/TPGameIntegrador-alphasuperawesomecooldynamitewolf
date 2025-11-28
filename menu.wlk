@@ -42,6 +42,7 @@ class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
     }
     method verNiveles() {
       menuNiveles.iniciar()
+      musica.stop()
     }
     method playPosition() =menu.get(0) 
     method entrenamientoPosition() =menu.get(1) 
