@@ -24,6 +24,7 @@ class Menu{
 
 //clase del menu de inicio. (pantalla despues de la intro)
 class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
+  const musica = game.sound("menu2.mp3")
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
@@ -32,7 +33,8 @@ class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
         game.addVisual(entrenamiento)
         menuElementos.add(play)
         menuElementos.add(entrenamiento) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
-        
+        musica.play()
+        musica.shouldLoop(true)
     }
     const pantallaControles = new Pantalla(imagen="fondoReglas2.png", position=game.at(0,0))
     method verControles(){
