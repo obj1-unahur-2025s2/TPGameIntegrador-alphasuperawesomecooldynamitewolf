@@ -8,6 +8,7 @@ import armas.*
 import intro.*
 
 
+
 object juego {
   const menusActivos=[]
   method menus() =menusActivos 
@@ -39,19 +40,17 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   var  property nivel = 0//Numero
   const niveles=[nivel1 , nivel2 , nivel3]
   const nivelesCompeltos=[]
-  const sonido = game.sound("orcsAttacking.mp3")
 
   method tieneNiveles() =niveles.size()>0 //util para teclas del selector nivel. impide que se agreguen multiple veces los niveles. (revisar Menu) 
   method iniciarNivel(unNivel) { 
     game.clear()
-    sonido.play()
-    sonido.shouldLoop(true)
     nivel=unNivel
 
     castillo.reiniciarVida()  
     controles.configurarTeclas()
     game.addVisual(torresOpciones) 
     self.obtenerNivel(unNivel).iniciar()
+    self.obtenerNivel(unNivel).iniciarMusica()
     self.iniciarReglas()
   }
   method iniciarReglas(){
@@ -72,7 +71,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
    sonidoGameOver.play()
   }
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
-    sonido.stop()
+    self.obtenerNivel(nivel).detenerMusica()
     self.obtenerNivel(nivel).partidaFinalizada()
     torresOpciones.partidaFinalizada()     
     game.removeVisual(torresOpciones)
@@ -84,7 +83,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     sonidoVictoria.play()
   }
   method ganarPartida() {  // lo llama Nivel al terminar de evaluar las condiciones de victoria.
-    sonido.stop()
+    self.obtenerNivel(nivel).detenerMusica()
     torresOpciones.partidaFinalizada() 
     self.obtenerNivel(nivel).partidaFinalizada()
     self.reproducirVictoria()
@@ -105,4 +104,8 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     nivel = (nivel + 1).min(2)
     return nivel
   }
+
+
+// const musicaMenu = game.sound("Menu2.mp3") 
+ 
 }

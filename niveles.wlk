@@ -13,6 +13,7 @@ class Nivel{
     const property enemigosReys = []
     const nivel // identificador -nivel
     const enemigosPorOleada 
+    const musica
     const dificultad
     var enemigosGenerados =0
     var enemigosVivos=0                 //x,y
@@ -50,6 +51,13 @@ class Nivel{
             game.addVisual(contadorEnemigos)           
             game.addVisual(contadorMoneda)     
         }
+    }
+    method iniciarMusica(){
+        musica.play()
+        musica.shouldLoop(true)
+    }
+    method detenerMusica(){
+        musica.stop()
     }
     method partidaFinalizada(){
         self.eliminarEnemigos();
@@ -150,7 +158,7 @@ const contadorEnemigos = new ContadorEnemigos()
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
 const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
-const nivelPrueba = new Nivel(nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel1= new Nivel(nivel=1, dificultad =1,enemigosPorOleada=3, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel2= new Nivel(nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel3= new Nivel(nivel=3, dificultad =3,enemigosPorOleada=8,  cantidadDeRey =3 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelPrueba = new Nivel(musica=game.sound("menu2.mp3"),nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel1= new Nivel(musica=game.sound("orcsAttacking.mp3"),nivel=1, dificultad =1,enemigosPorOleada=3, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel3= new Nivel(musica=game.sound("orcsLastPush.mp3"),nivel=3, dificultad =3,enemigosPorOleada=8,  cantidadDeRey =3 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
