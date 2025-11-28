@@ -14,8 +14,17 @@ class Intros{
       audio.stop()
     }
 }
+//Hay que cambiar los object en class, y crear un object que instancie cada uno. Lo dijeron en clase hoy eso. El "game.addVisual(self) hay que pasarlo a la clase padre ya que se usa en todas las instancias"
+/*
+object instanciaIntros{
+    const intro0...
+    const intro1...
+    const intro2...
+    const intro3...
+}
+*/
 
-object intro0 inherits Intros (audio=game.sound("victoria.mp3") , imagen = "intro0.png"){
+object intro0 inherits Intros (audio=game.sound("victoria.mp3") , imagen = "intro0.png"){ //El audio es uno random de los que ya teníamos solo para poder instanciar.
     override method iniciar(){
         controles.controlesIntro()
         game.addVisual(self)
@@ -24,7 +33,8 @@ object intro0 inherits Intros (audio=game.sound("victoria.mp3") , imagen = "intr
 }
 object intro1 inherits Intros (audio=game.sound("audio1.mp3"), imagen = "intro1.png"){
     override method iniciar(){
-        controles.controlesIntro()
+        audio.play()
+        //controles.controlesIntro()
         game.addVisual(self)
         //game.schedule(1000,{audio.play()})
     }
@@ -45,7 +55,7 @@ object intro3 inherits Intros (audio=game.sound ("audio3.mp3") ,imagen = "intro3
 object secuencia{
     var lastVisual = null
     var property position =game.origin()
-    const frames = [intro0 , intro1, intro2, intro3]
+    const frames = [intro0, intro1, intro2, intro3]
     method saltar(){
         self.saltarFrame()
     }
