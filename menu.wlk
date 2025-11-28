@@ -17,6 +17,7 @@ class Menu{
 
     method reiniciarPartida(){ //metodo Exclusivo de la tecla R.
       juegoDelCastillo.reiniciarPartida()
+      personajePrincipal.reiniciarKills()
     }    
 
 }
