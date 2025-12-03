@@ -33,6 +33,15 @@ object juego {
     method  obtenerMenuInicial()=menusActivos.get(0)
     method  obtenerMenuNextLevel()=menusActivos.get(1)
     method  obtenerMenuGameOver()=menusActivos.get(2)
+
+    method volverMenuBase(){
+      if(!game.hasVisual(menu.menuNiveles)){
+        game.clear()
+        juegoDelCastillo.obtenerNivel(juegoDelCastillo.nivel()).detenerMusica()
+        game.addVisual(self.obtenerMenuInicial())
+        self.obtenerMenuInicial().seleccionNivel()
+      }
+    }
 }
 
 object juegoDelCastillo {//para mantener la estructura del juego. <- primero debe pasar por el menu
@@ -45,7 +54,9 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
   method iniciarNivel(unNivel) { 
     game.clear()
     nivel=unNivel
-
+    //reinicia todos los parametros para empezar de 0 siempre
+    personajePrincipal.reiniciarMonedas()
+    personajePrincipal.reiniciarKills()
     castillo.reiniciarVida()  
     controles.configurarTeclas()
     game.addVisual(torresOpciones) 

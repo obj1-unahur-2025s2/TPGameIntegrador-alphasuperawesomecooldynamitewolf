@@ -54,7 +54,6 @@ class ContadorEnemigos inherits Contador{
 }
 
 object personajePrincipal{
-    var monedas = 6 //6
     method posicionActual() =position 
     var nivel= nivelPrueba
 
@@ -87,8 +86,12 @@ object personajePrincipal{
     }
     //Metodos encargados del manejo de la economia
 
+    var monedas = 6 //6
     method monedas() = monedas
     method puedePagar(costo) = monedas >= costo
+    method reiniciarMonedas(){
+        monedas = 6
+    } 
     method gastarMonedas(unCosto){
         monedas = monedas - unCosto
     }
