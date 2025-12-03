@@ -15,7 +15,7 @@ object controles {
           keyboard.space().onPressDo({personajePrincipal.agregarTorre()})
           keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
           keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
-          keyboard.r().onPressDo({juego.volverMenuBase()})
+          keyboard.o().onPressDo({juego.volverMenuBase()})
       //}
   }
     method controlesIntro() {
