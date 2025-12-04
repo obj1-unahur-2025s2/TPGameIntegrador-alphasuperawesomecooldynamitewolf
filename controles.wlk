@@ -12,7 +12,7 @@ object controles {
         keyboard.up().onPressDo({personajePrincipal.moverseHaciaArriba()})
         keyboard.down().onPressDo({personajePrincipal.moverseHaciaAbajo()})
       //teclas de opciones torres 
-          keyboard.space().onPressDo({personajePrincipal.agregarTorre()})
+          keyboard.space().onPressDo({personajePrincipal.accionDelCursor()})
           keyboard.w().onPressDo({torresOpciones.moverseHaciaArriba()})
           keyboard.s().onPressDo({torresOpciones.moverseHaciaAbajo()})
           keyboard.o().onPressDo({juego.volverMenuBase()})

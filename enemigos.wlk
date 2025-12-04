@@ -46,8 +46,7 @@ class Orco{
 
     }
     method reproducirMuerte() {
-        const sonidoMuerte=game.sound("rip.mp3")
-        sonidoMuerte.play()
+        game.sound("rip.mp3").play()
     
     }
     method morir(){
@@ -69,8 +68,7 @@ class Orco{
 
     method estaVivo() = vida > 0
     method reproducirDaño(){
-        const sonidoDaño=game.sound("damage.mp3")
-        sonidoDaño.play()
+        game.sound("damage.mp3").play()
     }
     method recibirDaño(cantidadDaño){
         if(self.estaVivo()){
@@ -81,8 +79,7 @@ class Orco{
         }
     }
     method reproducirDañoCastillo() {
-        const sonidoCastleDamage=game.sound("damageCasttle.mp3")
-        sonidoCastleDamage.play()
+        game.sound("damageCasttle.mp3").play()
     }
     method calcularDaño(unDaño)=if(unDaño<vida)vida - unDaño else self.morir()
     method atacar(unObjeto){

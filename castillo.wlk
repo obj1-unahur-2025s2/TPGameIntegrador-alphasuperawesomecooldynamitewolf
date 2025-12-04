@@ -99,12 +99,21 @@ object personajePrincipal{
     //Todos los metodos relacionados al poner torres
     method torreSeleccionada() =torresOpciones.torreSeleccionada(position.x(),position.y())
     method torreCosto() =self.torreSeleccionada().costo()  
-    method posicionValida() =  !torresOpciones.esPosibleEliminar() // Revisa si la posicion del cursor no esté en "Eliminar"
+    method esPosibleMejorar() =  torresOpciones.esPosibleMejorar() // Revisa si la posicion del cursor no esté en "Eliminar"
+    method esPosibleEliminar() =  torresOpciones.esPosibleEliminar() // Revisa si la posicion del cursor no esté en "Eliminar"
     method sePuedeAgregarTorre() = not self.hayTorreEn(self.posicionActual()) && self.puedePagar(self.torreCosto())   && juegoDelCastillo.nivelActual().partidaSigue()
     
-    method agregarTorre(){
+
+    method accionDelCursor(){
+       if(self.esPosibleMejorar())
+            self.mejorarTorrePosible()
+        else{
+            self.agregarOEliminarTorre()
+        }
        
-        if (self.posicionValida() && self.sePuedeAgregarTorre() ){
+    }
+    method agregarOEliminarTorre(){
+        if (!self.esPosibleEliminar() && self.sePuedeAgregarTorre() ){
             torresOpciones.elegirTorre() //le dice a torres Opcioens (menu izquierdo) que guarde esa torre.
             self.gastarMonedas(self.torreCosto())
             self.torreSeleccionada().reporducirAudioConstruir()
@@ -112,10 +121,14 @@ object personajePrincipal{
         else{
             self.eliminarSiEsPosible()
         }
-        
+    }
+    method mejorarTorrePosible(){
+        if(self.hayTorreEn(self.posicionActual())){
+            torresOpciones.mejorarTorre(self.position(),self)
+        }
     }
     method eliminarSiEsPosible() {
-      if(!self.posicionValida() and  self.hayTorreEn(self.posicionActual())){ // si está en la posicion de eliminar, y hay torre en la celda actual, eliminarla.
+      if(self.esPosibleEliminar() and  self.hayTorreEn(self.posicionActual())){ // si está en la posicion de eliminar, y hay torre en la celda actual, eliminarla.
         torresOpciones.eliminarTorre(position) // torres opciones se encarga de hacer el trabajo de eliminar.
       }
     }
@@ -123,14 +136,6 @@ object personajePrincipal{
         method partidaFinalizada() {
         monedas=6
     }
-    //usar en proxima Version del juego:  
-    method mejorarTorre(unaTorre){
-        const costo = unaTorre.costoMejora()
-        if (torresOpciones.torres().contains(unaTorre) && self.puedePagar(costo)) {
-            unaTorre.subirNivel()
-            self.gastarMonedas(costo)
-        }
-    }
-    
+
 
 }

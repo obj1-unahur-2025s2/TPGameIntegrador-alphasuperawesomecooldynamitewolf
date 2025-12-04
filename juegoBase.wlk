@@ -78,8 +78,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
 
   } 
   method reproducirGameOver() {
-    const sonidoGameOver= game.sound("gameOver.mp3")
-   sonidoGameOver.play()
+   game.sound("gameOver.mp3").play()
   }
   method partidaFinalizada() { //le indica al menu de torres de opcion que su partida finalizo, y selecciona el primer nivel y habilita su manera de perder el nivel (parando y eliminando.)  
     self.obtenerNivel(nivel).detenerMusica()
@@ -90,8 +89,7 @@ object juegoDelCastillo {//para mantener la estructura del juego. <- primero deb
     self.generarGameOver() //llama al menu GameOver para que vuevla con una pantalla.
   }  
   method reproducirVictoria() {
-    const sonidoVictoria= game.sound("victoria.mp3")
-    sonidoVictoria.play()
+    game.sound("victoria.mp3").play()
   }
   method ganarPartida() {  // lo llama Nivel al terminar de evaluar las condiciones de victoria.
     self.obtenerNivel(nivel).detenerMusica()
