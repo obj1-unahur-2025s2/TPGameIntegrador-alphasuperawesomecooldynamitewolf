@@ -67,8 +67,8 @@ class Torre{
   }
   method atacarSiEstaEnRango(unEnemigo) {
 
-    if(torreActiva and self.rangoEfectivo().contains(unEnemigo.post()) and unEnemigo.estaVivo())
-        game.schedule(100, {unEnemigo.recibirDaño(self.atacar())})
+    if(torreActiva  and unEnemigo.estaVivo() and self.rangoEfectivo().contains(unEnemigo.post()))
+        game.schedule(105, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {
     torreActiva=false

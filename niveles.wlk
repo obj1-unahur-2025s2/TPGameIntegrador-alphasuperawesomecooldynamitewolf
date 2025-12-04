@@ -112,10 +112,9 @@ class Nivel{
     method restaDeUbicaciones() =ubicacionesPosiblesDeTorre.filter({u => not self.ubicacionActualJugador().any({ub=> ub ==u})}) //filtra por los que NO estan en las lista de la lista de posiciones del jugador
     //Metodo encargado de generar la oleada de enemigos
     method generarOleada(){
-        game.removeTickEvent("oleada orco")
-            //game.schedule( 4000, {self.generarOleada()})
-        game.onTick(3000, "oleada orco", {
-            if((enemigosGenerados < enemigosPorOleada )and partidaSigue){
+            game.removeTickEvent("oleada orco")
+            game.onTick(4400, "oleada orco", {
+            if(partidaSigue and  (enemigosGenerados < enemigosPorOleada )){
             console.println("generé un orco")
             enemigosGenerados += 1
             enemigosVivos += 1
@@ -131,7 +130,7 @@ class Nivel{
         }
 
     method generarRey() {
-        if(reysGenerados<cantidadDeRey and partidaSigue){
+        if(partidaSigue and reysGenerados<cantidadDeRey ){
             reysGenerados+=1
             const orcoRey =new OrcoRey(vida=5* (dificultad*10),daño=15,imagen="idleTrollMiniBoss.png",imagenIdle="idleTrollMiniBoss.png",imagenRun="runTrollMiniBoss.png",imagenDaño="idleTrollMiniBossDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo())
             enemigos.add(orcoRey)
@@ -159,8 +158,8 @@ const contadorEnemigos = new ContadorEnemigos()
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
 const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
 const nivelPrueba = new Nivel(musica=game.sound("menu2.mp3"),nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel1= new Nivel(musica=game.sound("orcsAttacking.mp3"),nivel=1, dificultad =1,enemigosPorOleada=3, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel3= new Nivel(musica=game.sound("orcsLastPush.mp3"),nivel=3, dificultad =3,enemigosPorOleada=45,  cantidadDeRey =10 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel1= new Nivel(musica=game.sound("orcsAttacking.mp3"),nivel=1, dificultad =1,enemigosPorOleada=6, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=8, cantidadDeRey=3,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel3= new Nivel(musica=game.sound("orcsLastPush.mp3"),nivel=3, dificultad =3,enemigosPorOleada=10,  cantidadDeRey =5 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 
 //const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[17,6],[16,6],[15,6],[14,6],[13,6],[12,6],[11,6],[11,5],[11,4],[11,3],[11,2],[11,1],[11,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
