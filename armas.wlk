@@ -11,18 +11,21 @@ class Torre{
   const rango
   var torreActiva =true
   ///const costo
-  const daño
+  var daño
   var assetActual
   const assetNormal
   const assetMejora
-  const audioConstruccion="hammer.mp3"
+  const audioConstruccion= game.sound("hammer.mp3")
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const property  position 
+  const sonidoMejora=game.sound("upgradeTorre.mp3")
+
   method reporducirAudioConstruir() {
-    game.sound(audioConstruccion).play()
+    audioConstruccion.play()
   }
   method subirNivel(){
     nivelTorre = nivelTorre + 1
+    daño= daño * 1.30
   }
   method posicionDeOpcion() =positionOpcion 
   method costoDeMejora()
@@ -40,14 +43,11 @@ class Torre{
         derecha.diagonalSuperior(position)
         ]
   }
-  method reproducirAudioMejora(){
-    game.sound("upgradeTorre.mp3").play()
-  }
   method animar(){
             const upgradeParteUno = new Pantalla(imagen="upgradeTorre -1.png",position=position)
             const upgradeParteDos=new Pantalla(imagen="upgradeTorre -2.png",position=position)
             upgradeParteUno.iniciarSiNoEliminar()
-            self.reproducirAudioMejora()
+            sonidoMejora.play()
             game.schedule(200,{upgradeParteUno.iniciarSiNoEliminar() upgradeParteDos.iniciarSiNoEliminar()
             game.schedule(200, {upgradeParteDos.iniciarSiNoEliminar()})
             })
@@ -68,7 +68,7 @@ class Torre{
   method atacarSiEstaEnRango(unEnemigo) {
 
     if(torreActiva  and unEnemigo.estaVivo() and self.rangoEfectivo().contains(unEnemigo.post()))
-        game.schedule(105, {unEnemigo.recibirDaño(self.atacar())})
+        game.schedule(100, {unEnemigo.recibirDaño(self.atacar())})
   }
   method eliminar() {
     torreActiva=false
@@ -76,7 +76,7 @@ class Torre{
 
   }
   method image()
-  method atacar() = daño + nivelTorre
+  method atacar() = daño 
   method costo()
 
 }

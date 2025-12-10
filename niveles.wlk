@@ -118,7 +118,7 @@ class Nivel{
             console.println("generé un orco")
             enemigosGenerados += 1
             enemigosVivos += 1
-            const orco =new Orco(vida=1+(dificultad*5),daño=10,imagen="idleTroll.png",imagenIdle="idleTroll.png",imagenRun="runTroll.png",imagenDaño="idleTrollDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
+            const orco =new Orco(vida=1+(dificultad*4),daño=10,imagen="idleTroll.png",imagenIdle="idleTroll.png",imagenRun="runTroll.png",imagenDaño="idleTrollDaño.png",nivelAct=self,posiciones=self.mapeoEnemigo()) //Imagino que esto es para las pruebas. Pero podríamos parametrizar los stats (no todos, algunos), para poder cambiar de nivel a nivel.
             enemigos.add(orco)
             game.addVisual(orco)
             orco.iniciar()
