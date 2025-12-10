@@ -23,16 +23,13 @@ class Menu{
 }
 
 //clase del menu de inicio. (pantalla despues de la intro)
-class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
+class MenuInicio inherits Menu(menu =[[9,1]], imagen="juegoInicio.jpeg"){
   const musica = game.sound("menu2.mp3")
     override method seleccionNivel() {
         controles.configurarTeclaMenu()
         const play = new Pantalla(imagen="playIcon.png" ,position=game.at(self.playPosition().get(0),self.playPosition().get(1))) 
-        const entrenamiento = new Pantalla(imagen="maniqui.png" ,position=game.at(self.entrenamientoPosition().get(0),self.entrenamientoPosition().get(1))) 
         game.addVisual(play)
-        game.addVisual(entrenamiento)
-        menuElementos.add(play)
-        menuElementos.add(entrenamiento) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
+        menuElementos.add(play) //son agregados, porque despues al querer eliminarlos no funciona sin referencias, solo existió en el llamado y sus referencias murieron ahi.
         musica.play()
         musica.shouldLoop(true)
     }
@@ -45,7 +42,6 @@ class MenuInicio inherits Menu(menu =[[7,1],[11,1]], imagen="juegoInicio.jpeg"){
       musica.stop()
     }
     method playPosition() =menu.get(0) 
-    method entrenamientoPosition() =menu.get(1) 
 }
 //
 class MenuNextLevel inherits Menu(menu =[[7,1],[9,1],[7,4],[11,1] ],imagen="nivelGanado.png") { //menu del panta del siguiente nivel
