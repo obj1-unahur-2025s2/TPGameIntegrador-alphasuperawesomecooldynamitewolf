@@ -15,13 +15,11 @@ class Torre{
   var assetActual
   const assetNormal
   const assetMejora
-  const audioConstruccion= game.sound("hammer.mp3")
+  const audioConstruccion="hammer.mp3"
   const positionOpcion // direccion en la cual es  reflagada en el menu , esto para poder saber donde esta en el menu -> solo lo conoce la torre . 
   const property  position 
-  const sonidoMejora=game.sound("upgradeTorre.mp3")
-
   method reporducirAudioConstruir() {
-    audioConstruccion.play()
+    game.sound(audioConstruccion).play()
   }
   method subirNivel(){
     nivelTorre = nivelTorre + 1
@@ -43,11 +41,14 @@ class Torre{
         derecha.diagonalSuperior(position)
         ]
   }
+  method reproducirAudioMejora(){
+    game.sound("upgradeTorre.mp3").play()
+  }
   method animar(){
             const upgradeParteUno = new Pantalla(imagen="upgradeTorre -1.png",position=position)
             const upgradeParteDos=new Pantalla(imagen="upgradeTorre -2.png",position=position)
             upgradeParteUno.iniciarSiNoEliminar()
-            sonidoMejora.play()
+            self.reproducirAudioMejora()
             game.schedule(200,{upgradeParteUno.iniciarSiNoEliminar() upgradeParteDos.iniciarSiNoEliminar()
             game.schedule(200, {upgradeParteDos.iniciarSiNoEliminar()})
             })
