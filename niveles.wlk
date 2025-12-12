@@ -20,7 +20,7 @@ class Nivel{
     const cantidadDeRey=1
     var reysGenerados=0
     var partidaSigue=true //sirve para las oleadas, ayuda a datenerlas
-    const ubicacionesPosiblesDeTorre=[[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]] //debe estar ordenada //[8,3] es tomado como game.at()
+    const ubicacionesPosiblesDeTorre//= []   [[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]] //debe estar ordenada //[8,3] es tomado como game.at()
     const ubicacionesCamino = [] //Camino por donde pasan los enemigos
     const ubicacionActualJugador=[]
     const pantalla   //pasar la imagen de clase Pantalla al crear el nivel.
@@ -156,10 +156,10 @@ const contadorEnemigos = new ContadorEnemigos()
 
 //---------(Entorno)--------
 const nivelUnoFondo=new Pantalla(imagen="nivel1FondoPixel.png")
-const nivelDosFondo=new Pantalla(imagen="nivel2Fondo.png")
-const nivelPrueba = new Nivel(musica=game.sound("menu2.mp3"),nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel1= new Nivel(musica=game.sound("orcsAttacking.mp3"),nivel=1, dificultad =1,enemigosPorOleada=6, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=8, cantidadDeRey=3,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
-const nivel3= new Nivel(musica=game.sound("orcsLastPush.mp3"),nivel=3, dificultad =3,enemigosPorOleada=10,  cantidadDeRey =5 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]],pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivelDosFondo=new Pantalla(imagen="nivel2.png")
+//const nivelPrueba = new Nivel(musica=game.sound("menu2.mp3"),nivel=0,enemigosPorOleada=10, dificultad=0,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]], pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel1= new Nivel(musica=game.sound("orcsAttacking.mp3"),nivel=1, dificultad =1,enemigosPorOleada=6, ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]], ubicacionesPosiblesDeTorre = [[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]], pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=8, cantidadDeRey=3,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]], ubicacionesPosiblesDeTorre = [[5,8],[12,9],[8,6],[12,5],[9,2],[14,2]], pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
+const nivel3= new Nivel(musica=game.sound("orcsLastPush.mp3"),nivel=3, dificultad =3,enemigosPorOleada=10,  cantidadDeRey =5 ,ubicacionesCamino = [[19,5],[18,5],[17,5],[16,4],[16,3],[16,2],[15,2],[14,2],[13,2],[12,2],[11,2],[10,2],[9,2],[8,2],[8,1],[8,0]], ubicacionesPosiblesDeTorre = [[8,3],[11,0],[11,3],[16,0],[14,4],[16,6]], pantalla=nivelUnoFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante
 
 //const nivel2= new Nivel(musica=game.sound("coldOrcs.mp3"),nivel=2,dificultad =2, enemigosPorOleada=6, cantidadDeRey=2,ubicacionesCamino = [[19,5],[18,5],[17,5],[17,6],[16,6],[15,6],[14,6],[13,6],[12,6],[11,6],[11,5],[11,4],[11,3],[11,2],[11,1],[11,0]],pantalla=nivelDosFondo) //un nivel para probar diseños. --cambiar a tutorial mas adelante

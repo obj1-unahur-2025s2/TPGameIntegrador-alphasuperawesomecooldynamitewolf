@@ -55,7 +55,7 @@ class ContadorEnemigos inherits Contador{
 
 object personajePrincipal{
     method posicionActual() =position 
-    var nivel= nivelPrueba
+    var nivel= nivel1
 
     //Contador de kills
     var kills = 0
