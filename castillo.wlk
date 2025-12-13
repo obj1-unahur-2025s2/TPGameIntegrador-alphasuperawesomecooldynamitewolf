@@ -55,8 +55,9 @@ class ContadorEnemigos inherits Contador{
 
 object personajePrincipal{
     method posicionActual() =position 
-    var nivel= nivel1
+    //var nivel= nivel1
 
+    method nivel() = juegoDelCastillo.nivelActual()
     //Contador de kills
     var kills = 0
     method kills() = kills 
@@ -70,18 +71,18 @@ object personajePrincipal{
     const  imagen="cursorTorre.png"
     method image() = imagen
     var property position =game.at(8,3) 
-    method siguienteNivel(unNivel) {
+    /*method siguienteNivel(unNivel) {
       nivel=unNivel
-    }
+    }*/
     //method torres()=torres
 
     //movimientos, dejar aca para evitar confusion con los de torres
     method moverseHaciaArriba() {
-        const pos=nivel.ubicacionSiguienteA([position.x(),position.y()])
+        const pos=self.nivel().ubicacionSiguienteA([position.x(),position.y()])
         position= game.at(pos.get(0), pos.get(1))
 	}
 	method moverseHaciaAbajo() {
-		const pos =nivel.ubicacionAnterior()
+		const pos =self.nivel().ubicacionAnterior()
         position=game.at(pos.get(0),pos.get(1))
     }
     //Metodos encargados del manejo de la economia
